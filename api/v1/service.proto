@@ -1,0 +1,58 @@
+// Copyright 2023 AITrailblazer, LLC. All Rights Reserved.
+//
+
+syntax = "proto3";
+
+// import "validate/validate.proto";
+import "google/api/annotations.proto";
+
+package aitrailblazer.service.v1;
+
+// import "google/api/field_behavior.proto";
+// import "google/api/resource.proto";
+// import "google/protobuf/timestamp.proto";
+
+// option java_package = "com.google.cloud.apigeeregistry.v1";
+// option java_multiple_files = true;
+// option java_outer_classname = "AdminModelsProto";
+
+// https://github.com/aitrailblazer/ait-gcp-go-grpc/tree/main
+option go_package = "github.com/aitrailblazer/ait-gcp-go-grpc/rpc;rpc";
+
+// The greeting service definition.
+service AitrailblazerService {
+  // Sends a greeting
+  // rpc SayHello (SayHelloRequest) returns (SayHelloResponse) {
+  // // Client example - returns the first shelf:
+  // //   curl http://DOMAIN_NAME/v1/hello/John
+  // option (google.api.http) = { get: "/v1/hello/{name}" };
+  // }
+
+rpc Echo(StringMessage) returns (StringMessage) {
+    option (google.api.http) = {
+      post: "/v1/echo"
+      body: "*"
+    };
+  }
+}
+message StringMessage {
+  string value = 1;
+}
+// The request message containing the user's name.
+// message SayHelloRequest {
+//   // name must be between 1 and 10 characters, inclusive
+// string name = 1 [(validate.rules).string = { 
+//   min_len: 1, max_len: 10
+// }];
+
+//   string name  = 1 [(validate.rules).string = {
+//     pattern:   "^[^[0-9]A-Za-z]+( [^[0-9]A-Za-z]+)*$",
+//     max_bytes: 256,
+//  }];
+
+// }
+
+// The response message containing the greetings
+// message SayHelloResponse {
+//   string message = 1;
+// }
