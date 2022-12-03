@@ -1,6 +1,9 @@
 # ait-gcp-go-grpc
 
-Hello! 
+# How to Build and Deploy Production-Grade Web Services  with gRPC/OpenAPI with Go, Firebase, Firestore, API Gateway, Load Balancing and CloudRun Vol II.
+
+
+Source code for the book.
 
 [ait-gcp-go-grpc](https://github.com/aitrailblazer/ait-gcp-go-grpc)
 
