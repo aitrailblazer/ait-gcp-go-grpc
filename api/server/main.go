@@ -45,18 +45,29 @@ func routerSetup(e *echo.Echo) *echo.Echo {
 	return e
 }
 
+// funcmain .
+//
+// .funcmain
+// [source,go]
+// ----
+// include::${gad:current:fq}[tag=funcmain,indent=0]
+// ----
+// <1> PORT is set by the environment
+// tag::funcmain[]
 func main() {
 
-	port := os.Getenv("PORT")
+	port := os.Getenv("PORT") // <1> PORT is set by the environment
 	if port == "" {
-		port = "8080"
+		port = "8080" // <2> if PORT is not set, use 8080
 	}
-	log.Printf("port %s ", port)
+	log.Printf("port %s ", port) // <3> log the port
 
-	e := echo.New()
+	e := echo.New() // <4> create a new echo instance
 
-	e = routerSetup(e)
+	e = routerSetup(e) // <5> setup the router
 	// Start server
-	log.Println(PROJECT_ID, "REST API listening on port", port)
-	e.Logger.Fatal(e.Start(":" + port))
+	log.Println(PROJECT_ID, "REST API listening on port", port) // <6> log the port
+	e.Logger.Fatal(e.Start(":" + port))                         // <7> start the server
 }
+
+// end::funcmain[]
