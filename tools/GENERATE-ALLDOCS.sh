@@ -3,9 +3,9 @@
 go install github.com/mariotoffia/goasciidoc@latest
 
 cd api
-cd server
+cd v1
 
-goasciidoc -o api_d.adoc -i -t -n --nonexported  -m go.mod main.go -c "{\"author\": \"Constantine Vassilev\", \"email\": \"constantine@aitrailblazer.com\", \"web\": \"https://aitrailblazer.com\", \"images\": \"\", \"title\":\"ait-gcp-go-grpc\", \"toc\": \"Table of Contents\", \"toclevel\": 3}"
+goasciidoc -o api_d.adoc -i -t -n --nonexported  -m go.mod . -c "{\"author\": \"Constantine Vassilev\", \"email\": \"constantine@aitrailblazer.com\", \"web\": \"https://aitrailblazer.com\", \"images\": \"\", \"title\":\"ait-gcp-go-grpc\", \"toc\": \"Table of Contents\", \"toclevel\": 3}"
 
 asciidoctor-reducer api_d.adoc -o api.adoc
 rm -rf api_d.adoc

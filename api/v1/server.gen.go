@@ -12,7 +12,7 @@ import (
 	"path"
 	"strings"
 
-	. "github.com/aitrailblazer/ait-gcp-go-grpc/api/models"
+	. "github.com/aitrailblazer/ait-gcp-go-grpc/api/v1/models"
 	"github.com/getkin/kin-openapi/openapi3"
 	"github.com/labstack/echo/v4"
 )
