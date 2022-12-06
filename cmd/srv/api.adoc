@@ -1,0 +1,118 @@
+== Package github.com/aitrailblazer/ait-gcp-go-grpc/api/server/.
+
+
+=== Imports
+[source, go]
+----
+import (
+    "log"
+    "os"
+    "github.com/labstack/echo/v4"
+    "github.com/labstack/echo/v4/middleware"
+    "net/http"
+)
+----
+
+== Structs
+
+=== controller
+[source, go]
+----
+type controller struct {
+    logger    echo.Logger
+}
+----
+
+
+
+==== logger echo.Logger
+
+
+
+==== Receivers
+
+===== v1Handler
+[source, go]
+----
+func (ctrl *controller) v1Handler(c echo.Context) error
+----
+
+curl -X GET http://localhost:8080/v1/ -v    HTTP/1.1 200 OK                     {status: "running"}
+curl -X GET http://localhost:8080/v1/1 -v   HTTP/1.1 404 Not Found              {"message":"Not Found"}
+curl -X POST http://localhost:8080/v1/  -v  HTTP/1.1 405 Method Not Allowed     {"message":"Method Not Allowed"}
+
+===== notFoundHandler
+[source, go]
+----
+func (ctrl *controller) notFoundHandler(c echo.Context) error
+----
+
+
+
+
+
+
+=== Constants
+[source, go]
+----
+const (
+
+)
+----
+
+=== PROJECT_ID
+[source, go]
+----
+
+----
+
+
+
+== Functions
+
+
+
+=== routerSetup
+[source, go]
+----
+func routerSetup(e *echo.Echo) *echo.Echo
+----
+
+
+
+
+=== main
+[source, go]
+----
+func main()
+----
+
+funcmain .
+
+.funcmain
+[source,go]
+----
+func main() {
+
+	port := os.Getenv("PORT") // <1>
+	if port == "" {
+		port = "8080" // <2>
+	}
+	log.Printf("port %s ", port) // <3>
+
+	e := echo.New() // <4>
+
+	e = routerSetup(e) // <5>
+	// Start server
+	log.Println(PROJECT_ID, "REST API listening on port", port) // <6>
+	e.Logger.Fatal(e.Start(":" + port))                         // <7>
+}
+
+----
+<1> PORT is set by the environment
+<2> if PORT is not set, use 8080
+<3> log the port
+<4> create a new echo instance
+<5> setup the router
+<6> log the port
+<7> start the server
