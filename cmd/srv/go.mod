@@ -3,7 +3,7 @@ module github.com/aitrailblazer/ait-gcp-go-grpc/cmd/srv
 go 1.19
 
 require (
-	github.com/aitrailblazer/ait-gcp-go-grpc/api/v1/api v0.0.0-20221207202425-2a942c2a2267
+	github.com/aitrailblazer/ait-gcp-go-grpc/api/v1/api v0.0.0-20221207204149-94d30d28618d
 	github.com/labstack/echo/v4 v4.9.1
 )
 

@@ -1,6 +1,6 @@
 github.com/RaveNoX/go-jsoncommentstrip v1.0.0/go.mod h1:78ihd09MekBnJnxpICcwzCMzGrKSKYe4AqU6PDYYpjk=
-github.com/aitrailblazer/ait-gcp-go-grpc/api/v1/api v0.0.0-20221207202425-2a942c2a2267 h1:bF9I8qAZ4QXiITMaQ8ztNrhWDTFEBkGqqSoQ3JsMIds=
-github.com/aitrailblazer/ait-gcp-go-grpc/api/v1/api v0.0.0-20221207202425-2a942c2a2267/go.mod h1:gm68TzTYhovrV55T8dkJKArAm2MpFa7A0TyhmFRmpwI=
+github.com/aitrailblazer/ait-gcp-go-grpc/api/v1/api v0.0.0-20221207204149-94d30d28618d h1:Gc0RYC6G693IJYPtSsoO9gn/e4DlNriosnNknJo0KQA=
+github.com/aitrailblazer/ait-gcp-go-grpc/api/v1/api v0.0.0-20221207204149-94d30d28618d/go.mod h1:gm68TzTYhovrV55T8dkJKArAm2MpFa7A0TyhmFRmpwI=
 github.com/aitrailblazer/ait-gcp-go-grpc/api/v1/models v0.0.0-20221207193129-305bfe7de820 h1:APsbBOuUEmWPNsZpfSGKqbjQix4FiSIGvjWcR5I0BVU=
 github.com/aitrailblazer/ait-gcp-go-grpc/api/v1/models v0.0.0-20221207193129-305bfe7de820/go.mod h1:doZ8NTM89xz4gRFIvDYdIpHMaohyBHS4+M5EoMrv3wY=
 github.com/apapsch/go-jsonmerge/v2 v2.0.0 h1:axGnT1gRIfimI7gJifB699GoE/oq+F2MU7Dml6nw9rQ=

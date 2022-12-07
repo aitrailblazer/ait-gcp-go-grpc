@@ -15,20 +15,21 @@ go install golang.org/x/vuln/cmd/govulncheck@latest
 GENERATED='cmd/srv'
 # go env -w GOPRIVATE=code.ssnc.dev/\*
 
-echo "Generating Go srv"
+echo "==> Generating Go srv"
 
-echo "Generating Go models"
+echo "==> Generating Go models"
 
 cd api
 cd v1
 cd models
+
 rm -rf go.mod
 rm -rf go.sum
 
 go mod init github.com/aitrailblazer/ait-gcp-go-grpc/api/v1/models
 go mod tidy 
 
-govulncheck ./...
+# govulncheck ./...
 golangci-lint run ./...
 go build -v *.go
 
@@ -36,24 +37,26 @@ cd ..
 cd ..
 cd ..
 
-echo "Generating Go server.gen"
+echo "==> Generating Go server.gen"
 
 cd api
 cd v1
 cd api
+
 rm -rf go.mod
 rm -rf go.sum
 go mod init github.com/aitrailblazer/ait-gcp-go-grpc/api/v1/api
 
 go mod tidy
 
-govulncheck ./...
+# govulncheck ./...
 golangci-lint run ./...
 go build -v *.go
+
 cd ..
 cd ..
 cd ..
-echo "Generating Go srv"
+echo "==> Generating Go srv"
 
 cd cmd
 cd srv
@@ -64,7 +67,7 @@ go mod init github.com/aitrailblazer/ait-gcp-go-grpc/cmd/srv
 
 go mod tidy
 
-govulncheck ./...
+# govulncheck ./...
 golangci-lint run ./...
 rm -rf server
 go build -v main.go

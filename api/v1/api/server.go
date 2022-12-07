@@ -46,14 +46,19 @@ func NewHandler() Handler {
 	return handler
 }
 
+//	curl \
+//	  -X GET \
+//	  http://localhost:1323\?name\=Joe
 func (h *Handler) AitrailblazerServiceSend(ctx echo.Context, params models.AitrailblazerServiceSendParams) error {
 
 	var i int32 = 1
 	msec := time.Now()
-	// message := "pong"
-	message := params.Message
 
 	log.Println("params ", params)
+	// message := "pongTest"
+	message := params.Message
+	log.Println("message ", message)
+
 	pong := models.Pong{
 		Index:      &i,
 		Message:    message,
