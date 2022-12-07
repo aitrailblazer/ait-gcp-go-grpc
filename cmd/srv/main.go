@@ -9,7 +9,6 @@ import (
 	"net/http"
 	"os"
 
-	// "github.com/aitrailblazer/ait-gcp-go-grpc/api/v1/api"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 )
@@ -36,7 +35,7 @@ type controller struct {
 
 func routerSetup(e *echo.Echo) *echo.Echo {
 	// Create an instance of our handler which satisfies the generated interface
-	// PongStore := api.NewPongStore()
+	PongStore := api.NewPongStore()
 
 	// Middleware
 	e.Use(middleware.Logger())
@@ -48,7 +47,7 @@ func routerSetup(e *echo.Echo) *echo.Echo {
 	e.RouteNotFound("/*", ctrl.notFoundHandler) // any
 
 	// We now register our petStore above as the handler for the interface
-	// api.RegisterHandlers(e, PongStore)
+	api.RegisterHandlers(e, PongStore)
 	return e
 }
 
