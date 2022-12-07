@@ -1,7 +1,7 @@
 package api
 
 import (
-	"log"
+	"fmt"
 	"net/http"
 	"time"
 
@@ -51,14 +51,14 @@ func NewHandler() Handler {
 //	  http://localhost:1323\?name\=Joe
 func (h *Handler) AitrailblazerServiceSend(ctx echo.Context, params models.AitrailblazerServiceSendParams) error {
 
-	var i int32 = 1
+	var i int32 = 369
 	msec := time.Now()
-	log.Printf("AitrailblazerServiceSend: ver %s ", "1.0") // <3>
+	fmt.Printf("AitrailblazerServiceSend: ver %s ", "1.0") // <3>
 
-	log.Println("AitrailblazerServiceSend: params ", params)
+	fmt.Println("AitrailblazerServiceSend: params ", params)
 	// message := "pongTest"
 	message := params.Message
-	log.Println("AitrailblazerServiceSend: message ", message)
+	fmt.Println("AitrailblazerServiceSend: message ", message)
 
 	pong := models.Pong{
 		Index:      &i,
