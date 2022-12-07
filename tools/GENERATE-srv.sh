@@ -55,22 +55,22 @@ go build -v *.go
 
 cd ..
 cd ..
-# echo "Generating Go srv"
+echo "Generating Go srv"
 
-# cd cmd
-# cd srv
+cd cmd
+cd srv
 
-# rm -rf go.mod
-# rm -rf go.sum
-# go mod init code.ssnc.dev/cloud/cloud-registry/cmd/srv
+rm -rf go.mod
+rm -rf go.sum
+go mod init code.ssnc.dev/cloud/cloud-registry/cmd/srv
 
-# go mod tidy
+go mod tidy
 
-# golangci-lint run ./...
-# govulncheck ./...
-# golangci-lint run ./...
-# rm -rf server
-# go build -v server.go
+golangci-lint run ./...
+govulncheck ./...
+golangci-lint run ./...
+rm -rf server
+go build -v server.go
 
-# cd ..
-# cd ..
+cd ..
+cd ..

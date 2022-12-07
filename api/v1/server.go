@@ -9,15 +9,21 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
-// type Pong struct {
-// 	Pong   map[int64]models.Pong
-// 	NextId int64
-// 	Lock   sync.Mutex
-// }
-// Implements all the handlers in the ServerInterface
+type PongStore struct {
+	Pongs  map[int64]models.Pong
+	NextId int64
+	Lock   sync.Mutex
+}
+
+func NewPongStore() *PongStore {
+	return &PongStore{
+		Pongs:  make(map[int64]models.Pong),
+		NextId: 1000,
+	}
+}
 
 // (GET /v1/ping)
-func (p *models.ServerInterfaceWrapper) AitrailblazerServiceSend(ctx echo.Context, params models.AitrailblazerServiceSendParams) error {
+func (p *PongStore) AitrailblazerServiceSend(ctx echo.Context, params models.AitrailblazerServiceSendParams) error {
 	var err error
 	return fmt.Errorf("error marshaling '@type': %w", err)
 
