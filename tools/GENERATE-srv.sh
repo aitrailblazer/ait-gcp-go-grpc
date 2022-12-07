@@ -54,7 +54,7 @@ golangci-lint run ./...
 go build -v *.go
 
 cd ..
-
+cd ..
 # echo "Generating Go srv"
 
 # cd cmd

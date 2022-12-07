@@ -19,25 +19,50 @@ package aitrailblazer.service.v1;
 // https://github.com/aitrailblazer/ait-gcp-go-grpc/tree/main
 option go_package = "github.com/aitrailblazer/ait-gcp-go-grpc/rpc;rpc";
 
-// The greeting service definition.
-service AitrailblazerService {
-  // Sends a greeting
-  // rpc SayHello (SayHelloRequest) returns (SayHelloResponse) {
-  // // Client example - returns the first shelf:
-  // //   curl http://DOMAIN_NAME/v1/hello/John
-  // option (google.api.http) = { get: "/v1/hello/{name}" };
-  // }
+import "google/protobuf/timestamp.proto";
 
-rpc Echo(StringMessage) returns (StringMessage) {
+service AitrailblazerService {
+  rpc Send(Request) returns (Response) {
     option (google.api.http) = {
-      post: "/v1/echo"
-      body: "*"
+      get: "/v1/ping"
     };
   }
+  // rpc SendUpstream(Request) returns (Response) {}
 }
-message StringMessage {
-  string value = 1;
+
+message Request {
+  string message = 1;
 }
+
+message Pong {
+  int32 index = 1;
+  string message = 2;
+  google.protobuf.Timestamp received_on = 3;
+}
+
+message Response {
+  Pong pong = 1;
+}
+// The greeting service definition.
+// service AitrailblazerService {
+//   // Sends a greeting
+//   rpc SayHello (SayHelloRequest) returns (SayHelloResponse) {
+//   // Client example - returns the first shelf:
+//   //   curl http://DOMAIN_NAME/v1/hello/John
+//   option (google.api.http) = { get: "/v1/hello/{name}" };
+//   }
+
+// $ curl -X POST -k https://localhost:10000/v1/echo -d '{"value": "CoreOS is hiring!"}'
+// rpc Echo(EchoMessage) returns (EchoMessage) {
+//     option (google.api.http) = {
+//       post: "/v1/echo"
+//       body: "*"
+//     };
+//   }
+// }
+// message EchoMessage {
+//   string value = 1;
+// }
 // The request message containing the user's name.
 // message SayHelloRequest {
 //   // name must be between 1 and 10 characters, inclusive

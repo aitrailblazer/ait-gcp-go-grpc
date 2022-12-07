@@ -6,6 +6,7 @@ package models
 import (
 	"encoding/json"
 	"fmt"
+	"time"
 )
 
 // GoogleProtobufAny Contains an arbitrary serialized message along with a @type that describes the type of the serialized message.
@@ -13,6 +14,18 @@ type GoogleProtobufAny struct {
 	// Type The type of the serialized message.
 	Type                 *string                `json:"@type,omitempty"`
 	AdditionalProperties map[string]interface{} `json:"-"`
+}
+
+// Pong defines model for Pong.
+type Pong struct {
+	Index      *int32     `json:"index,omitempty"`
+	Message    *string    `json:"message,omitempty"`
+	ReceivedOn *time.Time `json:"receivedOn,omitempty"`
+}
+
+// Response defines model for Response.
+type Response struct {
+	Pong *Pong `json:"pong,omitempty"`
 }
 
 // Status The `Status` type defines a logical error model that is suitable for different programming environments, including REST APIs and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each `Status` message contains three pieces of data: error code, error message, and error details. You can find out more about this error model and how to work with it in the [API Design Guide](https://cloud.google.com/apis/design/errors).
@@ -27,13 +40,10 @@ type Status struct {
 	Message *string `json:"message,omitempty"`
 }
 
-// StringMessage defines model for StringMessage.
-type StringMessage struct {
-	Value *string `json:"value,omitempty"`
+// AitrailblazerServiceSendParams defines parameters for AitrailblazerServiceSend.
+type AitrailblazerServiceSendParams struct {
+	Message *string `form:"message,omitempty" json:"message,omitempty"`
 }
-
-// AitrailblazerServiceEchoJSONRequestBody defines body for AitrailblazerServiceEcho for application/json ContentType.
-type AitrailblazerServiceEchoJSONRequestBody = StringMessage
 
 // Getter for additional properties for GoogleProtobufAny. Returns the specified
 // element and whether it was found

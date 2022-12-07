@@ -22,7 +22,7 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type AitrailblazerServiceClient interface {
-	Echo(ctx context.Context, in *StringMessage, opts ...grpc.CallOption) (*StringMessage, error)
+	Send(ctx context.Context, in *Request, opts ...grpc.CallOption) (*Response, error)
 }
 
 type aitrailblazerServiceClient struct {
@@ -33,9 +33,9 @@ func NewAitrailblazerServiceClient(cc grpc.ClientConnInterface) AitrailblazerSer
 	return &aitrailblazerServiceClient{cc}
 }
 
-func (c *aitrailblazerServiceClient) Echo(ctx context.Context, in *StringMessage, opts ...grpc.CallOption) (*StringMessage, error) {
-	out := new(StringMessage)
-	err := c.cc.Invoke(ctx, "/aitrailblazer.service.v1.AitrailblazerService/Echo", in, out, opts...)
+func (c *aitrailblazerServiceClient) Send(ctx context.Context, in *Request, opts ...grpc.CallOption) (*Response, error) {
+	out := new(Response)
+	err := c.cc.Invoke(ctx, "/aitrailblazer.service.v1.AitrailblazerService/Send", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -46,7 +46,7 @@ func (c *aitrailblazerServiceClient) Echo(ctx context.Context, in *StringMessage
 // All implementations must embed UnimplementedAitrailblazerServiceServer
 // for forward compatibility
 type AitrailblazerServiceServer interface {
-	Echo(context.Context, *StringMessage) (*StringMessage, error)
+	Send(context.Context, *Request) (*Response, error)
 	mustEmbedUnimplementedAitrailblazerServiceServer()
 }
 
@@ -54,8 +54,8 @@ type AitrailblazerServiceServer interface {
 type UnimplementedAitrailblazerServiceServer struct {
 }
 
-func (UnimplementedAitrailblazerServiceServer) Echo(context.Context, *StringMessage) (*StringMessage, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Echo not implemented")
+func (UnimplementedAitrailblazerServiceServer) Send(context.Context, *Request) (*Response, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Send not implemented")
 }
 func (UnimplementedAitrailblazerServiceServer) mustEmbedUnimplementedAitrailblazerServiceServer() {}
 
@@ -70,20 +70,20 @@ func RegisterAitrailblazerServiceServer(s grpc.ServiceRegistrar, srv Aitrailblaz
 	s.RegisterService(&AitrailblazerService_ServiceDesc, srv)
 }
 
-func _AitrailblazerService_Echo_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(StringMessage)
+func _AitrailblazerService_Send_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Request)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(AitrailblazerServiceServer).Echo(ctx, in)
+		return srv.(AitrailblazerServiceServer).Send(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/aitrailblazer.service.v1.AitrailblazerService/Echo",
+		FullMethod: "/aitrailblazer.service.v1.AitrailblazerService/Send",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AitrailblazerServiceServer).Echo(ctx, req.(*StringMessage))
+		return srv.(AitrailblazerServiceServer).Send(ctx, req.(*Request))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -96,8 +96,8 @@ var AitrailblazerService_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*AitrailblazerServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "Echo",
-			Handler:    _AitrailblazerService_Echo_Handler,
+			MethodName: "Send",
+			Handler:    _AitrailblazerService_Send_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
