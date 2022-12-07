@@ -24,10 +24,27 @@ import (
 // 		ReceivedOn: time.Now(),
 // 	}
 // 	return pong
-
+// }
+// func NewPongStore() *PongStore {
+// 	pong := Pong{
+// 		Index:      1,
+// 		Message:    "Pong!",
+// 		ReceivedOn: time.Now(),
+// 	}
+// 	return pong
 // }
 
 type Handler struct{}
+
+func NewHandler() Handler {
+	// pong := Pong{
+	// 	Index:      1,
+	// 	Message:    "Pong!",
+	// 	ReceivedOn: time.Now(),
+	// }
+	handler := Handler{}
+	return handler
+}
 
 func (h *Handler) AitrailblazerServiceSend(ctx echo.Context, params models.AitrailblazerServiceSendParams) error {
 

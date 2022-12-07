@@ -47,6 +47,7 @@ func routerSetup(e *echo.Echo) *echo.Echo {
 	// swagger.Servers = nil
 	// Create an instance of our handler which satisfies the generated interface
 	// PongStore := api.NewPongStore()
+	handler := api.NewHandler()
 
 	// Log all requests
 	e.Use(echomiddleware.Logger())
@@ -56,7 +57,7 @@ func routerSetup(e *echo.Echo) *echo.Echo {
 
 	// e.Use(middleware.Recover())
 	// We now register our PongStore above as the handler for the interface
-	api.RegisterHandlers(e, &api.Handler{})
+	api.RegisterHandlers(e, handler)
 
 	// And we serve HTTP until the world ends.
 	// e.Logger.Fatal(e.Start(fmt.Sprintf("0.0.0.0:%d", *port)))
