@@ -27,7 +27,6 @@ service AitrailblazerService {
       get: "/v1/ping"
     };
   }
-  // rpc SendUpstream(Request) returns (Response) {}
 }
 
 message Request {

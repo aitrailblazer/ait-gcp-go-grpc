@@ -7,11 +7,11 @@ import (
 	// "fmt"
 	"github.com/aitrailblazer/ait-gcp-go-grpc/api/v1/api"
 	// "github.com/deepmap/oapi-codegen/pkg/middleware"
+	"log"
+	"os"
+
 	"github.com/labstack/echo/v4"
 	echomiddleware "github.com/labstack/echo/v4/middleware"
-	"log"
-	"net/http"
-	"os"
 )
 
 const PROJECT_ID = "ait-gcp-go-grpc"
@@ -19,20 +19,24 @@ const PROJECT_ID = "ait-gcp-go-grpc"
 // curl -X GET http://localhost:8080/v1/ -v    HTTP/1.1 200 OK                     {status: "running"}
 // curl -X GET http://localhost:8080/v1/1 -v   HTTP/1.1 404 Not Found              {"message":"Not Found"}
 // curl -X POST http://localhost:8080/v1/  -v  HTTP/1.1 405 Method Not Allowed     {"message":"Method Not Allowed"}
-func (ctrl *controller) v1Handler(c echo.Context) error {
-	log.Printf("v1Handler:Method %v c.Path %v ", c.Request().Method, c.Path())
-	return c.String(http.StatusOK, "{\"status\": \"running\"}")
-}
-func (ctrl *controller) notFoundHandler(c echo.Context) error {
-	log.Printf("notFoundHandler:Method %v c.Path %v ", c.Request().Method, c.Path())
-	return c.String(http.StatusNotFound, "{\"status\": \"NotFound\"}")
+// func (ctrl *controller) v1Handler(c echo.Context) error {
+// 	log.Printf("v1Handler:Method %v c.Path %v ", c.Request().Method, c.Path())
+// 	return c.String(http.StatusOK, "{\"status\": \"running\"}")
+// }
+// func (ctrl *controller) notFoundHandler(c echo.Context) error {
+// 	log.Printf("notFoundHandler:Method %v c.Path %v ", c.Request().Method, c.Path())
+// 	return c.String(http.StatusNotFound, "{\"status\": \"NotFound\"}")
 
-	// return c.String(http.StatusNotFound, c.Request().Method+" "+c.Path())
-}
+// 	// return c.String(http.StatusNotFound, c.Request().Method+" "+c.Path())
+// }
 
-type controller struct {
-	logger echo.Logger //
-}
+// type controller struct {
+// 	logger echo.Logger //
+// }
+
+// go run -v main.go
+// curl localhost:8080/v1/ping
+// {"index":1,"message":"pong","receivedOn":"2022-12-07T12:35:24.465638-08:00"}
 
 func routerSetup(e *echo.Echo) *echo.Echo {
 
@@ -57,7 +61,7 @@ func routerSetup(e *echo.Echo) *echo.Echo {
 
 	// e.Use(middleware.Recover())
 	// We now register our PongStore above as the handler for the interface
-	api.RegisterHandlers(e, handler)
+	api.RegisterHandlers(e, &handler)
 
 	// And we serve HTTP until the world ends.
 	// e.Logger.Fatal(e.Start(fmt.Sprintf("0.0.0.0:%d", *port)))

@@ -50,15 +50,13 @@ func (h *Handler) AitrailblazerServiceSend(ctx echo.Context, params models.Aitra
 
 	var i int32 = 1
 	msec := time.Now()
-	message := "pong"
-	log.Println("params ", params)
+	// message := "pong"
+	message := params.Message
 
-	// message := params.Message
-	// return ctx.JSON(http.StatusOK, spec.User{
-	// Email: "test@sumup.com",
+	log.Println("params ", params)
 	pong := models.Pong{
 		Index:      &i,
-		Message:    &message,
+		Message:    message,
 		ReceivedOn: &msec,
 	}
 	return ctx.JSON(http.StatusOK, pong)
