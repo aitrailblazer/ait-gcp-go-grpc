@@ -53,12 +53,12 @@ func (h *Handler) AitrailblazerServiceSend(ctx echo.Context, params models.Aitra
 
 	var i int32 = 1
 	msec := time.Now()
-	log.Printf("ver %s ", "1.0") // <3>
+	log.Printf("AitrailblazerServiceSend: ver %s ", "1.0") // <3>
 
-	log.Println("params ", params)
+	log.Println("AitrailblazerServiceSend: params ", params)
 	// message := "pongTest"
 	message := params.Message
-	log.Println("message ", message)
+	log.Println("AitrailblazerServiceSend: message ", message)
 
 	pong := models.Pong{
 		Index:      &i,
