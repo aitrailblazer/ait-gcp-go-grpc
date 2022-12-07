@@ -1,6 +1,6 @@
 github.com/RaveNoX/go-jsoncommentstrip v1.0.0/go.mod h1:78ihd09MekBnJnxpICcwzCMzGrKSKYe4AqU6PDYYpjk=
-github.com/aitrailblazer/ait-gcp-go-grpc/api/v1/models v0.0.0-20221207204149-94d30d28618d h1:bcWUYi7LRfkcVJDwqWsgcL0BQcE+trcwI7tTBJvRT0E=
-github.com/aitrailblazer/ait-gcp-go-grpc/api/v1/models v0.0.0-20221207204149-94d30d28618d/go.mod h1:doZ8NTM89xz4gRFIvDYdIpHMaohyBHS4+M5EoMrv3wY=
+github.com/aitrailblazer/ait-gcp-go-grpc/api/v1/models v0.0.0-20221207213048-c531504c839d h1:EzjLiN7f3Xuq3CkpsPqXkqDhvuTFjy+M3DyDDPygWYg=
+github.com/aitrailblazer/ait-gcp-go-grpc/api/v1/models v0.0.0-20221207213048-c531504c839d/go.mod h1:doZ8NTM89xz4gRFIvDYdIpHMaohyBHS4+M5EoMrv3wY=
 github.com/apapsch/go-jsonmerge/v2 v2.0.0 h1:axGnT1gRIfimI7gJifB699GoE/oq+F2MU7Dml6nw9rQ=
 github.com/apapsch/go-jsonmerge/v2 v2.0.0/go.mod h1:lvDnEdqiQrp0O42VQGgmlKpxL1AP2+08jFMw88y4klk=
 github.com/bmatcuk/doublestar v1.1.1/go.mod h1:UD6OnuiIn0yFxxA2le/rnRU1G4RaI4UvFv1sNto9p6w=

@@ -5,6 +5,7 @@ package api
 
 import (
 	"bytes"
+	"log"
 	"compress/gzip"
 	"encoding/base64"
 	"fmt"
@@ -76,6 +77,7 @@ func RegisterHandlersWithBaseURL(router EchoRouter, si ServerInterface, baseURL 
 	wrapper := ServerInterfaceWrapper{
 		Handler: si,
 	}
+	log.Printf("RegisterHandlersWithBaseURL: ver %s ", "1.0") // <3>
 
 	router.GET(baseURL+"/v1/ping", wrapper.AitrailblazerServiceSend)
 
