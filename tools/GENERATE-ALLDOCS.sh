@@ -4,6 +4,7 @@ go install github.com/mariotoffia/goasciidoc@latest
 
 cd api
 cd v1
+cd api
 
 goasciidoc -o api_d.adoc -i -t -n --nonexported  -m go.mod . -c "{\"author\": \"Constantine Vassilev\", \"email\": \"constantine@aitrailblazer.com\", \"web\": \"https://aitrailblazer.com\", \"images\": \"\", \"title\":\"ait-gcp-go-grpc\", \"toc\": \"Table of Contents\", \"toclevel\": 3}"
 
@@ -13,7 +14,7 @@ rm -rf api_d.adoc
 
 # cp docs.adoc api.adoc 
 # rm -rf docs.adoc
-
+cd ..
 cd ..
 cd ..
 
