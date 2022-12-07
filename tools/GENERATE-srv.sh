@@ -62,7 +62,7 @@ cd srv
 
 rm -rf go.mod
 rm -rf go.sum
-go mod init code.ssnc.dev/cloud/cloud-registry/cmd/srv
+go mod init github.com/aitrailblazer/ait-gcp-go-grpc/cmd/srv
 
 go mod tidy
 

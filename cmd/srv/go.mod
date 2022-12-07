@@ -1,3 +1,3 @@
-module code.ssnc.dev/cloud/cloud-registry/cmd/srv
+module github.com/aitrailblazer/ait-gcp-go-grpc/cmd/srv
 
 go 1.19
