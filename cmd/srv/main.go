@@ -96,6 +96,7 @@ func main() {
 		port = "8080" // <2>
 	}
 	log.Printf("port %s ", port) // <3>
+	log.Printf("ver %s ", "1.0") // <3>
 
 	e := echo.New() // <4>
 

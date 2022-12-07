@@ -53,6 +53,7 @@ func (h *Handler) AitrailblazerServiceSend(ctx echo.Context, params models.Aitra
 
 	var i int32 = 1
 	msec := time.Now()
+	log.Printf("ver %s ", "1.0") // <3>
 
 	log.Println("params ", params)
 	// message := "pongTest"
