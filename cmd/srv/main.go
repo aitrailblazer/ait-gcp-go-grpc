@@ -4,13 +4,14 @@
 package main
 
 import (
+	// "fmt"
 	"github.com/aitrailblazer/ait-gcp-go-grpc/api/v1/api"
+	// "github.com/deepmap/oapi-codegen/pkg/middleware"
+	"github.com/labstack/echo/v4"
+	echomiddleware "github.com/labstack/echo/v4/middleware"
 	"log"
 	"net/http"
 	"os"
-
-	"github.com/labstack/echo/v4"
-	"github.com/labstack/echo/v4/middleware"
 )
 
 const PROJECT_ID = "ait-gcp-go-grpc"
@@ -34,20 +35,37 @@ type controller struct {
 }
 
 func routerSetup(e *echo.Echo) *echo.Echo {
+
+	// swagger, err := api.GetSwagger()
+	// if err != nil {
+	// 	fmt.Fprintf(os.Stderr, "Error loading swagger spec\n: %s", err)
+	// 	os.Exit(1)
+	// }
+
+	// Clear out the servers array in the swagger spec, that skips validating
+	// that server names match. We don't know how this thing will be run.
+	// swagger.Servers = nil
 	// Create an instance of our handler which satisfies the generated interface
-	PongStore := api.NewPongStore()
+	// PongStore := api.NewPongStore()
 
-	// Middleware
-	e.Use(middleware.Logger())
+	// Log all requests
+	e.Use(echomiddleware.Logger())
+	// Use our validation middleware to check all requests against the
+	// OpenAPI schema.
+	// e.Use(middleware.OapiRequestValidator(swagger))
+
 	// e.Use(middleware.Recover())
+	// We now register our PongStore above as the handler for the interface
+	api.RegisterHandlers(e, &api.Handler{})
 
-	ctrl := controller{logger: e.Logger}
-	e.GET("/v1/", ctrl.v1Handler) // handler method with controller struct
+	// And we serve HTTP until the world ends.
+	// e.Logger.Fatal(e.Start(fmt.Sprintf("0.0.0.0:%d", *port)))
 
-	e.RouteNotFound("/*", ctrl.notFoundHandler) // any
+	// ctrl := controller{logger: e.Logger}
+	// e.GET("/v1/", ctrl.v1Handler) // handler method with controller struct
 
-	// We now register our petStore above as the handler for the interface
-	api.RegisterHandlers(e, PongStore)
+	// e.RouteNotFound("/*", ctrl.notFoundHandler) // any
+
 	return e
 }
 
@@ -79,7 +97,11 @@ func main() {
 	e = routerSetup(e) // <5>
 	// Start server
 	log.Println(PROJECT_ID, "REST API listening on port", port) // <6>
-	e.Logger.Fatal(e.Start(":" + port))                         // <7>
+	e.Logger.Fatal(e.Start(":" + port))
+	// And we serve HTTP until the world ends.
+	// e.Logger.Fatal(e.Start(fmt.Sprintf("0.0.0.0:%d", port)))
+
+	// <7>
 }
 
 // end::funcmain[]

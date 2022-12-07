@@ -4,6 +4,7 @@ additional-imports:
   - package: github.com/aitrailblazer/ait-gcp-go-grpc/api/v1/models
     alias: .
 generate:
+  # client: true
   echo-server: true
   embedded-spec: true
 

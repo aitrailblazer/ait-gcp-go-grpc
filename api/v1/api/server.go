@@ -1,34 +1,54 @@
 package api
 
 import (
-	"fmt"
-	"sync"
+	"log"
+	"net/http"
+	"time"
 
 	models "github.com/aitrailblazer/ait-gcp-go-grpc/api/v1/models"
 
 	"github.com/labstack/echo/v4"
 )
 
-type PongStore struct {
-	Pongs  map[int64]models.Pong
-	NextId int64
-	Lock   sync.Mutex
-}
+// type PongStore struct {
+// 	Pong models.Pong
+// 	// Pongs  map[int64]models.Pong
+// 	// NextId int64
+// 	// Lock   sync.Mutex
+// }
 
-func NewPongStore() *PongStore {
-	return &PongStore{
-		Pongs:  make(map[int64]models.Pong),
-		NextId: 1000,
+// func NewPongStore() *PongStore {
+// 	pong := Pong{
+// 		Index:      1,
+// 		Message:    "Pong!",
+// 		ReceivedOn: time.Now(),
+// 	}
+// 	return pong
+
+// }
+
+type Handler struct{}
+
+func (h *Handler) AitrailblazerServiceSend(ctx echo.Context, params models.AitrailblazerServiceSendParams) error {
+
+	var i int32 = 1
+	msec := time.Now()
+	message := "pong"
+	log.Println("params ", params)
+
+	// message := params.Message
+	// return ctx.JSON(http.StatusOK, spec.User{
+	// Email: "test@sumup.com",
+	pong := models.Pong{
+		Index:      &i,
+		Message:    &message,
+		ReceivedOn: &msec,
 	}
+	return ctx.JSON(http.StatusOK, pong)
+
 }
 
 // (GET /v1/ping)
-func (p *PongStore) AitrailblazerServiceSend(ctx echo.Context, params models.AitrailblazerServiceSendParams) error {
-	var err error
-	return fmt.Errorf("error marshaling '@type': %w", err)
-
-}
-
 // func (s *pingService) Send(ctx context.Context, req *pb.Request) (*pb.Response, error) {
 // 	log.Print("sending ping response")
 // 	return &pb.Response{
