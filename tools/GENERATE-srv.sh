@@ -41,7 +41,7 @@ echo "Generating Go server.gen"
 
 cd api
 cd v1
-
+cd api
 rm -rf go.mod
 rm -rf go.sum
 go mod init github.com/aitrailblazer/ait-gcp-go-grpc/api/v1/api
@@ -52,7 +52,7 @@ golangci-lint run ./...
 govulncheck ./...
 golangci-lint run ./...
 go build -v *.go
-
+cd ..
 cd ..
 cd ..
 echo "Generating Go srv"

@@ -1,5 +1,5 @@
 package: api
-output: api/v1/server.gen.go
+output: api/v1/api/server.gen.go
 additional-imports:
   - package: github.com/aitrailblazer/ait-gcp-go-grpc/api/v1/models
     alias: .
