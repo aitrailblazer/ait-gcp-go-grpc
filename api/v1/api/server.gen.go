@@ -22,7 +22,7 @@ import (
 // ServerInterface represents all server handlers.
 type ServerInterface interface {
 
-	// (GET /v1/ping1)
+	// (GET /v1/ping)
 	AitrailblazerServiceSend(ctx echo.Context, params AitrailblazerServiceSendParams) error
 }
 
@@ -77,7 +77,7 @@ func RegisterHandlersWithBaseURL(router EchoRouter, si ServerInterface, baseURL 
 		Handler: si,
 	}
 
-	router.GET(baseURL+"/v1/ping1", wrapper.AitrailblazerServiceSend)
+	router.GET(baseURL+"/v1/ping", wrapper.AitrailblazerServiceSend)
 
 }
 
@@ -96,10 +96,10 @@ var swaggerSpec = []string{
 	"gZpSa5Mbe9igHXNLPc2Bw6DLG29ofbaRYr+hOWbZzjktwXKUFGsWO0420hjCNovzSnd47ChQcgOC9n3v",
 	"HUQ6BshOjdl72Ujik28STxbq48/a5HxMHloGQ8Dtq15/nY6hDdlUi/cN6mz1Uyu91pwd3LrWcuxKWLpt",
 	"4nr56dEb6/U85JKxYmquvZOO6jPZv5yVW//LETRM1hTgwxF0PcmvLZOTN03RtMWu8XkEsth0tkwfCra1",
-	"xe8UHihsWFOqiyrUhkKcVLsqr8oPSVc/kMOB1UJdl1fldfI1SpdrVm0+VAO79kP605KknyQzJuXvzD+E",
-	"eiBnMkrAnoRCVIunNNbVQv05UtiqQjnsE9F9SYv5m3lhju/WaZJPMzhz+nh1NXWbE3KZEQ6DZZ05Vd+i",
-	"d4dv8M9892O4ZxlPXfXlt6mHGhyt/GcR57F/Id6nKdLsv3BgVijBNml4UWy13h1dedkre/Hqbr37OwAA",
-	"//8mOi1brAgAAA==",
+	"xe8UHihsWFOqiyrUhkKcVLsqr8oPSVc/kMOB1UJdl1fldfI1SpdrVm0+VANPY64lST9JZUzC35l/iPRA",
+	"zmSQgD0JhagWT2mqq4X6c6SwVYVy2Cee+4oW8yfzwhjfrdMgn0ZwpvTx6mpqNifkMiMcBss6c6q+Re8O",
+	"n+Cf2e7HbM8qnprqy29TCzU4WvnPIs5T/0K8T1Ok2X7hwKxQgm3S8KLYar07uvKyV/bi1d1693cAAAD/",
+	"/8tXzOOrCAAA",
 }
 
 // GetSwagger returns the content of the embedded swagger specification file
