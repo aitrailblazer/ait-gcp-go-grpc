@@ -2,10 +2,10 @@ module github.com/aitrailblazer/ait-gcp-go-grpc/cmd/srv
 
 go 1.19
 
-// github.com/aitrailblazer/ait-gcp-go-grpc/api/v1/api v0.0.0-20221207204149-94d30d28618d
-require github.com/labstack/echo/v4 v4.9.1
-
-require github.com/aitrailblazer/ait-gcp-go-grpc/api/v1/api v0.0.0-20221208010342-ca8ac2aed7c1
+require (
+	github.com/aitrailblazer/ait-gcp-go-grpc/api/v1/api v0.0.0-20221208010342-ca8ac2aed7c1
+	github.com/labstack/echo/v4 v4.9.1
+)
 
 require (
 	github.com/aitrailblazer/ait-gcp-go-grpc/api/v1/models v0.0.0-20221207213048-c531504c839d // indirect

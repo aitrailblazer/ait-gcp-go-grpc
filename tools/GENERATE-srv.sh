@@ -23,13 +23,13 @@ cd api
 cd v1
 cd models
 
-# rm -rf go.mod
-# rm -rf go.sum
+rm -rf go.mod
+rm -rf go.sum
 
-# go mod init github.com/aitrailblazer/ait-gcp-go-grpc/api/v1/models
+go mod init github.com/aitrailblazer/ait-gcp-go-grpc/api/v1/models
 go mod tidy 
 
-# govulncheck ./...
+govulncheck ./...
 golangci-lint run ./...
 go build -v *.go
 
@@ -43,13 +43,13 @@ cd api
 cd v1
 cd api
 
-# rm -rf go.mod
-# rm -rf go.sum
-# go mod init github.com/aitrailblazer/ait-gcp-go-grpc/api/v1/api
+rm -rf go.mod
+rm -rf go.sum
+go mod init github.com/aitrailblazer/ait-gcp-go-grpc/api/v1/api
 
 go mod tidy
 
-# govulncheck ./...
+govulncheck ./...
 golangci-lint run ./...
 go build -v *.go
 
@@ -61,9 +61,9 @@ echo "==> Generating Go srv"
 cd cmd
 cd srv
 
-# rm -rf go.mod
-# rm -rf go.sum
-# go mod init github.com/aitrailblazer/ait-gcp-go-grpc/cmd/srv
+rm -rf go.mod
+rm -rf go.sum
+go mod init github.com/aitrailblazer/ait-gcp-go-grpc/cmd/srv
 
 go mod tidy
 
