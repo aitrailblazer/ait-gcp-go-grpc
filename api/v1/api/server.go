@@ -2,6 +2,7 @@ package api
 
 import (
 	"fmt"
+	"log"
 	"net/http"
 	"time"
 
@@ -9,6 +10,8 @@ import (
 
 	"github.com/labstack/echo/v4"
 )
+
+const VERSION = "1.01"
 
 // type PongStore struct {
 // 	Pong models.Pong
@@ -53,17 +56,18 @@ func (h *Handler) AitrailblazerServiceSend(ctx echo.Context, params models.Aitra
 
 	var i int32 = 369
 	msec := time.Now()
-	fmt.Printf("AitrailblazerServiceSend: ver %s ", "1.0") // <3>
+	log.Printf("AitrailblazerServiceSend VERSION %s ", VERSION) // <3>
 
 	fmt.Println("AitrailblazerServiceSend: params ", params)
 	// message := "pongTest"
 	message := params.Message
 	fmt.Println("AitrailblazerServiceSend: message ", message)
-
+	var v string = VERSION
 	pong := models.Pong{
 		Index:      &i,
 		Message:    message,
 		ReceivedOn: &msec,
+		Ver:        &v,
 	}
 	return ctx.JSON(http.StatusOK, pong)
 

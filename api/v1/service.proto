@@ -36,7 +36,8 @@ message Request {
 message Pong {
   int32 index = 1;
   string message = 2;
-  google.protobuf.Timestamp received_on = 3;
+  string ver = 3;
+  google.protobuf.Timestamp received_on = 4;
 }
 
 message Response {

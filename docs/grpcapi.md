@@ -31,6 +31,7 @@
 | ----- | ---- | ----- | ----------- |
 | index | [int32](#int32) |  |  |
 | message | [string](#string) |  |  |
+| ver | [string](#string) |  |  |
 | received_on | [google.protobuf.Timestamp](#google-protobuf-Timestamp) |  |  |
 
 

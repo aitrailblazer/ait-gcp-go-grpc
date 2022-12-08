@@ -21,6 +21,7 @@ type Pong struct {
 	Index      *int32     `json:"index,omitempty"`
 	Message    *string    `json:"message,omitempty"`
 	ReceivedOn *time.Time `json:"receivedOn,omitempty"`
+	Ver        *string    `json:"ver,omitempty"`
 }
 
 // Response defines model for Response.

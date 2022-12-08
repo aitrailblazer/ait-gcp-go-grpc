@@ -47,6 +47,8 @@ components:
                     format: int32
                 message:
                     type: string
+                ver:
+                    type: string
                 receivedOn:
                     type: string
                     format: date-time
