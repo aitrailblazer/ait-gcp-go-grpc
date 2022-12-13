@@ -38,41 +38,32 @@ const PROJECT_ID = "ait-gcp-go-grpc"
 // curl localhost:8080/v1/ping
 // {"index":1,"message":"pong","receivedOn":"2022-12-07T12:35:24.465638-08:00"}
 
+// curl localhost:8080/v1/shelves/{shelf}
+// curl localhost:8080/v1/shelves/369
+// {"id":369,"theme":"My Bookshelf"}
+
+// routerSetup .
+//
+// .routerSetup
+// [source,go]
+// ----
+// include::${gad:current:fq}[tag=routerSetup,indent=0]
+// ----
+// <1> create a new handler
+// <2> log all requests
+// <3> register the handlers
+// tag::routerSetup[]
 func routerSetup(e *echo.Echo) *echo.Echo {
-
-	// swagger, err := api.GetSwagger()
-	// if err != nil {
-	// 	fmt.Fprintf(os.Stderr, "Error loading swagger spec\n: %s", err)
-	// 	os.Exit(1)
-	// }
-
-	// Clear out the servers array in the swagger spec, that skips validating
-	// that server names match. We don't know how this thing will be run.
-	// swagger.Servers = nil
-	// Create an instance of our handler which satisfies the generated interface
-	// PongStore := api.NewPongStore()
-	handler := api.NewHandler()
+	handler := api.NewHandler() // <1>
 
 	// Log all requests
-	e.Use(echomiddleware.Logger())
-	// Use our validation middleware to check all requests against the
-	// OpenAPI schema.
-	// e.Use(middleware.OapiRequestValidator(swagger))
-
-	// e.Use(middleware.Recover())
-	// We now register our PongStore above as the handler for the interface
-	api.RegisterHandlers(e, &handler)
-
-	// And we serve HTTP until the world ends.
-	// e.Logger.Fatal(e.Start(fmt.Sprintf("0.0.0.0:%d", *port)))
-
-	// ctrl := controller{logger: e.Logger}
-	// e.GET("/v1/", ctrl.v1Handler) // handler method with controller struct
-
-	// e.RouteNotFound("/*", ctrl.notFoundHandler) // any
+	e.Use(echomiddleware.Logger())    // <2>
+	api.RegisterHandlers(e, &handler) // <3>
 
 	return e
 }
+
+// end::routerSetup[]
 
 // funcmain .
 //

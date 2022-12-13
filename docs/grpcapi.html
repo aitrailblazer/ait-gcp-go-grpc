@@ -179,15 +179,23 @@
             <ul>
               
                 <li>
+                  <a href="#aitrailblazer.service.v1.GetShelfRequest"><span class="badge">M</span>GetShelfRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#aitrailblazer.service.v1.PingRequest"><span class="badge">M</span>PingRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#aitrailblazer.service.v1.PingResponse"><span class="badge">M</span>PingResponse</a>
+                </li>
+              
+                <li>
                   <a href="#aitrailblazer.service.v1.Pong"><span class="badge">M</span>Pong</a>
                 </li>
               
                 <li>
-                  <a href="#aitrailblazer.service.v1.Request"><span class="badge">M</span>Request</a>
-                </li>
-              
-                <li>
-                  <a href="#aitrailblazer.service.v1.Response"><span class="badge">M</span>Response</a>
+                  <a href="#aitrailblazer.service.v1.Shelf"><span class="badge">M</span>Shelf</a>
                 </li>
               
               
@@ -212,8 +220,8 @@
       <p></p>
 
       
-        <h3 id="aitrailblazer.service.v1.Pong">Pong</h3>
-        <p></p>
+        <h3 id="aitrailblazer.service.v1.GetShelfRequest">GetShelfRequest</h3>
+        <p>Request message for GetShelf method.</p>
 
         
           <table class="field-table">
@@ -223,31 +231,10 @@
             <tbody>
               
                 <tr>
-                  <td>index</td>
-                  <td><a href="#int32">int32</a></td>
+                  <td>shelf</td>
+                  <td><a href="#int64">int64</a></td>
                   <td></td>
-                  <td><p> </p></td>
-                </tr>
-              
-                <tr>
-                  <td>message</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p> </p></td>
-                </tr>
-              
-                <tr>
-                  <td>ver</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p> </p></td>
-                </tr>
-              
-                <tr>
-                  <td>received_on</td>
-                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
-                  <td></td>
-                  <td><p> </p></td>
+                  <td><p>The ID of the shelf resource to retrieve. </p></td>
                 </tr>
               
             </tbody>
@@ -257,7 +244,7 @@
 
         
       
-        <h3 id="aitrailblazer.service.v1.Request">Request</h3>
+        <h3 id="aitrailblazer.service.v1.PingRequest">PingRequest</h3>
         <p></p>
 
         
@@ -281,7 +268,7 @@
 
         
       
-        <h3 id="aitrailblazer.service.v1.Response">Response</h3>
+        <h3 id="aitrailblazer.service.v1.PingResponse">PingResponse</h3>
         <p></p>
 
         
@@ -305,6 +292,82 @@
 
         
       
+        <h3 id="aitrailblazer.service.v1.Pong">Pong</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>index</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p>index </p></td>
+                </tr>
+              
+                <tr>
+                  <td>message</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>message </p></td>
+                </tr>
+              
+                <tr>
+                  <td>ver</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>version </p></td>
+                </tr>
+              
+                <tr>
+                  <td>received_on</td>
+                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
+                  <td></td>
+                  <td><p>received_on </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="aitrailblazer.service.v1.Shelf">Shelf</h3>
+        <p>A shelf resource.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>id</td>
+                  <td><a href="#int64">int64</a></td>
+                  <td></td>
+                  <td><p>A unique shelf id. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>theme</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>A theme of the shelf (fiction, poetry, etc). </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
 
       
 
@@ -312,7 +375,7 @@
 
       
         <h3 id="aitrailblazer.service.v1.AitrailblazerService">AitrailblazerService</h3>
-        <p></p>
+        <p>## API Overview</p>
         <table class="enum-table">
           <thead>
             <tr><td>Method Name</td><td>Request Type</td><td>Response Type</td><td>Description</td></tr>
@@ -320,10 +383,23 @@
           <tbody>
             
               <tr>
-                <td>Send</td>
-                <td><a href="#aitrailblazer.service.v1.Request">Request</a></td>
-                <td><a href="#aitrailblazer.service.v1.Response">Response</a></td>
+                <td>SendPing</td>
+                <td><a href="#aitrailblazer.service.v1.PingRequest">PingRequest</a></td>
+                <td><a href="#aitrailblazer.service.v1.PingResponse">PingResponse</a></td>
                 <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>GetShelf</td>
+                <td><a href="#aitrailblazer.service.v1.GetShelfRequest">GetShelfRequest</a></td>
+                <td><a href="#aitrailblazer.service.v1.Shelf">Shelf</a></td>
+                <td><p>rpc GetBook(GetBookRequest) returns (Book) {
+  option (google.api.http) = {
+    get: &#34;/v1/{name=publishers/*/books/*}&#34;
+  };
+  option (google.api.method_signature) = &#34;name&#34;;
+}
+Returns a specific bookstore shelf.</p></td>
               </tr>
             
           </tbody>
@@ -347,9 +423,19 @@
               
               
               <tr>
-                <td>Send</td>
+                <td>SendPing</td>
                 <td>GET</td>
                 <td>/v1/ping</td>
+                <td></td>
+              </tr>
+              
+            
+              
+              
+              <tr>
+                <td>GetShelf</td>
+                <td>GET</td>
+                <td>/v1/shelves/{shelf}</td>
                 <td></td>
               </tr>
               

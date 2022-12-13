@@ -10,7 +10,6 @@ clone_common_protos
 go install github.com/google/gnostic/cmd/protoc-gen-openapi@latest
 
 echo "==> Generating OpenAPI spec for ${AIT_PROTOS[@]}"
-# protoc ${HOSTED_PROTOS[*]} --proto_path='.' --proto_path=$COMMON_PROTOS_PATH --openapi_out='.'
 protoc ${AIT_PROTOS[*]}  \
 --proto_path='.'  \
 --proto_path=$COMMON_PROTOS_PATH  \

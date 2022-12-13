@@ -4,13 +4,14 @@
 openapi: 3.0.3
 info:
     title: AitrailblazerService API
+    description: '## API Overview'
     version: 0.0.1
 paths:
     /v1/ping:
         get:
             tags:
                 - AitrailblazerService
-            operationId: AitrailblazerService_Send
+            operationId: AitrailblazerService_SendPing
             parameters:
                 - name: message
                   in: query
@@ -22,7 +23,41 @@ paths:
                     content:
                         application/json:
                             schema:
-                                $ref: '#/components/schemas/Response'
+                                $ref: '#/components/schemas/PingResponse'
+                default:
+                    description: Default error response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Status'
+    /v1/shelves/{shelf}:
+        get:
+            tags:
+                - AitrailblazerService
+            description: |-
+                rpc GetBook(GetBookRequest) returns (Book) {
+                   option (google.api.http) = {
+                     get: "/v1/{name=publishers/*/books/*}"
+                   };
+                   option (google.api.method_signature) = "name";
+                 }
+                 Returns a specific bookstore shelf.
+            operationId: AitrailblazerService_GetShelf
+            parameters:
+                - name: shelf
+                  in: path
+                  description: The ID of the shelf resource to retrieve.
+                  required: true
+                  schema:
+                    type: integer
+                    format: int64
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Shelf'
                 default:
                     description: Default error response
                     content:
@@ -39,6 +74,11 @@ components:
                     description: The type of the serialized message.
             additionalProperties: true
             description: Contains an arbitrary serialized message along with a @type that describes the type of the serialized message.
+        PingResponse:
+            type: object
+            properties:
+                pong:
+                    $ref: '#/components/schemas/Pong'
         Pong:
             type: object
             properties:
@@ -52,11 +92,17 @@ components:
                 receivedOn:
                     type: string
                     format: date-time
-        Response:
+        Shelf:
             type: object
             properties:
-                pong:
-                    $ref: '#/components/schemas/Pong'
+                id:
+                    type: integer
+                    description: A unique shelf id.
+                    format: int64
+                theme:
+                    type: string
+                    description: A theme of the shelf (fiction, poetry, etc).
+            description: A shelf resource.
         Status:
             type: object
             properties:

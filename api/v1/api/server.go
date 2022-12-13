@@ -11,7 +11,7 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
-const VERSION = "1.01"
+const VERSION = "1.02"
 
 // type PongStore struct {
 // 	Pong models.Pong
@@ -51,8 +51,8 @@ func NewHandler() Handler {
 
 //	curl \
 //	  -X GET \
-//	  http://localhost:1323\?name\=Joe
-func (h *Handler) AitrailblazerServiceSend(ctx echo.Context, params models.AitrailblazerServiceSendParams) error {
+//		localhost:8080/v1/ping
+func (h *Handler) AitrailblazerServiceSendPing(ctx echo.Context, params models.AitrailblazerServiceSendPingParams) error {
 
 	var i int32 = 369
 	msec := time.Now()
@@ -71,6 +71,22 @@ func (h *Handler) AitrailblazerServiceSend(ctx echo.Context, params models.Aitra
 	}
 	return ctx.JSON(http.StatusOK, pong)
 
+}
+
+// (GET /v1/shelves/{shelf})
+func (h *Handler) AitrailblazerServiceGetShelf(ctx echo.Context, shelf int64) error {
+
+	log.Printf("AitrailblazerServiceGetShelf VERSION %s ", VERSION) // <3>
+
+	fmt.Println("AitrailblazerServiceGetShelf: shelf ", shelf)
+	i := shelf
+
+	theme := "My Bookshelf"
+	bookshelf := models.Shelf{
+		Id:    &i,
+		Theme: &theme,
+	}
+	return ctx.JSON(http.StatusOK, bookshelf)
 }
 
 // (GET /v1/ping)

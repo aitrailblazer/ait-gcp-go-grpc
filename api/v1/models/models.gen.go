@@ -16,6 +16,11 @@ type GoogleProtobufAny struct {
 	AdditionalProperties map[string]interface{} `json:"-"`
 }
 
+// PingResponse defines model for PingResponse.
+type PingResponse struct {
+	Pong *Pong `json:"pong,omitempty"`
+}
+
 // Pong defines model for Pong.
 type Pong struct {
 	Index      *int32     `json:"index,omitempty"`
@@ -24,9 +29,13 @@ type Pong struct {
 	Ver        *string    `json:"ver,omitempty"`
 }
 
-// Response defines model for Response.
-type Response struct {
-	Pong *Pong `json:"pong,omitempty"`
+// Shelf A shelf resource.
+type Shelf struct {
+	// Id A unique shelf id.
+	Id *int64 `json:"id,omitempty"`
+
+	// Theme A theme of the shelf (fiction, poetry, etc).
+	Theme *string `json:"theme,omitempty"`
 }
 
 // Status The `Status` type defines a logical error model that is suitable for different programming environments, including REST APIs and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each `Status` message contains three pieces of data: error code, error message, and error details. You can find out more about this error model and how to work with it in the [API Design Guide](https://cloud.google.com/apis/design/errors).
@@ -41,8 +50,8 @@ type Status struct {
 	Message *string `json:"message,omitempty"`
 }
 
-// AitrailblazerServiceSendParams defines parameters for AitrailblazerServiceSend.
-type AitrailblazerServiceSendParams struct {
+// AitrailblazerServiceSendPingParams defines parameters for AitrailblazerServiceSendPing.
+type AitrailblazerServiceSendPingParams struct {
 	Message *string `form:"message,omitempty" json:"message,omitempty"`
 }
 

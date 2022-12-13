@@ -4,9 +4,11 @@
 ## Table of Contents
 
 - [api/v1/service.proto](#api_v1_service-proto)
+    - [GetShelfRequest](#aitrailblazer-service-v1-GetShelfRequest)
+    - [PingRequest](#aitrailblazer-service-v1-PingRequest)
+    - [PingResponse](#aitrailblazer-service-v1-PingResponse)
     - [Pong](#aitrailblazer-service-v1-Pong)
-    - [Request](#aitrailblazer-service-v1-Request)
-    - [Response](#aitrailblazer-service-v1-Response)
+    - [Shelf](#aitrailblazer-service-v1-Shelf)
   
     - [AitrailblazerService](#aitrailblazer-service-v1-AitrailblazerService)
   
@@ -21,6 +23,51 @@
 
 
 
+<a name="aitrailblazer-service-v1-GetShelfRequest"></a>
+
+### GetShelfRequest
+Request message for GetShelf method.
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| shelf | [int64](#int64) |  | The ID of the shelf resource to retrieve. |
+
+
+
+
+
+
+<a name="aitrailblazer-service-v1-PingRequest"></a>
+
+### PingRequest
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| message | [string](#string) |  |  |
+
+
+
+
+
+
+<a name="aitrailblazer-service-v1-PingResponse"></a>
+
+### PingResponse
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| pong | [Pong](#aitrailblazer-service-v1-Pong) |  |  |
+
+
+
+
+
+
 <a name="aitrailblazer-service-v1-Pong"></a>
 
 ### Pong
@@ -29,40 +76,26 @@
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| index | [int32](#int32) |  |  |
-| message | [string](#string) |  |  |
-| ver | [string](#string) |  |  |
-| received_on | [google.protobuf.Timestamp](#google-protobuf-Timestamp) |  |  |
+| index | [int32](#int32) |  | index |
+| message | [string](#string) |  | message |
+| ver | [string](#string) |  | version |
+| received_on | [google.protobuf.Timestamp](#google-protobuf-Timestamp) |  | received_on |
 
 
 
 
 
 
-<a name="aitrailblazer-service-v1-Request"></a>
+<a name="aitrailblazer-service-v1-Shelf"></a>
 
-### Request
-
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| message | [string](#string) |  |  |
-
-
-
-
-
-
-<a name="aitrailblazer-service-v1-Response"></a>
-
-### Response
-
+### Shelf
+A shelf resource.
 
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| pong | [Pong](#aitrailblazer-service-v1-Pong) |  |  |
+| id | [int64](#int64) |  | A unique shelf id. |
+| theme | [string](#string) |  | A theme of the shelf (fiction, poetry, etc). |
 
 
 
@@ -78,11 +111,12 @@
 <a name="aitrailblazer-service-v1-AitrailblazerService"></a>
 
 ### AitrailblazerService
-
+## API Overview
 
 | Method Name | Request Type | Response Type | Description |
 | ----------- | ------------ | ------------- | ------------|
-| Send | [Request](#aitrailblazer-service-v1-Request) | [Response](#aitrailblazer-service-v1-Response) |  |
+| SendPing | [PingRequest](#aitrailblazer-service-v1-PingRequest) | [PingResponse](#aitrailblazer-service-v1-PingResponse) |  |
+| GetShelf | [GetShelfRequest](#aitrailblazer-service-v1-GetShelfRequest) | [Shelf](#aitrailblazer-service-v1-Shelf) | rpc GetBook(GetBookRequest) returns (Book) { option (google.api.http) = { get: &#34;/v1/{name=publishers/*/books/*}&#34; }; option (google.api.method_signature) = &#34;name&#34;; } Returns a specific bookstore shelf. |
 
  
 

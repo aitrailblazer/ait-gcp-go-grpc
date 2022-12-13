@@ -9,7 +9,7 @@ clone_common_protos
 
 go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@latest
 
-echo "Generating Go gRPC client/server for ${SERVICE_PROTOS[@]}"
+echo "Generating Go gRPC client/server model for ${SERVICE_PROTOS[@]}"
 protoc ${AIT_PROTOS[*]}  \
 --proto_path='.'  \
 --proto_path=$COMMON_PROTOS_PATH   \
