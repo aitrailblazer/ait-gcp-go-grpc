@@ -94,7 +94,7 @@ echo -- Generate NewVersion
 cd genversion
 go mod init digicert.com/apttus-pricing-caching-service/genversion
 go mod tidy
-
+ 
 go generate
 CGO_ENABLED=0 go build #-v
 echo --- generated NewVersion:genversion.go

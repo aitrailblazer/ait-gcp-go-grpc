@@ -12,7 +12,7 @@ COPY . ./
 # I typically commit the vendor dependencies as it
 # makes the final build more reproducible and less
 # dependant on dependency managers.
-# ADD ./vendor ./vendor
+ADD ./vendor ./vendor
 COPY go.mod ./
 # COPY go.sum ./
 
