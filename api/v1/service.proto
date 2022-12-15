@@ -38,7 +38,7 @@ package aitrailblazer.service.v1;
 // option java_outer_classname = "AdminModelsProto";
 
 // https://github.com/aitrailblazer/ait-gcp-go-grpc/tree/main
-option go_package = "github.com/aitrailblazer/ait-gcp-go-grpc/rpc;rpc";
+option go_package = "github.com/aitrailblazer/ait-gcp-go-grpc/rpc/v1;rpc";
 
 
 // ## API Overview 

@@ -13,30 +13,6 @@ import (
 
 const VERSION = "1.02"
 
-// type PongStore struct {
-// 	Pong models.Pong
-// 	// Pongs  map[int64]models.Pong
-// 	// NextId int64
-// 	// Lock   sync.Mutex
-// }
-
-// func NewPongStore() *PongStore {
-// 	pong := Pong{
-// 		Index:      1,
-// 		Message:    "Pong!",
-// 		ReceivedOn: time.Now(),
-// 	}
-// 	return pong
-// }
-// func NewPongStore() *PongStore {
-// 	pong := Pong{
-// 		Index:      1,
-// 		Message:    "Pong!",
-// 		ReceivedOn: time.Now(),
-// 	}
-// 	return pong
-// }
-
 type Handler struct{}
 
 func NewHandler() Handler {

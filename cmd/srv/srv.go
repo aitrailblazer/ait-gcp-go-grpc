@@ -5,6 +5,9 @@ package main
 
 import (
 	// "fmt"
+	"embed"
+	"net/http"
+
 	"github.com/aitrailblazer/ait-gcp-go-grpc/api/v1/api"
 	// "github.com/deepmap/oapi-codegen/pkg/middleware"
 	"log"
@@ -13,6 +16,9 @@ import (
 	"github.com/labstack/echo/v4"
 	echomiddleware "github.com/labstack/echo/v4/middleware"
 )
+
+//go:embed ui
+var src embed.FS
 
 const PROJECT_ID = "ait-gcp-go-grpc"
 
@@ -64,6 +70,17 @@ func routerSetup(e *echo.Echo) *echo.Echo {
 }
 
 // end::routerSetup[]
+
+func init() {
+
+	// use embed
+	// http://localhost:8080/ui/
+	filehandler := http.FileServer(http.FS(src))
+	// use http.Handle
+	// shows the ui page. needs a slash (/) at the end of the name
+	http.Handle("/ui/", http.StripPrefix("/", filehandler))
+
+}
 
 // funcmain .
 //

@@ -18,7 +18,7 @@ COPY go.mod ./
 
 # Build the binary.
 # RUN go build -mod=readonly -v -o supermarket
-RUN go build -o server
+RUN go build -o srv
 
 # RUN go test -v -cover ./...
 
@@ -26,10 +26,10 @@ FROM gcr.io/distroless/base
 ########################
 
 # Copy the binary to the production image from the builder stage.
-COPY --from=builder /app/server /app/server
+COPY --from=builder /app/srv /app/srv
 
 # Run the web service on container startup.
-CMD ["/app/server"]
+CMD ["/app/srv"]
 
 # FROM gcr.io/distroless/base-debian10
 # WORKDIR /usr/src/app

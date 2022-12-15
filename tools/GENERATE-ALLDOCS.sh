@@ -18,35 +18,6 @@ cd ..
 cd ..
 cd ..
 
-
-
-# cd api
-# golangci-lint run ./...
-
-# echo goasciidoc -o api-doc.adoc -i -t --nonexported  -m go.mod . -c "{\"author\": \"Konstantin Vassilev\", \"email\": \"konstantin.vassilev@sscinc.com\", \"web\": \"https://code.ssnc.dev/cloud/cloud-registry\", \"images\": \"\", \"title\":\"cloud-registry\", \"toc\": \"Table of Contents\", \"toclevel\": 3}"
-
-# goasciidoc -o api-d.adoc -i -t --nonexported  -m go.mod . -c "{\"author\": \"Konstantin Vassilev\", \"email\": \"konstantin.vassilev@sscinc.com\", \"web\": \"https://code.ssnc.dev/cloud/cloud-registry\", \"images\": \"\", \"title\":\"cloud-registry\", \"toc\": \"Table of Contents\", \"toclevel\": 3}"
-# asciidoctor-reducer api-d.adoc -o api-doc.adoc
-# rm -rf api-d.adoc
-
-# cd ..
-
-
-# cd cmd
-# cd srv
-# golangci-lint run ./...
-
-# echo goasciidoc -o cmd-srv-doc.adoc -i -t --nonexported  -m go.mod . -c "{\"author\": \"Konstantin Vassilev\", \"email\": \"konstantin.vassilev@sscinc.com\", \"web\": \"https://code.ssnc.dev/cloud/cloud-registry\", \"images\": \"\", \"title\":\"cloud-registry\", \"toc\": \"Table of Contents\", \"toclevel\": 3}"
-
-# goasciidoc -o cmd-srv-d.adoc -i -t --nonexported  -m go.mod . -c "{\"author\": \"Konstantin Vassilev\", \"email\": \"konstantin.vassilev@sscinc.com\", \"web\": \"https://code.ssnc.dev/cloud/cloud-registry\", \"images\": \"\", \"title\":\"cloud-registry\", \"toc\": \"Table of Contents\", \"toclevel\": 3}"
-# asciidoctor-reducer cmd-srv-d.adoc -o cmd-srv-doc.adoc
-# rm -rf cmd-srv-d.adoc
-
-# cd ..
-# cd ..
-
-# asciidoctor-reducer makefile.adoc -o makefile-f.adoc
-# plantuml diagrams/makefile.plantuml -o .
 plantuml diagrams/main.plantuml -o .
 plantuml diagrams/servers.plantuml -o .
 mv diagrams/main.png  images
