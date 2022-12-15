@@ -13,7 +13,7 @@ docker build -f Dockerfile -t $GCP_SVC_NAME .
 # gcloud builds submit --tag gcr.io/${GCP_PROJECT}/${GCP_SVC_NAME}
 # gcloud beta run deploy ${GCP_SVC_NAME} --image gcr.io/${GCP_PROJECT}/${GCP_SVC_NAME}   --project ${GCP_PROJECT} --platform managed --allow-unauthenticated --use-http2
 
-# https://grpc-cloud-run-apttus-pricing-caching-service-q36jfaooja-uc.a.run.app
+# https://grpc-a.run.app
 
 # # go test
 # git add .
