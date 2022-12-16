@@ -28,10 +28,11 @@
 # CGO_ENABLED=0 go build -v
 go clean -cache
 go clean -testcache
-
-CGO_ENABLED=0 go build -a -tags netgo -ldflags '-w' #-v
-
 go mod vendor #-v
+
+# CGO_ENABLED=0 which will prevent the net package from linking to the host resolver.
+# CGO_ENABLED=0 go build -a -tags netgo -ldflags '-w' #-v
+CGO_ENABLED=0 -v srv.go
 
 # docker build --pull --no-cache -f Dockerfile.local -t caching-service .
 # docker scan caching-service
