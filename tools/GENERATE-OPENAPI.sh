@@ -15,3 +15,5 @@ protoc ${AIT_PROTOS[*]}  \
 --proto_path=$COMMON_PROTOS_PATH  \
 --proto_path=$AIT_PROTOS  \
 --openapi_out='docs/.'
+
+cp docs/openapi.yaml cmd/srv/ui/openapi.yaml

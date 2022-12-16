@@ -6,6 +6,7 @@ package main
 import (
 	// "fmt"
 	"embed"
+	"io/fs"
 	"net/http"
 
 	"github.com/aitrailblazer/ait-gcp-go-grpc/api/v1/api"
@@ -18,7 +19,22 @@ import (
 )
 
 //go:embed ui
-var src embed.FS
+var embededFiles embed.FS
+
+func getFileSystem(useOS bool) http.FileSystem {
+	if useOS {
+		log.Print("using live mode")
+		return http.FS(os.DirFS("ui"))
+	}
+
+	log.Print("using embed mode")
+	fsys, err := fs.Sub(embededFiles, "ui")
+	if err != nil {
+		panic(err)
+	}
+
+	return http.FS(fsys)
+}
 
 const PROJECT_ID = "ait-gcp-go-grpc"
 
@@ -71,16 +87,16 @@ func routerSetup(e *echo.Echo) *echo.Echo {
 
 // end::routerSetup[]
 
-func init() {
+// func init() {
 
-	// use embed
-	// http://localhost:8080/ui/
-	filehandler := http.FileServer(http.FS(src))
-	// use http.Handle
-	// shows the ui page. needs a slash (/) at the end of the name
-	http.Handle("/ui/", http.StripPrefix("/", filehandler))
+// use embed
+// http://localhost:8080/ui/
+// filehandler := http.FileServer(http.FS(src))
+// use http.Handle
+// shows the ui page. needs a slash (/) at the end of the name
+// http.Handle("/ui/", http.StripPrefix("/", filehandler))
 
-}
+// }
 
 // funcmain .
 //
@@ -107,8 +123,13 @@ func main() {
 	log.Printf("VERSION %s ", api.VERSION) // <3>
 
 	e := echo.New() // <4>
+	useOS := false
+	assetHandler := http.FileServer(getFileSystem(useOS))
 
 	e = routerSetup(e) // <5>
+	e.GET("/", echo.WrapHandler(assetHandler))
+	e.GET("/ui/*", echo.WrapHandler(http.StripPrefix("/ui/", assetHandler)))
+
 	// Start server
 	log.Println(PROJECT_ID, "REST API listening on port", port) // <6>
 	e.Logger.Fatal(e.Start(":" + port))

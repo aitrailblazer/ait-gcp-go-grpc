@@ -12,13 +12,15 @@ COPY . ./
 # I typically commit the vendor dependencies as it
 # makes the final build more reproducible and less
 # dependant on dependency managers.
+ADD ./ui ./ui
+
 ADD ./vendor ./vendor
 COPY go.mod ./
 # COPY go.sum ./
 
 # Build the binary.
 # RUN go build -mod=readonly -v -o supermarket
-RUN go build -o srv
+RUN CGO_ENABLED=0 go build -o srv
 
 # RUN go test -v -cover ./...
 

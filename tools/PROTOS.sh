@@ -1,6 +1,9 @@
 #!/bin/bash
 #
 # Copyright 2023 AITrailblazer, LLC. All Rights Reserved.
+PROJECT_ID=ait-gcp-go-grpc
+GCP_SVC_NAME=$PROJECT_ID"_svc"
+GCP_PROJECT=smartapi-295619
 
 AIT_PROTOS=(
 	api/v1/service.proto

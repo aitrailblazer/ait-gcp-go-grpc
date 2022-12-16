@@ -1,12 +1,11 @@
 #!/bin/bash
 
-PROJECT_ID=ait-gcp-go-grpc
 # go mod init github.com/aitrailblazer/ait-gcp-go-grpc/rpc/v1
 # go mod init github.com/aitrailblazer/ait-gcp-go-grpc/cmd/cli_grpc
 
 # set -e
 
-# . tools/PROTOS.sh
+. tools/PROTOS.sh
 # clone_common_protos
 
 # go install golang.org/x/vuln/cmd/govulncheck@latest
@@ -40,8 +39,7 @@ cd srv_grpc
 rm -rf go.mod
 rm -rf go.sum
 go mod init github.com/aitrailblazer/${PROJECT_ID}/cmd/srv_grpc
-
-# go mod tidy 
+go mod tidy 
 
 # govulncheck ./...
 golangci-lint run ./...
@@ -56,23 +54,22 @@ CGO_ENABLED=0 go build -v cmd/srv_grpc/*.go
 # # 2022/12/13 11:20:04 AitrailblazerServiceSend VERSION 1.02 
 # # 2022/12/13 11:20:04 Received message: world
 
-# echo "==> Compile Go cli_grpc:"${PROJECT_ID}
-# cd cmd
-# cd cli_grpc
+echo "==> Compile Go cli_grpc:"${PROJECT_ID}
+cd cmd
+cd cli_grpc
 
-# rm -rf go.mod
-# rm -rf go.sum
-# go mod init github.com/aitrailblazer/${PROJECT_ID}/cmd/cli_grpc
+rm -rf go.mod
+rm -rf go.sum
+go mod init github.com/aitrailblazer/${PROJECT_ID}/cmd/cli_grpc
+go mod tidy 
 
-# # go mod tidy 
+# govulncheck ./...
+golangci-lint run ./...
+# CGO_ENABLED=0 go build -v *.go
 
-# # govulncheck ./...
-# golangci-lint run ./...
-# # CGO_ENABLED=0 go build -v *.go
-
-# cd ..
-# cd ..
-# CGO_ENABLED=0 go build -v cmd/cli_grpc/*.go 
+cd ..
+cd ..
+CGO_ENABLED=0 go build -v cmd/cli_grpc/*.go 
 # # go run cmd/cli_grpc/main.go 
 # # go run cmd/cli_grpc/main.go 
 # # 2022/12/13 11:20:04 Pong: index:369  message:"world"  ver:"1.02"  received_on:{seconds:1670959204  nanos:163510000}
@@ -80,64 +77,64 @@ CGO_ENABLED=0 go build -v cmd/srv_grpc/*.go
 
 # echo "==> Compile Go srv:"${PROJECT_ID}
 
-# echo "==> Compile Go OpenAPI models"
+echo "==> Compile Go OpenAPI models"
 
-# cd api
-# cd v1
-# cd models
+cd api
+cd v1
+cd models
 
-# rm -rf go.mod
-# rm -rf go.sum
+rm -rf go.mod
+rm -rf go.sum
 
-# go mod init github.com/aitrailblazer/${PROJECT_ID}/api/v1/models
-# go mod tidy 
+go mod init github.com/aitrailblazer/${PROJECT_ID}/api/v1/models
+go mod tidy 
 
-# # govulncheck ./...
-# golangci-lint run ./...
+# govulncheck ./...
+golangci-lint run ./...
 
-# cd ..
-# cd ..
-# cd ..
-# CGO_ENABLED=0 go build -v api/v1/models/*.go
+cd ..
+cd ..
+cd ..
+CGO_ENABLED=0 go build -v api/v1/models/*.go
 
-# echo "==> Compile Go OpenAPI"
+echo "==> Compile Go OpenAPI"
 
-# cd api
-# cd v1
-# cd api
+cd api
+cd v1
+cd api
 
-# rm -rf go.mod
-# rm -rf go.sum
-# go mod init github.com/aitrailblazer/${PROJECT_ID}/api/v1/api
+rm -rf go.mod
+rm -rf go.sum
+go mod init github.com/aitrailblazer/${PROJECT_ID}/api/v1/api
 
-# go mod tidy
+go mod tidy
 
-# # govulncheck ./...
-# golangci-lint run ./...
+# govulncheck ./...
+golangci-lint run ./...
 
-# cd ..
-# cd ..
-# cd ..
+cd ..
+cd ..
+cd ..
 
-# CGO_ENABLED=0 go build -v api/v1/api/*.go
+CGO_ENABLED=0 go build -v api/v1/api/*.go
 
-# echo "==> Generating Go OpenAPI srv"
+echo "==> Generating Go OpenAPI srv"
 
-# cd cmd
-# cd srv
+cd cmd
+cd srv
 
-# rm -rf go.mod
-# rm -rf go.sum
-# go mod init github.com/aitrailblazer/${PROJECT_ID}/cmd/srv
+rm -rf go.mod
+rm -rf go.sum
+go mod init github.com/aitrailblazer/${PROJECT_ID}/cmd/srv
 
-# go mod tidy
+go mod tidy
 
-# # govulncheck ./...
-# golangci-lint run ./...
-# # rm -rf main
-# go mod vendor #-v
+# govulncheck ./...
+golangci-lint run ./...
+# rm -rf main
+go mod vendor #-v
 
-# cd ..
-# cd ..
+cd ..
+cd ..
 
-# CGO_ENABLED=0 CGO_ENABLED=0 go build -v cmd/srv/srv.go
+CGO_ENABLED=0 go build -v cmd/srv/srv.go
