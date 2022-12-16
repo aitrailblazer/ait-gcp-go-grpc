@@ -114,7 +114,6 @@ func routerSetup(e *echo.Echo) *echo.Echo {
 // <7> start the server
 // tag::funcmain[]
 func main() {
-
 	port := os.Getenv("PORT") // <1>
 	if port == "" {
 		port = "8080" // <2>
