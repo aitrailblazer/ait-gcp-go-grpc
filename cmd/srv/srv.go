@@ -5,36 +5,32 @@ package main
 
 import (
 	// "fmt"
-	"embed"
-	"io/fs"
+
+	"fmt"
 	"net/http"
 
-	"github.com/aitrailblazer/ait-gcp-go-grpc/api/v1/api"
 	// "github.com/deepmap/oapi-codegen/pkg/middleware"
 	"log"
 	"os"
 
+	"github.com/aitrailblazer/ait-gcp-go-grpc/api/v1/api"
 	"github.com/labstack/echo/v4"
-	echomiddleware "github.com/labstack/echo/v4/middleware"
 )
 
-//go:embed ui
-var embededFiles embed.FS
+// func getFileSystem(useOS bool) http.FileSystem {
+// 	if useOS {
+// 		log.Print("using live mode")
+// 		return http.FS(os.DirFS("ui"))
+// 	}
 
-func getFileSystem(useOS bool) http.FileSystem {
-	if useOS {
-		log.Print("using live mode")
-		return http.FS(os.DirFS("ui"))
-	}
+// 	log.Print("using embed mode")
+// 	fsys, err := fs.Sub(embededFiles, "ui")
+// 	if err != nil {
+// 		panic(err)
+// 	}
 
-	log.Print("using embed mode")
-	fsys, err := fs.Sub(embededFiles, "ui")
-	if err != nil {
-		panic(err)
-	}
-
-	return http.FS(fsys)
-}
+// 	return http.FS(fsys)
+// }
 
 const PROJECT_ID = "ait-gcp-go-grpc"
 
@@ -79,7 +75,7 @@ func routerSetup(e *echo.Echo) *echo.Echo {
 	handler := api.NewHandler() // <1>
 
 	// Log all requests
-	e.Use(echomiddleware.Logger())    // <2>
+	// e.Use(echomiddleware.Logger())    // <2>
 	api.RegisterHandlers(e, &handler) // <3>
 
 	return e
@@ -113,29 +109,54 @@ func routerSetup(e *echo.Echo) *echo.Echo {
 // <6> log the port
 // <7> start the server
 // tag::funcmain[]
-func main() {
-	port := os.Getenv("PORT") // <1>
-	if port == "" {
-		port = "8080" // <2>
-	}
-	log.Printf("port %s ", port)           // <3>
-	log.Printf("VERSION %s ", api.VERSION) // <3>
+// func mainOld() {
+// 	port := os.Getenv("PORT") // <1>
+// 	if port == "" {
+// 		port = "8080" // <2>
+// 	}
+// 	log.Printf("port %s ", port)           // <3>
+// 	log.Printf("VERSION %s ", api.VERSION) // <3>
 
-	e := echo.New() // <4>
-	useOS := false
-	assetHandler := http.FileServer(getFileSystem(useOS))
+// 	e := echo.New() // <4>
+// 	// useOS := false
+// 	// assetHandler := http.FileServer(getFileSystem(useOS))
 
-	e = routerSetup(e) // <5>
-	e.GET("/", echo.WrapHandler(assetHandler))
-	e.GET("/ui/*", echo.WrapHandler(http.StripPrefix("/ui/", assetHandler)))
+// 	e = routerSetup(e) // <5>
+// 	// e.GET("/", echo.WrapHandler(assetHandler))
+// 	// e.GET("/ui/*", echo.WrapHandler(http.StripPrefix("/ui/", assetHandler)))
 
-	// Start server
-	log.Println(PROJECT_ID, "REST API listening on port", port) // <6>
-	e.Logger.Fatal(e.Start(":" + port))
-	// And we serve HTTP until the world ends.
-	// e.Logger.Fatal(e.Start(fmt.Sprintf("0.0.0.0:%d", port)))
+// 	// Start server
+// 	log.Println(PROJECT_ID, "REST API listening on port", port) // <6>
+// 	e.Logger.Fatal(e.Start(":" + port))
+// 	// And we serve HTTP until the world ends.
+// 	// e.Logger.Fatal(e.Start(fmt.Sprintf("0.0.0.0:%d", port)))
 
-	// <7>
-}
+// 	// <7>
+// }
 
 // end::funcmain[]
+func main() {
+	log.Print("starting server...")
+	http.HandleFunc("/", handler)
+
+	// Determine port for HTTP service.
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8080"
+		log.Printf("defaulting to port %s", port)
+	}
+
+	// Start HTTP server.
+	log.Printf("listening on port %s", port)
+	if err := http.ListenAndServe(":"+port, nil); err != nil {
+		log.Fatal(err)
+	}
+}
+
+func handler(w http.ResponseWriter, r *http.Request) {
+	name := os.Getenv("NAME")
+	if name == "" {
+		name = "World"
+	}
+	fmt.Fprintf(w, "Hello %s!\n", name)
+}

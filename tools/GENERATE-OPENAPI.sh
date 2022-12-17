@@ -8,12 +8,13 @@ set -e
 clone_common_protos
 
 go install github.com/google/gnostic/cmd/protoc-gen-openapi@latest
+mkdir -p ./docs/
 
 echo "==> Generating OpenAPI spec for ${AIT_PROTOS[@]}"
 protoc ${AIT_PROTOS[*]}  \
 --proto_path='.'  \
 --proto_path=$COMMON_PROTOS_PATH  \
 --proto_path=$AIT_PROTOS  \
---openapi_out='docs/.'
+--openapi_out='./docs'
 
 cp docs/openapi.yaml cmd/srv/ui/openapi.yaml

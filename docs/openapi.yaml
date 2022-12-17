@@ -4,7 +4,6 @@
 openapi: 3.0.3
 info:
     title: AitrailblazerService API
-    description: '## API Overview'
     version: 0.0.1
 paths:
     /v1/ping:
@@ -41,7 +40,7 @@ paths:
                    };
                    option (google.api.method_signature) = "name";
                  }
-                 Returns a specific bookstore shelf.
+                  Returns a specific bookstore shelf.
             operationId: AitrailblazerService_GetShelf
             parameters:
                 - name: shelf

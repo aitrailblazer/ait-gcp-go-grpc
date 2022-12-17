@@ -4,6 +4,9 @@
 ## Table of Contents
 
 - [api/v1/service.proto](#api_v1_service-proto)
+    - [Book](#aitrailblazer-service-v1-Book)
+    - [Error](#aitrailblazer-service-v1-Error)
+    - [GetBookRequest](#aitrailblazer-service-v1-GetBookRequest)
     - [GetShelfRequest](#aitrailblazer-service-v1-GetShelfRequest)
     - [PingRequest](#aitrailblazer-service-v1-PingRequest)
     - [PingResponse](#aitrailblazer-service-v1-PingResponse)
@@ -20,6 +23,52 @@
 <p align="right"><a href="#top">Top</a></p>
 
 ## api/v1/service.proto
+
+
+
+<a name="aitrailblazer-service-v1-Book"></a>
+
+### Book
+A representation of a book in the library.
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| name | [string](#string) |  | The resource name of the book. Format: publishers/{publisher}/books/{book} |
+
+
+
+
+
+
+<a name="aitrailblazer-service-v1-Error"></a>
+
+### Error
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| code | [int32](#int32) |  |  |
+| message | [string](#string) |  |  |
+
+
+
+
+
+
+<a name="aitrailblazer-service-v1-GetBookRequest"></a>
+
+### GetBookRequest
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| name | [string](#string) |  | The name of the book to retrieve. Format: publishers/{publisher}/books/{book} |
+
+
+
 
 
 
@@ -111,7 +160,7 @@ A shelf resource.
 <a name="aitrailblazer-service-v1-AitrailblazerService"></a>
 
 ### AitrailblazerService
-## API Overview
+
 
 | Method Name | Request Type | Response Type | Description |
 | ----------- | ------------ | ------------- | ------------|

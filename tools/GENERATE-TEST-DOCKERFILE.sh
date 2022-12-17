@@ -6,10 +6,10 @@ set -e
 
 . tools/PROTOS.sh
 # clone_common_protos
-docker run -d \
-    -p 8081:8080 \
-    --name $GCP_SVC_NAME \
-    $GCP_SVC_NAME
+# docker run -d \
+#     -p 8081:8080 \
+#     --name $GCP_SVC_NAME \
+#     $GCP_SVC_NAME
 
-# curl localhost:8081/v1/ping
+curl localhost:8081/v1/ping/
     

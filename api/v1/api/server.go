@@ -25,6 +25,17 @@ func NewHandler() Handler {
 	return handler
 }
 
+// This function wraps sending of an error in the Error format, and
+// handling the failure to marshal that.
+// func sendServiceError(ctx echo.Context, code int, message string) error {
+// 	petErr := models.Error{
+// 		Code:    int32(code),
+// 		Message: message,
+// 	}
+// 	err := ctx.JSON(code, petErr)
+// 	return err
+// }
+
 //	curl \
 //	  -X GET \
 //		localhost:8080/v1/ping

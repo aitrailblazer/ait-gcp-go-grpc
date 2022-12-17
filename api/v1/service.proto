@@ -2,23 +2,27 @@
 //
 
 syntax = "proto3";
-
+// import "google/api/annotations.proto";
+// import "google/api/client.proto";
+// import "google/protobuf/any.proto";
+// import "google/protobuf/duration.proto";
+// import "google/protobuf/empty.proto";
+// import "google/rpc/status.proto";
+import "google/protobuf/descriptor.proto";
 // import "validate/validate.proto";
 import "google/api/annotations.proto";
-import "google/longrunning/operations.proto";
-import "validate/validate.proto";
+// import "google/longrunning/operations.proto";
 
 // import "google/type/date.proto";
 // import "google/protobuf/duration.proto";
-// import "google/api/field_behavior.proto";
-// import "google/api/resource.proto";
+import "google/api/field_behavior.proto";
+import "google/api/resource.proto";
 // import "google/api/routing.proto";
 import "google/protobuf/timestamp.proto";
 
 
 // import "google/api/client.proto";
 // import "google/api/field_behavior.proto";
-// import "google/api/resource.proto";
 // import "google/api/routing.proto";
 // import "google/iam/v1/iam_policy.proto";
 // import "google/iam/v1/policy.proto";
@@ -43,91 +47,25 @@ package aitrailblazer.service.v1;
 // https://github.com/aitrailblazer/ait-gcp-go-grpc/tree/main
 option go_package = "github.com/aitrailblazer/ait-gcp-go-grpc/rpc/v1;rpc";
 
-
-// ## API Overview 
-//
-service DiskService {
+service AitrailblazerService {
   rpc SendPing(PingRequest) returns (PingResponse) {
     option (google.api.http) = {
       get: "/v1/ping"
     };
   }
-  rpc GetDisk (GetDiskRequest) returns (GetDiskResponse) {
-    option (google.api.http) = {
-      get: "/v1beta1/compute/disks/{name}"
-    };
-  };
-
-  // buf:lint:ignore RPC_REQUEST_RESPONSE_UNIQUE
-  // buf:lint:ignore RPC_RESPONSE_STANDARD_NAME
-  rpc CreateDisk (CreateDiskRequest) returns (google.longrunning.Operation) {
-    option (google.api.http) = {
-      post: "/v1beta1/compute/subprojects/{subproject}/disks"
-      body: "*"
-    };
-    option (google.longrunning.operation_info) = {
-      metadata_type: "ssnc.cloud.compute.operations.v1beta1.OperationMetadata"
-      response_type: "CreateDiskResponse"
-    };
-  };
-
-  // buf:lint:ignore RPC_REQUEST_RESPONSE_UNIQUE
-  // buf:lint:ignore RPC_RESPONSE_STANDARD_NAME
-  rpc DeleteDisk (DeleteDiskRequest) returns (google.longrunning.Operation) {
-    option (google.api.http) = {
-      delete: "/v1beta1/compute/disks/{name}"
-    };
-    option (google.longrunning.operation_info) = {
-      metadata_type: "ssnc.cloud.compute.operations.v1beta1.OperationMetadata"
-      response_type: "google.protobuf.Empty"
-    };
-  };
-
-  rpc ListDisks (ListDisksRequest) returns (ListDisksResponse) {
-    option (google.api.http) = {
-      get: "/v1beta1/compute/subprojects/{subproject}/disks"
-    };
-  };
-
-  rpc UpdateDisk (UpdateDiskRequest) returns (UpdateDiskResponse) {
-    option (google.api.http) = {
-      put: "/v1beta1/compute/disks/{name}"
-      body: "disk"
-    };
+  // rpc GetBook(GetBookRequest) returns (Book) {
+  //   option (google.api.http) = {
+  //     get: "/v1/{name=publishers/*/books/*}"
+  //   };
+  //   option (google.api.method_signature) = "name";
+  // }
+  //  Returns a specific bookstore shelf.
+   rpc GetShelf(GetShelfRequest) returns (Shelf) {
+    // Client example - returns the first shelf:
+    //   curl http://DOMAIN_NAME/v1/shelves/1
+    option (google.api.http) = { get: "/v1/shelves/{shelf}" };
   }
-
-  // buf:lint:ignore RPC_REQUEST_RESPONSE_UNIQUE
-  // buf:lint:ignore RPC_RESPONSE_STANDARD_NAME
-  rpc ResizeDisk (ResizeDiskRequest) returns (google.longrunning.Operation) {
-    option (google.api.http) = {
-      post: "/v1beta1/compute/disks/{name}/resize"
-      body: "*"
-    };
-    option (google.longrunning.operation_info) = {
-      metadata_type: "ssnc.cloud.compute.operations.v1beta1.OperationMetadata"
-      response_type: "ResizeDiskResponse"
-    };
-  };
 }
-// service AitrailblazerService {
-//   rpc SendPing(PingRequest) returns (PingResponse) {
-//     option (google.api.http) = {
-//       get: "/v1/ping"
-//     };
-//   }
-//   // rpc GetBook(GetBookRequest) returns (Book) {
-//   //   option (google.api.http) = {
-//   //     get: "/v1/{name=publishers/*/books/*}"
-//   //   };
-//   //   option (google.api.method_signature) = "name";
-//   // }
-//    // Returns a specific bookstore shelf.
-//    rpc GetShelf(GetShelfRequest) returns (Shelf) {
-//     // Client example - returns the first shelf:
-//     //   curl http://DOMAIN_NAME/v1/shelves/1
-//     option (google.api.http) = { get: "/v1/shelves/{shelf}" };
-//   }
-// }
 
 message PingRequest {
   string message = 1;
@@ -143,150 +81,48 @@ message Pong {
 message PingResponse {
   Pong pong = 1;
 }
-enum DiskStatus {
-  DISK_STATUS_UNSPECIFIED = 0;
-  DISK_STATUS_CREATING = 1;
-  DISK_STATUS_RESTORING = 2;
-  DISK_STATUS_FAILED = 3;
-  DISK_STATUS_READY = 4;
-  DISK_STATUS_DELETING = 5;
-}
-message Disk {
-  // Output only. The name of the disk as generated by the service.
-  string name = 1;
 
-  string description = 2;
-
-  // The size of the disk in GB. Must be between 1 and 62000 (62 TB).
-  uint64 size_gb = 3;
-
-  // Output only. The status of the disk.
-  DiskStatus status = 4;
-
-  // Output only. ID of the instance the disk is attached to.
-  string instance = 5;
-
-  // Output only.  The Volume ID (sometimes called UID or Serial Number) of the
-  // disk.
-  string volume_id = 6;
-
-  // Output only. Creation timestamp in RFC3339 format.
-  google.protobuf.Timestamp create_time = 7;
-
-  // Output only. Last attach timestamp in RFC3339 format.
-  google.protobuf.Timestamp last_attach_time = 8;
-
-  // Output only. Last detach timestamp in RFC3339 format.
-  google.protobuf.Timestamp last_detach_time = 9;
-
-  // Output only. Modification timestamp in RFC3339 format.
-  google.protobuf.Timestamp last_modified_time = 10;
-}
-
-message CreateDiskRequest {
-  // The subproject id to which the disk belongs.
-  string subproject = 1 [(validate.rules).string.min_len = 1];
-
-  // The specification of the disk to be created.
-  Disk disk = 2 [(validate.rules).message.required = true];
-}
-
-message CreateDiskResponse {
-  // The subproject id to which the disk belongs.
-  string subproject = 1 [(validate.rules).string.min_len = 1];
-
-  // The specification of the disk to be created.
-  Disk disk = 2 [(validate.rules).message.required = true];
-}
-// GetDiskRequest
-message GetDiskRequest {
-  // The name of the disk to be retrieved.
-  string name = 1 [(validate.rules).string.min_len = 1];
-}
-
-// GetDiskResponse
-message GetDiskResponse {
-  // The specification of the requested disk.
-  Disk disk = 1 [(validate.rules).message.required = true];
-
-  // The subproject id to which the disk belongs.
-  string subproject = 2;
-}
-
-message UpdateDiskRequest {
-  // The specification of the resized disk.
-  Disk disk = 1 [(validate.rules).message.required = true];
-}
-
-message UpdateDiskResponse {
-  // The specification of the resized disk.
-  Disk disk = 1 [(validate.rules).message.required = true];
-}
-
-message DeleteDiskRequest {
-  // The disk to be Deleted.
-  Disk disk = 1 [(validate.rules).message.required = true];
-}
-
-message ListDisksRequest {
-  // The subproject ids to which the disks belong.
-  repeated string subprojects = 1 [(validate.rules).repeated = {unique: true, min_items: 1, items: {string: {min_len: 1}}}];
-}
-
-message ListDisksResponse {
-  // The set of disks found.
-  repeated Disk disks = 1;
-}
-
-message ResizeDiskRequest {
-  // The name of the disk to be resized.
-  string name = 1 [(validate.rules).string.min_len = 1];
-
-  // Size in GB of the disk. Must be between 1 and 62000 (62 TB).
-  uint64 size_gb = 2 [(validate.rules).uint64 = {gte:1, lte:62000}];
-}
-
-// Used in the Operation as a response.
-message ResizeDiskResponse {
-  // The resized disk.
-  Disk disk = 1 [(validate.rules).message.required = true];
+message Error {
+  int32 code = 1;
+  string message = 2;
 }
 
 // Request message for GetShelf method.
-// message GetShelfRequest {
-//   // The ID of the shelf resource to retrieve.
-//   int64 shelf = 1;
-// }
+message GetShelfRequest {
+  // The ID of the shelf resource to retrieve.
+  int64 shelf = 1;
+}
 // A shelf resource.
-// message Shelf {
-//   // A unique shelf id.
-//   int64 id = 1;
-//   // A theme of the shelf (fiction, poetry, etc).
-//   string theme = 2;
-// }
+message Shelf {
+  // A unique shelf id.
+  int64 id = 1;
+  // A theme of the shelf (fiction, poetry, etc).
+  string theme = 2;
+}
 // A representation of a book in the library.
-// message Book {
-//   option (google.api.resource) = {
-//     type: "library.googleapis.com/Book"
-//     pattern: "publishers/{publisher}/books/{book}"
-//   };
+message Book {
+  option (google.api.resource) = {
+    type: "library.googleapis.com/Book"
+    pattern: "publishers/{publisher}/books/{book}"
+  };
 
-//   // The resource name of the book.
-//   // Format: publishers/{publisher}/books/{book}
-//   string name = 1;
+  // The resource name of the book.
+  // Format: publishers/{publisher}/books/{book}
+  string name = 1;
 
-//   // Other fields...
-// }
+  // Other fields...
+}
 
-// message GetBookRequest {
-//   // The name of the book to retrieve.
-//   // Format: publishers/{publisher}/books/{book}
-//   string name = 1 [
-//     (google.api.field_behavior) = REQUIRED,
-//     (google.api.resource_reference) = {
-//       type: "library.googleapis.com/Book"
-//     }];
-// }
+message GetBookRequest {
+  // The name of the book to retrieve.
+  // Format: publishers/{publisher}/books/{book}
+  string name = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.api.resource_reference) = {
+      type: "library.googleapis.com/Book"
+    }];
+}
+
 // The greeting service definition.
 // service AitrailblazerService {
 //   // Sends a greeting

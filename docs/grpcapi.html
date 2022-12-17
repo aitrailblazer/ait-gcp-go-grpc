@@ -179,6 +179,18 @@
             <ul>
               
                 <li>
+                  <a href="#aitrailblazer.service.v1.Book"><span class="badge">M</span>Book</a>
+                </li>
+              
+                <li>
+                  <a href="#aitrailblazer.service.v1.Error"><span class="badge">M</span>Error</a>
+                </li>
+              
+                <li>
+                  <a href="#aitrailblazer.service.v1.GetBookRequest"><span class="badge">M</span>GetBookRequest</a>
+                </li>
+              
+                <li>
                   <a href="#aitrailblazer.service.v1.GetShelfRequest"><span class="badge">M</span>GetShelfRequest</a>
                 </li>
               
@@ -219,6 +231,87 @@
       </div>
       <p></p>
 
+      
+        <h3 id="aitrailblazer.service.v1.Book">Book</h3>
+        <p>A representation of a book in the library.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>name</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>The resource name of the book.
+Format: publishers/{publisher}/books/{book} </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="aitrailblazer.service.v1.Error">Error</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>code</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>message</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="aitrailblazer.service.v1.GetBookRequest">GetBookRequest</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>name</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>The name of the book to retrieve.
+Format: publishers/{publisher}/books/{book} </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
       
         <h3 id="aitrailblazer.service.v1.GetShelfRequest">GetShelfRequest</h3>
         <p>Request message for GetShelf method.</p>
@@ -375,7 +468,7 @@
 
       
         <h3 id="aitrailblazer.service.v1.AitrailblazerService">AitrailblazerService</h3>
-        <p>## API Overview</p>
+        <p></p>
         <table class="enum-table">
           <thead>
             <tr><td>Method Name</td><td>Request Type</td><td>Response Type</td><td>Description</td></tr>
@@ -399,7 +492,7 @@
   };
   option (google.api.method_signature) = &#34;name&#34;;
 }
-Returns a specific bookstore shelf.</p></td>
+ Returns a specific bookstore shelf.</p></td>
               </tr>
             
           </tbody>

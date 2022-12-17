@@ -4,11 +4,7 @@
 openapi: 3.0.3
 info:
     title: AitrailblazerService API
-    description: '## API Overview'
     version: 0.0.1
-servers:
-  # - url: "http://localhost:80"
-  - url: "https://dcapttws-v1-q36jfaooja-uc.a.run.app"
 paths:
     /v1/ping:
         get:
@@ -44,7 +40,7 @@ paths:
                    };
                    option (google.api.method_signature) = "name";
                  }
-                 Returns a specific bookstore shelf.
+                  Returns a specific bookstore shelf.
             operationId: AitrailblazerService_GetShelf
             parameters:
                 - name: shelf

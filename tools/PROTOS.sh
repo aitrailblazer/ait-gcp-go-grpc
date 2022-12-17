@@ -2,14 +2,16 @@
 #
 # Copyright 2023 AITrailblazer, LLC. All Rights Reserved.
 PROJECT_ID=ait-gcp-go-grpc
-GCP_SVC_NAME=$PROJECT_ID"_svc"
-GCP_PROJECT=smartapi-295619
+GCP_PROJECT=smartapi-3696
+GCP_SVC_NAME=$GCP_PROJECT"-svc"
 
 AIT_PROTOS=(
 	api/v1/service.proto
 )
 
 COMMON_PROTOS_PATH='third_party/api-common-protos'
+COMMON_PROTOS_GEN_VALIDATE_PATH='third_party/protoc-gen-validate'
+
 GOOGLE_APIS_PATH='google'
 
 # https://github.com/googleapis/googleapis.git
@@ -25,6 +27,13 @@ function clone_common_protos {
 		git clone https://github.com/googleapis/api-common-protos $COMMON_PROTOS_PATH
 	fi
 }
+function clone_validate_protos {
+	if [ ! -d $COMMON_PROTOS_GEN_VALIDATE_PATH ]
+	then
+		git clone https://github.com/bufbuild/protoc-gen-validate.git $COMMON_PROTOS_GEN_VALIDATE_PATH
+	fi
+}
+
 
 # Require a specific version of protoc for generating files.
 # This stabilizes the generated file output, which includes the protoc version.
