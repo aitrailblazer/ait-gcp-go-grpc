@@ -36,9 +36,8 @@ func NewHandler() Handler {
 // 	return err
 // }
 
-//	curl \
-//	  -X GET \
-//		localhost:8080/v1/ping
+// curl localhost:8080/v1/ping
+// curl localhost:8080/v1/ping?message=test
 func (h *Handler) AitrailblazerServiceSendPing(ctx echo.Context, params models.AitrailblazerServiceSendPingParams) error {
 
 	var i int32 = 369
@@ -57,7 +56,21 @@ func (h *Handler) AitrailblazerServiceSendPing(ctx echo.Context, params models.A
 		Ver:        &v,
 	}
 	return ctx.JSON(http.StatusOK, pong)
+}
 
+// curl localhost:8080/v1/ping
+func (h *Handler) AitrailblazerServiceEcho(ctx echo.Context, message string, params models.AitrailblazerServiceEchoParams) error {
+
+	fmt.Println("AitrailblazerServiceEcho: message ", message)
+	paramsValue := params.Value
+
+	fmt.Println("AitrailblazerServiceEcho: paramsValue ", paramsValue)
+
+	message = message + " -> Echo from AitrailblazerServiceEcho"
+	pong := models.EchoMessage{
+		Value: &message,
+	}
+	return ctx.JSON(http.StatusOK, pong)
 }
 
 // (GET /v1/shelves/{shelf})

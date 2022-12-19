@@ -32,8 +32,6 @@ import "google/protobuf/timestamp.proto";
 // import "google/protobuf/timestamp.proto";
 // import "google/type/date.proto";
 
-
-
 package aitrailblazer.service.v1;
 
 // import "google/api/field_behavior.proto";
@@ -45,14 +43,21 @@ package aitrailblazer.service.v1;
 // option java_outer_classname = "AdminModelsProto";
 
 // https://github.com/aitrailblazer/ait-gcp-go-grpc/tree/main
-option go_package = "github.com/aitrailblazer/ait-gcp-go-grpc/rpc/v1;rpc";
+option go_package = "github.com/aitrailblazer/ait-gcp-go-grpc/rpc/v1/pb";
 
 service AitrailblazerService {
+  // /v1/ping or with optional message as query /v1/ping?message=test
   rpc SendPing(PingRequest) returns (PingResponse) {
     option (google.api.http) = {
       get: "/v1/ping"
     };
   }
+  rpc Echo(EchoMessage) returns (EchoMessage) {
+    option (google.api.http) = {
+      get: "/echo/{message}"
+    };
+  }
+
   // rpc GetBook(GetBookRequest) returns (Book) {
   //   option (google.api.http) = {
   //     get: "/v1/{name=publishers/*/books/*}"
@@ -63,7 +68,9 @@ service AitrailblazerService {
    rpc GetShelf(GetShelfRequest) returns (Shelf) {
     // Client example - returns the first shelf:
     //   curl http://DOMAIN_NAME/v1/shelves/1
-    option (google.api.http) = { get: "/v1/shelves/{shelf}" };
+    option (google.api.http) = { 
+      get: "/v1/shelves/{shelf}" 
+    };
   }
 }
 
@@ -81,7 +88,9 @@ message Pong {
 message PingResponse {
   Pong pong = 1;
 }
-
+message EchoMessage {
+  string value = 1;
+}
 message Error {
   int32 code = 1;
   string message = 2;

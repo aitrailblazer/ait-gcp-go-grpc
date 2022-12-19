@@ -4,7 +4,7 @@
 // - protoc             v3.21.9
 // source: api/v1/service.proto
 
-package rpc
+package pb
 
 import (
 	context "context"
@@ -22,7 +22,9 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type AitrailblazerServiceClient interface {
+	// /v1/ping or with optional message as query /v1/ping?message=test
 	SendPing(ctx context.Context, in *PingRequest, opts ...grpc.CallOption) (*PingResponse, error)
+	Echo(ctx context.Context, in *EchoMessage, opts ...grpc.CallOption) (*EchoMessage, error)
 	//	rpc GetBook(GetBookRequest) returns (Book) {
 	//	  option (google.api.http) = {
 	//	    get: "/v1/{name=publishers/*/books/*}"
@@ -30,7 +32,7 @@ type AitrailblazerServiceClient interface {
 	//	  option (google.api.method_signature) = "name";
 	//	}
 	//
-	// Returns a specific bookstore shelf.
+	//	Returns a specific bookstore shelf.
 	GetShelf(ctx context.Context, in *GetShelfRequest, opts ...grpc.CallOption) (*Shelf, error)
 }
 
@@ -51,6 +53,15 @@ func (c *aitrailblazerServiceClient) SendPing(ctx context.Context, in *PingReque
 	return out, nil
 }
 
+func (c *aitrailblazerServiceClient) Echo(ctx context.Context, in *EchoMessage, opts ...grpc.CallOption) (*EchoMessage, error) {
+	out := new(EchoMessage)
+	err := c.cc.Invoke(ctx, "/aitrailblazer.service.v1.AitrailblazerService/Echo", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *aitrailblazerServiceClient) GetShelf(ctx context.Context, in *GetShelfRequest, opts ...grpc.CallOption) (*Shelf, error) {
 	out := new(Shelf)
 	err := c.cc.Invoke(ctx, "/aitrailblazer.service.v1.AitrailblazerService/GetShelf", in, out, opts...)
@@ -64,7 +75,9 @@ func (c *aitrailblazerServiceClient) GetShelf(ctx context.Context, in *GetShelfR
 // All implementations must embed UnimplementedAitrailblazerServiceServer
 // for forward compatibility
 type AitrailblazerServiceServer interface {
+	// /v1/ping or with optional message as query /v1/ping?message=test
 	SendPing(context.Context, *PingRequest) (*PingResponse, error)
+	Echo(context.Context, *EchoMessage) (*EchoMessage, error)
 	//	rpc GetBook(GetBookRequest) returns (Book) {
 	//	  option (google.api.http) = {
 	//	    get: "/v1/{name=publishers/*/books/*}"
@@ -72,7 +85,7 @@ type AitrailblazerServiceServer interface {
 	//	  option (google.api.method_signature) = "name";
 	//	}
 	//
-	// Returns a specific bookstore shelf.
+	//	Returns a specific bookstore shelf.
 	GetShelf(context.Context, *GetShelfRequest) (*Shelf, error)
 	mustEmbedUnimplementedAitrailblazerServiceServer()
 }
@@ -83,6 +96,9 @@ type UnimplementedAitrailblazerServiceServer struct {
 
 func (UnimplementedAitrailblazerServiceServer) SendPing(context.Context, *PingRequest) (*PingResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SendPing not implemented")
+}
+func (UnimplementedAitrailblazerServiceServer) Echo(context.Context, *EchoMessage) (*EchoMessage, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Echo not implemented")
 }
 func (UnimplementedAitrailblazerServiceServer) GetShelf(context.Context, *GetShelfRequest) (*Shelf, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetShelf not implemented")
@@ -118,6 +134,24 @@ func _AitrailblazerService_SendPing_Handler(srv interface{}, ctx context.Context
 	return interceptor(ctx, in, info, handler)
 }
 
+func _AitrailblazerService_Echo_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(EchoMessage)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AitrailblazerServiceServer).Echo(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/aitrailblazer.service.v1.AitrailblazerService/Echo",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AitrailblazerServiceServer).Echo(ctx, req.(*EchoMessage))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _AitrailblazerService_GetShelf_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(GetShelfRequest)
 	if err := dec(in); err != nil {
@@ -146,6 +180,10 @@ var AitrailblazerService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "SendPing",
 			Handler:    _AitrailblazerService_SendPing_Handler,
+		},
+		{
+			MethodName: "Echo",
+			Handler:    _AitrailblazerService_Echo_Handler,
 		},
 		{
 			MethodName: "GetShelf",

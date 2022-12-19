@@ -1,8 +1,4 @@
-/*
- *
- */
-
-// Package main implements a client for Greeter service.
+// Package main implements a client for Ping service.
 package main
 
 import (
@@ -11,7 +7,7 @@ import (
 	"log"
 	"time"
 
-	pb "github.com/aitrailblazer/ait-gcp-go-grpc/rpc/v1/pb"
+	"github.com/aitrailblazer/ait-gcp-go-grpc/rpc/v1/pb"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
 )

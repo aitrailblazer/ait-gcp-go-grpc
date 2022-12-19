@@ -48,11 +48,10 @@ go mod vendor #-v
 cd ..
 cd ..
 CGO_ENABLED=0 go build -v cmd/srv_grpc/*.go 
-# # go run cmd/srv_grpc/main.go 
-# # go run cmd/srv_grpc/main.go 
-# # 2022/12/13 11:19:45 server listening at [::]:50051
-# # 2022/12/13 11:20:04 AitrailblazerServiceSend VERSION 1.02 
-# # 2022/12/13 11:20:04 Received message: world
+# go run cmd/srv_grpc/main.go 
+# 2022/12/13 11:19:45 server listening at [::]:50051
+# 2022/12/13 11:20:04 AitrailblazerServiceSend VERSION 1.02 
+# 2022/12/13 11:20:04 Received message: world
 
 echo "==> Compile Go cli_grpc:"${PROJECT_ID}
 cd cmd
@@ -70,9 +69,8 @@ golangci-lint run ./...
 cd ..
 cd ..
 CGO_ENABLED=0 go build -v cmd/cli_grpc/*.go 
-# # go run cmd/cli_grpc/main.go 
-# # go run cmd/cli_grpc/main.go 
-# # 2022/12/13 11:20:04 Pong: index:369  message:"world"  ver:"1.02"  received_on:{seconds:1670959204  nanos:163510000}
+# go run cmd/cli_grpc/main.go 
+# 2022/12/13 11:20:04 Pong: index:369  message:"world"  ver:"1.02"  received_on:{seconds:1670959204  nanos:163510000}
 
 
 # echo "==> Compile Go srv:"${PROJECT_ID}

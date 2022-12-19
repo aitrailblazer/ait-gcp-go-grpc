@@ -6,10 +6,39 @@ info:
     title: AitrailblazerService API
     version: 0.0.1
 paths:
+    /echo/{message}:
+        get:
+            tags:
+                - AitrailblazerService
+            operationId: AitrailblazerService_Echo
+            parameters:
+                - name: message
+                  in: path
+                  required: true
+                  schema:
+                    type: string
+                - name: value
+                  in: query
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/EchoMessage'
+                default:
+                    description: Default error response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Status'
     /v1/ping:
         get:
             tags:
                 - AitrailblazerService
+            description: /v1/ping or with optional message as query /v1/ping?message=test
             operationId: AitrailblazerService_SendPing
             parameters:
                 - name: message
@@ -65,6 +94,11 @@ paths:
                                 $ref: '#/components/schemas/Status'
 components:
     schemas:
+        EchoMessage:
+            type: object
+            properties:
+                value:
+                    type: string
         GoogleProtobufAny:
             type: object
             properties:

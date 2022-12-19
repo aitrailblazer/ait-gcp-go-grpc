@@ -183,6 +183,10 @@
                 </li>
               
                 <li>
+                  <a href="#aitrailblazer.service.v1.EchoMessage"><span class="badge">M</span>EchoMessage</a>
+                </li>
+              
+                <li>
                   <a href="#aitrailblazer.service.v1.Error"><span class="badge">M</span>Error</a>
                 </li>
               
@@ -248,6 +252,30 @@
                   <td></td>
                   <td><p>The resource name of the book.
 Format: publishers/{publisher}/books/{book} </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="aitrailblazer.service.v1.EchoMessage">EchoMessage</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>value</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
                 </tr>
               
             </tbody>
@@ -479,6 +507,13 @@ Format: publishers/{publisher}/books/{book} </p></td>
                 <td>SendPing</td>
                 <td><a href="#aitrailblazer.service.v1.PingRequest">PingRequest</a></td>
                 <td><a href="#aitrailblazer.service.v1.PingResponse">PingResponse</a></td>
+                <td><p>v1/ping or with optional message as query /v1/ping?message=test</p></td>
+              </tr>
+            
+              <tr>
+                <td>Echo</td>
+                <td><a href="#aitrailblazer.service.v1.EchoMessage">EchoMessage</a></td>
+                <td><a href="#aitrailblazer.service.v1.EchoMessage">EchoMessage</a></td>
                 <td><p></p></td>
               </tr>
             
@@ -519,6 +554,16 @@ Format: publishers/{publisher}/books/{book} </p></td>
                 <td>SendPing</td>
                 <td>GET</td>
                 <td>/v1/ping</td>
+                <td></td>
+              </tr>
+              
+            
+              
+              
+              <tr>
+                <td>Echo</td>
+                <td>GET</td>
+                <td>/echo/{message}</td>
                 <td></td>
               </tr>
               

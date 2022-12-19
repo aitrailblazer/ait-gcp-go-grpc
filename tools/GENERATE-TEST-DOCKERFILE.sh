@@ -11,5 +11,7 @@ set -e
 #     --name $GCP_SVC_NAME \
 #     $GCP_SVC_NAME
 
-curl localhost:8081/v1/ping/
+curl localhost:8081
+
+
     

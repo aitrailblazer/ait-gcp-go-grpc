@@ -9,6 +9,11 @@ import (
 	"time"
 )
 
+// EchoMessage defines model for EchoMessage.
+type EchoMessage struct {
+	Value *string `json:"value,omitempty"`
+}
+
 // GoogleProtobufAny Contains an arbitrary serialized message along with a @type that describes the type of the serialized message.
 type GoogleProtobufAny struct {
 	// Type The type of the serialized message.
@@ -48,6 +53,11 @@ type Status struct {
 
 	// Message A developer-facing error message, which should be in English. Any user-facing error message should be localized and sent in the [google.rpc.Status.details][google.rpc.Status.details] field, or localized by the client.
 	Message *string `json:"message,omitempty"`
+}
+
+// AitrailblazerServiceEchoParams defines parameters for AitrailblazerServiceEcho.
+type AitrailblazerServiceEchoParams struct {
+	Value *string `form:"value,omitempty" json:"value,omitempty"`
 }
 
 // AitrailblazerServiceSendPingParams defines parameters for AitrailblazerServiceSendPing.

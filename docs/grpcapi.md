@@ -5,6 +5,7 @@
 
 - [api/v1/service.proto](#api_v1_service-proto)
     - [Book](#aitrailblazer-service-v1-Book)
+    - [EchoMessage](#aitrailblazer-service-v1-EchoMessage)
     - [Error](#aitrailblazer-service-v1-Error)
     - [GetBookRequest](#aitrailblazer-service-v1-GetBookRequest)
     - [GetShelfRequest](#aitrailblazer-service-v1-GetShelfRequest)
@@ -35,6 +36,21 @@ A representation of a book in the library.
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
 | name | [string](#string) |  | The resource name of the book. Format: publishers/{publisher}/books/{book} |
+
+
+
+
+
+
+<a name="aitrailblazer-service-v1-EchoMessage"></a>
+
+### EchoMessage
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| value | [string](#string) |  |  |
 
 
 
@@ -164,7 +180,8 @@ A shelf resource.
 
 | Method Name | Request Type | Response Type | Description |
 | ----------- | ------------ | ------------- | ------------|
-| SendPing | [PingRequest](#aitrailblazer-service-v1-PingRequest) | [PingResponse](#aitrailblazer-service-v1-PingResponse) |  |
+| SendPing | [PingRequest](#aitrailblazer-service-v1-PingRequest) | [PingResponse](#aitrailblazer-service-v1-PingResponse) | v1/ping or with optional message as query /v1/ping?message=test |
+| Echo | [EchoMessage](#aitrailblazer-service-v1-EchoMessage) | [EchoMessage](#aitrailblazer-service-v1-EchoMessage) |  |
 | GetShelf | [GetShelfRequest](#aitrailblazer-service-v1-GetShelfRequest) | [Shelf](#aitrailblazer-service-v1-Shelf) | rpc GetBook(GetBookRequest) returns (Book) { option (google.api.http) = { get: &#34;/v1/{name=publishers/*/books/*}&#34; }; option (google.api.method_signature) = &#34;name&#34;; } Returns a specific bookstore shelf. |
 
  

@@ -8,7 +8,7 @@ import (
 	"log"
 	"net"
 
-	pb "github.com/aitrailblazer/ait-gcp-go-grpc/rpc/v1/pb"
+	"github.com/aitrailblazer/ait-gcp-go-grpc/rpc/v1/pb"
 	"google.golang.org/grpc"
 	"google.golang.org/protobuf/types/known/timestamppb"
 )
@@ -23,12 +23,6 @@ var (
 type server struct {
 	pb.UnimplementedAitrailblazerServiceServer
 }
-
-// SayHello implements helloworld.GreeterServer
-// func (s *server) SayHello(ctx context.Context, in *pb.HelloRequest) (*pb.HelloReply, error) {
-// 	log.Printf("Received: %v", in.GetName())
-// 	return &pb.HelloReply{Message: "Hello " + in.GetName()}, nil
-// }
 
 // SendPing
 func (s *server) SendPing(ctx context.Context, in *pb.PingRequest) (*pb.PingResponse, error) {
