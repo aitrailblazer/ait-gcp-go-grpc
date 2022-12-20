@@ -82,9 +82,13 @@ func (h *Handler) AitrailblazerServiceSendPing(ctx echo.Context, params models.A
 	log.Printf("AitrailblazerServiceSendPing VERSION %s ", VERSION) // <3>
 
 	message := params.Message
-	fmt.Println("AitrailblazerServiceSendPing: message ", *message)
-	var p string = "path parameter=" + *message + " Ping from AitrailblazerServiceSendPing"
-
+	var p string
+	if params.Message != nil {
+		fmt.Println("AitrailblazerServiceSendPing: message ", *message)
+		p = "path parameter=" + *message + " Ping from AitrailblazerServiceSendPing"
+	} else {
+		p = " Ping from AitrailblazerServiceSendPing"
+	}
 	var v string = VERSION
 	pong := models.Pong{
 		Index:      &i,
