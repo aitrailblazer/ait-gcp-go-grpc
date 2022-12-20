@@ -42,35 +42,42 @@ func (h *Handler) AitrailblazerServiceSendPing(ctx echo.Context, params models.A
 
 	var i int32 = 369
 	msec := time.Now()
-	log.Printf("AitrailblazerServiceSend VERSION %s ", VERSION) // <3>
+	log.Printf("AitrailblazerServiceSendPing VERSION %s ", VERSION) // <3>
 
-	fmt.Println("AitrailblazerServiceSend: params ", params)
-	// message := "pongTest"
 	message := params.Message
-	fmt.Println("AitrailblazerServiceSend: message ", message)
+	fmt.Println("AitrailblazerServiceSendPing: message ", *message)
+	var p string = "path parameter=" + *message + " Ping from AitrailblazerServiceSendPing"
+
 	var v string = VERSION
 	pong := models.Pong{
 		Index:      &i,
-		Message:    message,
+		Message:    &p,
 		ReceivedOn: &msec,
 		Ver:        &v,
 	}
 	return ctx.JSON(http.StatusOK, pong)
 }
 
-// curl localhost:8080/v1/ping
+// (GET /echo/:message)
+// curl localhost:8080/echo/test
+// curl localhost:8080/echo/test\?value\=test1234
 func (h *Handler) AitrailblazerServiceEcho(ctx echo.Context, message string, params models.AitrailblazerServiceEchoParams) error {
 
-	fmt.Println("AitrailblazerServiceEcho: message ", message)
-	paramsValue := params.Value
+	// ------------- Path parameter "message" -------------
+	fmt.Println("AitrailblazerServiceEcho: Path parameter ", message)
+	// paramsValue := params.Value
 
-	fmt.Println("AitrailblazerServiceEcho: paramsValue ", paramsValue)
+	if params.Value != nil {
+		fmt.Println("AitrailblazerServiceEcho: params.Value ", *params.Value)
+		message = "path parameter=" + message + " query=" + *params.Value + " Echo from AitrailblazerServiceEcho"
+	} else {
+		message = "path parameter=" + message + " Echo from AitrailblazerServiceEcho"
+	}
 
-	message = message + " -> Echo from AitrailblazerServiceEcho"
-	pong := models.EchoMessage{
+	echoMessage := models.EchoMessage{
 		Value: &message,
 	}
-	return ctx.JSON(http.StatusOK, pong)
+	return ctx.JSON(http.StatusOK, echoMessage)
 }
 
 // (GET /v1/shelves/{shelf})
