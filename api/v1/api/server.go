@@ -26,18 +26,18 @@ func sendPetStoreError(ctx echo.Context, code int, message string) error {
 	return err
 }
 
-type PetStore struct {
-	Lock   sync.Mutex
-	Pets   map[int64]models.Pet
-	NextId int64
-}
+// type PetStore struct {
+// 	Lock   sync.Mutex
+// 	Pets   map[int64]models.Pet
+// 	NextId int64
+// }
 
-func NewPetStore() *PetStore {
-	return &PetStore{
-		Pets:   make(map[int64]models.Pet),
-		NextId: 1000,
-	}
-}
+// func NewPetStore() *PetStore {
+// 	return &PetStore{
+// 		Pets:   make(map[int64]models.Pet),
+// 		NextId: 1000,
+// 	}
+// }
 
 // type Handler struct {}
 type Handler struct {
