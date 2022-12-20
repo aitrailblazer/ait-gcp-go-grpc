@@ -25,15 +25,47 @@ type AitrailblazerServiceClient interface {
 	// /v1/ping or with optional message as query /v1/ping?message=test
 	SendPing(ctx context.Context, in *PingRequest, opts ...grpc.CallOption) (*PingResponse, error)
 	Echo(ctx context.Context, in *EchoMessage, opts ...grpc.CallOption) (*EchoMessage, error)
-	//	rpc GetBook(GetBookRequest) returns (Book) {
-	//	  option (google.api.http) = {
-	//	    get: "/v1/{name=publishers/*/books/*}"
-	//	  };
-	//	  option (google.api.method_signature) = "name";
-	//	}
+	// The FindPets RPC (Remote Procedure Call) allows
+	// a client to search for pets based on certain
+	// parameters. The parameters include tags
+	// (such as breed, color, etc.) and a limit on the
+	// number of pets to be returned. The RPC uses a
+	// GET HTTP request to the "/pets" endpoint to
+	// retrieve the desired pets. The result of the
+	// RPC is a Pet message, which contains information
+	// about the found pets.
+	FindPets(ctx context.Context, in *FindPetsParameters, opts ...grpc.CallOption) (*Pet, error)
+	// The AddPet RPC allows for the addition of a new
+	// pet to the system. It takes in AddPetParameters
+	// as input, which includes a NewPet message that
+	// contains the name and tag of the new pet.
+	// The RPC returns a Pet message, which likely
+	// includes information about the newly added pet.
+	// The RPC can be accessed via an HTTP POST request
+	// to the "/pets" endpoint, with the new pet
+	// information being sent in the body of the request.
+	AddPet(ctx context.Context, in *AddPetParameters, opts ...grpc.CallOption) (*Pet, error)
+	// This is a function signature for a Remote Procedure Call (RPC) in the Google API specification language. The function is called "FindPetByID" and it takes in a single input parameter called "FindPetByIDParameters". The function returns a single output of type "Pet".
 	//
-	//	Returns a specific bookstore shelf.
-	GetShelf(ctx context.Context, in *GetShelfRequest, opts ...grpc.CallOption) (*Shelf, error)
+	// The "option" statement specifies additional options for the function, in this case specifying that the function can be called using an HTTP GET request to the URL "/pets/{id}", where "{id}" is a placeholder for a specific pet ID.
+	//
+	// This function allows a client to retrieve information about a specific pet by providing the pet's ID as a parameter in the HTTP request.
+	//
+	// Returns a pet by ID
+	FindPetByID(ctx context.Context, in *FindPetByIDParameters, opts ...grpc.CallOption) (*Pet, error)
+	// The DeletePet RPC (Remote Procedure Call) is used
+	// to delete a pet from a database. It takes in a
+	//
+	//	DeletePetParameters message as input, which
+	//
+	// contains the ID of the pet to be deleted.
+	// The RPC returns an Error message, which includes
+	// a code and a message describing any errors that
+	// may have occurred during the delete operation.
+	// The RPC uses the HTTP DELETE method to delete
+	// the pet from the database, with the ID of the
+	// pet being specified in the URL as a path parameter.
+	DeletePet(ctx context.Context, in *DeletePetParameters, opts ...grpc.CallOption) (*Error, error)
 }
 
 type aitrailblazerServiceClient struct {
@@ -62,9 +94,36 @@ func (c *aitrailblazerServiceClient) Echo(ctx context.Context, in *EchoMessage, 
 	return out, nil
 }
 
-func (c *aitrailblazerServiceClient) GetShelf(ctx context.Context, in *GetShelfRequest, opts ...grpc.CallOption) (*Shelf, error) {
-	out := new(Shelf)
-	err := c.cc.Invoke(ctx, "/aitrailblazer.service.v1.AitrailblazerService/GetShelf", in, out, opts...)
+func (c *aitrailblazerServiceClient) FindPets(ctx context.Context, in *FindPetsParameters, opts ...grpc.CallOption) (*Pet, error) {
+	out := new(Pet)
+	err := c.cc.Invoke(ctx, "/aitrailblazer.service.v1.AitrailblazerService/FindPets", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *aitrailblazerServiceClient) AddPet(ctx context.Context, in *AddPetParameters, opts ...grpc.CallOption) (*Pet, error) {
+	out := new(Pet)
+	err := c.cc.Invoke(ctx, "/aitrailblazer.service.v1.AitrailblazerService/AddPet", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *aitrailblazerServiceClient) FindPetByID(ctx context.Context, in *FindPetByIDParameters, opts ...grpc.CallOption) (*Pet, error) {
+	out := new(Pet)
+	err := c.cc.Invoke(ctx, "/aitrailblazer.service.v1.AitrailblazerService/FindPetByID", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *aitrailblazerServiceClient) DeletePet(ctx context.Context, in *DeletePetParameters, opts ...grpc.CallOption) (*Error, error) {
+	out := new(Error)
+	err := c.cc.Invoke(ctx, "/aitrailblazer.service.v1.AitrailblazerService/DeletePet", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -78,15 +137,47 @@ type AitrailblazerServiceServer interface {
 	// /v1/ping or with optional message as query /v1/ping?message=test
 	SendPing(context.Context, *PingRequest) (*PingResponse, error)
 	Echo(context.Context, *EchoMessage) (*EchoMessage, error)
-	//	rpc GetBook(GetBookRequest) returns (Book) {
-	//	  option (google.api.http) = {
-	//	    get: "/v1/{name=publishers/*/books/*}"
-	//	  };
-	//	  option (google.api.method_signature) = "name";
-	//	}
+	// The FindPets RPC (Remote Procedure Call) allows
+	// a client to search for pets based on certain
+	// parameters. The parameters include tags
+	// (such as breed, color, etc.) and a limit on the
+	// number of pets to be returned. The RPC uses a
+	// GET HTTP request to the "/pets" endpoint to
+	// retrieve the desired pets. The result of the
+	// RPC is a Pet message, which contains information
+	// about the found pets.
+	FindPets(context.Context, *FindPetsParameters) (*Pet, error)
+	// The AddPet RPC allows for the addition of a new
+	// pet to the system. It takes in AddPetParameters
+	// as input, which includes a NewPet message that
+	// contains the name and tag of the new pet.
+	// The RPC returns a Pet message, which likely
+	// includes information about the newly added pet.
+	// The RPC can be accessed via an HTTP POST request
+	// to the "/pets" endpoint, with the new pet
+	// information being sent in the body of the request.
+	AddPet(context.Context, *AddPetParameters) (*Pet, error)
+	// This is a function signature for a Remote Procedure Call (RPC) in the Google API specification language. The function is called "FindPetByID" and it takes in a single input parameter called "FindPetByIDParameters". The function returns a single output of type "Pet".
 	//
-	//	Returns a specific bookstore shelf.
-	GetShelf(context.Context, *GetShelfRequest) (*Shelf, error)
+	// The "option" statement specifies additional options for the function, in this case specifying that the function can be called using an HTTP GET request to the URL "/pets/{id}", where "{id}" is a placeholder for a specific pet ID.
+	//
+	// This function allows a client to retrieve information about a specific pet by providing the pet's ID as a parameter in the HTTP request.
+	//
+	// Returns a pet by ID
+	FindPetByID(context.Context, *FindPetByIDParameters) (*Pet, error)
+	// The DeletePet RPC (Remote Procedure Call) is used
+	// to delete a pet from a database. It takes in a
+	//
+	//	DeletePetParameters message as input, which
+	//
+	// contains the ID of the pet to be deleted.
+	// The RPC returns an Error message, which includes
+	// a code and a message describing any errors that
+	// may have occurred during the delete operation.
+	// The RPC uses the HTTP DELETE method to delete
+	// the pet from the database, with the ID of the
+	// pet being specified in the URL as a path parameter.
+	DeletePet(context.Context, *DeletePetParameters) (*Error, error)
 	mustEmbedUnimplementedAitrailblazerServiceServer()
 }
 
@@ -100,8 +191,17 @@ func (UnimplementedAitrailblazerServiceServer) SendPing(context.Context, *PingRe
 func (UnimplementedAitrailblazerServiceServer) Echo(context.Context, *EchoMessage) (*EchoMessage, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Echo not implemented")
 }
-func (UnimplementedAitrailblazerServiceServer) GetShelf(context.Context, *GetShelfRequest) (*Shelf, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetShelf not implemented")
+func (UnimplementedAitrailblazerServiceServer) FindPets(context.Context, *FindPetsParameters) (*Pet, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method FindPets not implemented")
+}
+func (UnimplementedAitrailblazerServiceServer) AddPet(context.Context, *AddPetParameters) (*Pet, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method AddPet not implemented")
+}
+func (UnimplementedAitrailblazerServiceServer) FindPetByID(context.Context, *FindPetByIDParameters) (*Pet, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method FindPetByID not implemented")
+}
+func (UnimplementedAitrailblazerServiceServer) DeletePet(context.Context, *DeletePetParameters) (*Error, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeletePet not implemented")
 }
 func (UnimplementedAitrailblazerServiceServer) mustEmbedUnimplementedAitrailblazerServiceServer() {}
 
@@ -152,20 +252,74 @@ func _AitrailblazerService_Echo_Handler(srv interface{}, ctx context.Context, de
 	return interceptor(ctx, in, info, handler)
 }
 
-func _AitrailblazerService_GetShelf_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetShelfRequest)
+func _AitrailblazerService_FindPets_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(FindPetsParameters)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(AitrailblazerServiceServer).GetShelf(ctx, in)
+		return srv.(AitrailblazerServiceServer).FindPets(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/aitrailblazer.service.v1.AitrailblazerService/GetShelf",
+		FullMethod: "/aitrailblazer.service.v1.AitrailblazerService/FindPets",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AitrailblazerServiceServer).GetShelf(ctx, req.(*GetShelfRequest))
+		return srv.(AitrailblazerServiceServer).FindPets(ctx, req.(*FindPetsParameters))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AitrailblazerService_AddPet_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AddPetParameters)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AitrailblazerServiceServer).AddPet(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/aitrailblazer.service.v1.AitrailblazerService/AddPet",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AitrailblazerServiceServer).AddPet(ctx, req.(*AddPetParameters))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AitrailblazerService_FindPetByID_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(FindPetByIDParameters)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AitrailblazerServiceServer).FindPetByID(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/aitrailblazer.service.v1.AitrailblazerService/FindPetByID",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AitrailblazerServiceServer).FindPetByID(ctx, req.(*FindPetByIDParameters))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AitrailblazerService_DeletePet_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeletePetParameters)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AitrailblazerServiceServer).DeletePet(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/aitrailblazer.service.v1.AitrailblazerService/DeletePet",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AitrailblazerServiceServer).DeletePet(ctx, req.(*DeletePetParameters))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -186,8 +340,20 @@ var AitrailblazerService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _AitrailblazerService_Echo_Handler,
 		},
 		{
-			MethodName: "GetShelf",
-			Handler:    _AitrailblazerService_GetShelf_Handler,
+			MethodName: "FindPets",
+			Handler:    _AitrailblazerService_FindPets_Handler,
+		},
+		{
+			MethodName: "AddPet",
+			Handler:    _AitrailblazerService_AddPet_Handler,
+		},
+		{
+			MethodName: "FindPetByID",
+			Handler:    _AitrailblazerService_FindPetByID_Handler,
+		},
+		{
+			MethodName: "DeletePet",
+			Handler:    _AitrailblazerService_DeletePet_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

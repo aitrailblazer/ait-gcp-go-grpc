@@ -14,11 +14,35 @@ type EchoMessage struct {
 	Value *string `json:"value,omitempty"`
 }
 
+// Error defines model for Error.
+type Error struct {
+	Code    *int32  `json:"code,omitempty"`
+	Message *string `json:"message,omitempty"`
+}
+
 // GoogleProtobufAny Contains an arbitrary serialized message along with a @type that describes the type of the serialized message.
 type GoogleProtobufAny struct {
 	// Type The type of the serialized message.
 	Type                 *string                `json:"@type,omitempty"`
 	AdditionalProperties map[string]interface{} `json:"-"`
+}
+
+// NewPet The NewPet message contains information about a  new pet being added to the system. It includes  the name of the pet (a string) and a tag  (also a string) that can be used to identify  the pet. This message is used as the "new_pet"  field in the AddPetParameters message, which is  passed as input to the AddPet RPC.
+type NewPet struct {
+	Name *string `json:"name,omitempty"`
+	Tag  *string `json:"tag,omitempty"`
+}
+
+// Pet The message Pet is a data structure that  represents a pet in this gRPC function.  It has three fields: name, tag, and id.  The name field is a string that represents  the name of the pet. The tag field is a  string that represents a tag or label  associated with the pet. The id field  is an integer that represents a unique  identifier for the pet. These three  fields are defined as required fields,  meaning that they must be provided when  creating a new Pet object.
+type Pet struct {
+	// Id The id of the pet
+	Id *int64 `json:"id,omitempty"`
+
+	// Name The name of the pet
+	Name *string `json:"name,omitempty"`
+
+	// Tag The tag of the pet
+	Tag *string `json:"tag,omitempty"`
 }
 
 // PingResponse defines model for PingResponse.
@@ -32,15 +56,6 @@ type Pong struct {
 	Message    *string    `json:"message,omitempty"`
 	ReceivedOn *time.Time `json:"receivedOn,omitempty"`
 	Ver        *string    `json:"ver,omitempty"`
-}
-
-// Shelf A shelf resource.
-type Shelf struct {
-	// Id A unique shelf id.
-	Id *int64 `json:"id,omitempty"`
-
-	// Theme A theme of the shelf (fiction, poetry, etc).
-	Theme *string `json:"theme,omitempty"`
 }
 
 // Status The `Status` type defines a logical error model that is suitable for different programming environments, including REST APIs and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each `Status` message contains three pieces of data: error code, error message, and error details. You can find out more about this error model and how to work with it in the [API Design Guide](https://cloud.google.com/apis/design/errors).
@@ -60,10 +75,19 @@ type AitrailblazerServiceEchoParams struct {
 	Value *string `form:"value,omitempty" json:"value,omitempty"`
 }
 
+// AitrailblazerServiceFindPetsParams defines parameters for AitrailblazerServiceFindPets.
+type AitrailblazerServiceFindPetsParams struct {
+	Tags  *[]string `form:"tags,omitempty" json:"tags,omitempty"`
+	Limit *int32    `form:"limit,omitempty" json:"limit,omitempty"`
+}
+
 // AitrailblazerServiceSendPingParams defines parameters for AitrailblazerServiceSendPing.
 type AitrailblazerServiceSendPingParams struct {
 	Message *string `form:"message,omitempty" json:"message,omitempty"`
 }
+
+// AitrailblazerServiceAddPetJSONRequestBody defines body for AitrailblazerServiceAddPet for application/json ContentType.
+type AitrailblazerServiceAddPetJSONRequestBody = NewPet
 
 // Getter for additional properties for GoogleProtobufAny. Returns the specified
 // element and whether it was found

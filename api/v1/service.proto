@@ -2,7 +2,6 @@
 //
 
 syntax = "proto3";
-// import "google/api/annotations.proto";
 // import "google/api/client.proto";
 // import "google/protobuf/any.proto";
 // import "google/protobuf/duration.proto";
@@ -14,9 +13,10 @@ import "google/api/annotations.proto";
 // import "google/longrunning/operations.proto";
 
 // import "google/type/date.proto";
+// import "google/type/datetime.proto";
 // import "google/protobuf/duration.proto";
-import "google/api/field_behavior.proto";
-import "google/api/resource.proto";
+// import "google/api/field_behavior.proto";
+// import "google/api/resource.proto";
 // import "google/api/routing.proto";
 import "google/protobuf/timestamp.proto";
 
@@ -45,6 +45,7 @@ package aitrailblazer.service.v1;
 // https://github.com/aitrailblazer/ait-gcp-go-grpc/tree/main
 option go_package = "github.com/aitrailblazer/ait-gcp-go-grpc/rpc/v1/pb";
 
+// This API represents ...
 service AitrailblazerService {
   // /v1/ping or with optional message as query /v1/ping?message=test
   rpc SendPing(PingRequest) returns (PingResponse) {
@@ -58,33 +59,95 @@ service AitrailblazerService {
     };
   }
 
-  // rpc GetBook(GetBookRequest) returns (Book) {
-  //   option (google.api.http) = {
-  //     get: "/v1/{name=publishers/*/books/*}"
-  //   };
-  //   option (google.api.method_signature) = "name";
-  // }
-  //  Returns a specific bookstore shelf.
-   rpc GetShelf(GetShelfRequest) returns (Shelf) {
-    // Client example - returns the first shelf:
-    //   curl http://DOMAIN_NAME/v1/shelves/1
+  // The FindPets RPC (Remote Procedure Call) allows 
+  // a client to search for pets based on certain 
+  // parameters. The parameters include tags 
+  // (such as breed, color, etc.) and a limit on the 
+  // number of pets to be returned. The RPC uses a 
+  // GET HTTP request to the "/pets" endpoint to 
+  // retrieve the desired pets. The result of the 
+  // RPC is a Pet message, which contains information 
+  // about the found pets.
+  rpc FindPets ( FindPetsParameters ) returns ( Pet ) {
     option (google.api.http) = { 
-      get: "/v1/shelves/{shelf}" 
+      get:"/pets"  
     };
   }
+
+  // The AddPet RPC allows for the addition of a new 
+  // pet to the system. It takes in AddPetParameters 
+  // as input, which includes a NewPet message that 
+  // contains the name and tag of the new pet. 
+  // The RPC returns a Pet message, which likely 
+  // includes information about the newly added pet. 
+  // The RPC can be accessed via an HTTP POST request 
+  // to the "/pets" endpoint, with the new pet 
+  // information being sent in the body of the request.
+  rpc AddPet ( AddPetParameters ) returns ( Pet ) {
+    option (google.api.http) = { 
+      post:"/pets" body:"new_pet"  
+    };
+  }
+
+  // This is a function signature for a Remote Procedure Call (RPC) in the Google API specification language. The function is called "FindPetByID" and it takes in a single input parameter called "FindPetByIDParameters". The function returns a single output of type "Pet".
+  // 
+  // The "option" statement specifies additional options for the function, in this case specifying that the function can be called using an HTTP GET request to the URL "/pets/{id}", where "{id}" is a placeholder for a specific pet ID.
+  // 
+  // This function allows a client to retrieve information about a specific pet by providing the pet's ID as a parameter in the HTTP request.
+  // 
+  // Returns a pet by ID
+  rpc FindPetByID ( FindPetByIDParameters ) returns ( Pet ) {
+    option (google.api.http) = { 
+      get:"/pets/{id}"  
+    };
+  }
+
+  // The DeletePet RPC (Remote Procedure Call) is used 
+  // to delete a pet from a database. It takes in a
+  //  DeletePetParameters message as input, which 
+  // contains the ID of the pet to be deleted. 
+  // The RPC returns an Error message, which includes 
+  // a code and a message describing any errors that 
+  // may have occurred during the delete operation. 
+  // The RPC uses the HTTP DELETE method to delete 
+  // the pet from the database, with the ID of the 
+  // pet being specified in the URL as a path parameter.
+  rpc DeletePet ( DeletePetParameters ) returns ( Error ) {
+    option (google.api.http) = { 
+      delete:"/pets/{id}"  
+    };
+  }
+    // Gets a book. Returns NOT_FOUND if the book does not exist.
+    // rpc GetBook(GetBookRequest) returns (Book) {
+    //   option (google.api.http) = {
+    //     get: "/v1/{name=shelves/*/books/*}"
+    //   };
+    //   option (google.api.method_signature) = "name";
+    // }
+
+    // Gets a book. 
+    // rpc GetBookSimple(GetBookSimpleRequest) returns ( BookSimple ) {
+    //   option (google.api.http) = { 
+    //     get:"/shelves/{shelf}/books/{book}"  
+    //   };
+    // }
+
+    // rpc GetBookSimple(GetBookSimpleRequest) returns ( BookSimple ) {
+    //   option (google.api.http) = { 
+    //     get:"/shelves/{shelf}/books/{book}"  
+    //   };
+    // }
 }
 
 message PingRequest {
   string message = 1;
 }
-
 message Pong {
   int32 index = 1; // index
   string message = 2; // message
   string ver = 3; // version
   google.protobuf.Timestamp received_on = 4; // received_on
 }
-
 message PingResponse {
   Pong pong = 1;
 }
@@ -96,61 +159,132 @@ message Error {
   string message = 2;
 }
 
-// Request message for GetShelf method.
-message GetShelfRequest {
-  // The ID of the shelf resource to retrieve.
-  int64 shelf = 1;
-}
-// A shelf resource.
-message Shelf {
-  // A unique shelf id.
+message FindPetByIDParameters {
   int64 id = 1;
-  // A theme of the shelf (fiction, poetry, etc).
-  string theme = 2;
 }
-// A representation of a book in the library.
-message Book {
-  option (google.api.resource) = {
-    type: "library.googleapis.com/Book"
-    pattern: "publishers/{publisher}/books/{book}"
-  };
+// The Error message is used to communicate any
+//  errors that may have occurred during the 
+// delete operation. It contains a code field, 
+// which is an integer representing the error 
+// code, and a message field, which is a string 
+// describing the error in more detail. 
+// This message is returned by the DeletePet 
+// RPC if there is an issue with deleting the 
+// specified pet from the database.
+message DeletePetParameters {
+  int64 id = 1;
+}
 
-  // The resource name of the book.
-  // Format: publishers/{publisher}/books/{book}
+// The AddPetParameters message is used as input for 
+// the AddPet RPC. It contains a field called 
+// "new_pet" of type NewPet, which holds the 
+// information about the new pet being added to the 
+// system. This includes the name and tag of the pet.
+message AddPetParameters {
+  NewPet new_pet = 1;
+}
+
+// The NewPet message contains information about a 
+// new pet being added to the system. It includes 
+// the name of the pet (a string) and a tag 
+// (also a string) that can be used to identify 
+// the pet. This message is used as the "new_pet" 
+// field in the AddPetParameters message, which is 
+// passed as input to the AddPet RPC.
+message NewPet {
   string name = 1;
-
-  // Other fields...
+  string tag = 2;
 }
 
-message GetBookRequest {
-  // The name of the book to retrieve.
-  // Format: publishers/{publisher}/books/{book}
-  string name = 1 [
-    (google.api.field_behavior) = REQUIRED,
-    (google.api.resource_reference) = {
-      type: "library.googleapis.com/Book"
-    }];
+// The message Pet is a data structure that 
+// represents a pet in this gRPC function. 
+// It has three fields: name, tag, and id. 
+// The name field is a string that represents 
+// the name of the pet. The tag field is a 
+// string that represents a tag or label 
+// associated with the pet. The id field 
+// is an integer that represents a unique 
+// identifier for the pet. These three 
+// fields are defined as required fields, 
+// meaning that they must be provided when 
+// creating a new Pet object.
+message Pet {
+  // The name of the pet
+  string name = 1; 
+  // The tag of the pet
+  string tag = 2; 
+  // The id of the pet
+  int64 id = 3; 
+}
+// The FindPetsParameters message contains the 
+// parameters for the FindPets RPC. It has two 
+// fields: tags and limit. The tags field is a 
+// repeated string field, which means it can 
+// contain multiple strings. These strings 
+// represent the tags used to search for pets. 
+// The limit field is an integer field that 
+// represents the maximum number of pets to be 
+// returned in the result.
+message FindPetsParameters {
+  repeated string tags = 1;
+  int32 limit = 2;
 }
 
-// The greeting service definition.
-// service AitrailblazerService {
-//   // Sends a greeting
-//   rpc SayHello (SayHelloRequest) returns (SayHelloResponse) {
-//   // Client example - returns the first shelf:
-//   //   curl http://DOMAIN_NAME/v1/hello/John
-//   option (google.api.http) = { get: "/v1/hello/{name}" };
-//   }
-
-// $ curl -X POST -k https://localhost:10000/v1/echo -d '{"value": "CoreOS is hiring!"}'
-// rpc Echo(EchoMessage) returns (EchoMessage) {
-//     option (google.api.http) = {
-//       post: "/v1/echo"
-//       body: "*"
-//     };
-//   }
+// Request message for LibraryService.GetBook.
+// message GetBookRequest {
+//   // The name of the book to retrieve.
+//   string name = 1 [
+//     (google.api.field_behavior) = REQUIRED,
+//     (google.api.resource_reference).type = "Book"
+//   ];
 // }
-// message EchoMessage {
-//   string value = 1;
+
+// message GetBookSimpleRequest {
+//   int64 shelf = 1;
+//   int64 book = 2;
+// }
+// A single book in the library.
+// message Book {
+//   option (google.api.resource) = {
+//     type: "library-example.googleapis.com/Book",
+//     pattern: "shelves/{shelf_id}/books/{book_id}"
+//   };
+//   // The resource name of the book.
+//   // Book names have the form `shelves/{shelf_id}/books/{book_id}`.
+//   // The name is ignored when creating a book.
+//   string name = 1 [
+//     (google.api.field_behavior) = REQUIRED,
+//     (google.api.resource_reference).type = "library-example.googleapis.com/Book"
+//   ];
+
+//   // The name of the book author.
+//   string author = 2;
+
+//   // The title of the book.
+//   string title = 3;
+
+//   // Value indicating whether the book has been read.
+//   bool read = 4;
+
+//   // The previous borrowing timestamp.
+//   google.protobuf.Timestamp borrow_time = 5
+//    [(google.api.field_behavior) = OUTPUT_ONLY];
+
+//   // The creation date and time.
+//   google.type.DateTime created_at = 6
+//    [(google.api.field_behavior) = OUTPUT_ONLY];
+
+//   // The last update date and time.
+//   google.type.DateTime updated_at = 7
+//    [(google.api.field_behavior) = OUTPUT_ONLY];
+// }
+
+// message BookSimple {
+//   string author = 1;
+
+//   string name = 2;
+
+//   string title = 3;
 // }
 // The request message containing the user's name.
 // message SayHelloRequest {

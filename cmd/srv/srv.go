@@ -74,8 +74,8 @@ func routerSetup(e *echo.Echo) *echo.Echo {
 	handler := api.NewHandler() // <1>
 
 	// Log all requests
-	e.Use(middleware.Logger())        // <2>
-	api.RegisterHandlers(e, &handler) // <3>
+	e.Use(middleware.Logger())       // <2>
+	api.RegisterHandlers(e, handler) // <3>
 
 	return e
 }
