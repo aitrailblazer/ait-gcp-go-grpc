@@ -27,6 +27,15 @@ type GoogleProtobufAny struct {
 	AdditionalProperties map[string]interface{} `json:"-"`
 }
 
+// ListPetsResponse defines model for ListPetsResponse.
+type ListPetsResponse struct {
+	// NextPageToken A token, which can be sent as `page_token` to retrieve the next page. If this field is omitted, there are no subsequent pages.
+	NextPageToken *string `json:"nextPageToken,omitempty"`
+
+	// Pets The Pets.
+	Pets *[]Pet `json:"pets,omitempty"`
+}
+
 // NewPet The NewPet message contains information about a  new pet being added to the system. It includes  the name of the pet (a string) and a tag  (also a string) that can be used to identify  the pet. This message is used as the "new_pet"  field in the AddPetParameters message, which is  passed as input to the AddPet RPC.
 type NewPet struct {
 	Name *string `json:"name,omitempty"`
@@ -73,6 +82,15 @@ type Status struct {
 // AitrailblazerServiceEchoParams defines parameters for AitrailblazerServiceEcho.
 type AitrailblazerServiceEchoParams struct {
 	Value *string `form:"value,omitempty" json:"value,omitempty"`
+}
+
+// AitrailblazerServiceListPetsParams defines parameters for AitrailblazerServiceListPets.
+type AitrailblazerServiceListPetsParams struct {
+	// PageSize The maximum number of books to return. The service may return fewer than this value. If unspecified, at most 50 books will be returned. The maximum value is 1000; values above 1000 will be coerced to 1000.
+	PageSize *int32 `form:"pageSize,omitempty" json:"pageSize,omitempty"`
+
+	// PageToken A page token, received from a previous `ListBooks` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListBooks` must match the call that provided the page token.
+	PageToken *string `form:"pageToken,omitempty" json:"pageToken,omitempty"`
 }
 
 // AitrailblazerServiceFindPetsParams defines parameters for AitrailblazerServiceFindPets.

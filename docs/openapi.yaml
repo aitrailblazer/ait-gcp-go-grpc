@@ -11,6 +11,7 @@ paths:
         get:
             tags:
                 - AitrailblazerService
+            description: echo
             operationId: AitrailblazerService_Echo
             parameters:
                 - name: message
@@ -35,11 +36,42 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/Status'
+    /listpets:
+        get:
+            tags:
+                - AitrailblazerService
+            description: ListPets
+            operationId: AitrailblazerService_ListPets
+            parameters:
+                - name: pageSize
+                  in: query
+                  description: The maximum number of books to return. The service may return fewer than this value. If unspecified, at most 50 books will be returned. The maximum value is 1000; values above 1000 will be coerced to 1000.
+                  schema:
+                    type: integer
+                    format: int32
+                - name: pageToken
+                  in: query
+                  description: A page token, received from a previous `ListBooks` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListBooks` must match the call that provided the page token.
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ListPetsResponse'
+                default:
+                    description: Default error response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Status'
     /pets:
         get:
             tags:
                 - AitrailblazerService
-            description: "The FindPets RPC (Remote Procedure Call) allows \n a client to search for pets based on certain \n parameters. The parameters include tags \n (such as breed, color, etc.) and a limit on the \n number of pets to be returned. The RPC uses a \n GET HTTP request to the \"/pets\" endpoint to \n retrieve the desired pets. The result of the \n RPC is a Pet message, which contains information \n about the found pets."
+            description: "FindPets\n\n The FindPets RPC (Remote Procedure Call) allows \n a client to search for pets based on certain \n parameters. The parameters include tags \n (such as breed, color, etc.) and a limit on the \n number of pets to be returned. The RPC uses a \n GET HTTP request to the \"/pets\" endpoint to \n retrieve the desired pets. The result of the \n RPC is a Pet message, which contains information \n about the found pets."
             operationId: AitrailblazerService_FindPets
             parameters:
                 - name: tags
@@ -69,7 +101,7 @@ paths:
         post:
             tags:
                 - AitrailblazerService
-            description: "The AddPet RPC allows for the addition of a new \n pet to the system. It takes in AddPetParameters \n as input, which includes a NewPet message that \n contains the name and tag of the new pet. \n The RPC returns a Pet message, which likely \n includes information about the newly added pet. \n The RPC can be accessed via an HTTP POST request \n to the \"/pets\" endpoint, with the new pet \n information being sent in the body of the request."
+            description: "AddPet\n\n The AddPet RPC allows for the addition of a new \n pet to the system. It takes in AddPetParameters \n as input, which includes a NewPet message that \n contains the name and tag of the new pet. \n The RPC returns a Pet message, which likely \n includes information about the newly added pet. \n The RPC can be accessed via an HTTP POST request \n to the \"/pets\" endpoint, with the new pet \n information being sent in the body of the request.\n \n Example #1: name = \"Spot\", tag = \"TagOfSpot\"\n \n Example #2: name = \"Fido\", tag = \"TagOfFido\"\n \n Example #3: name = \"Rover\", tag = \"TagOfRover\"\n\n Example #4: name = \"Spike\", tag = \"TagOfSpike\"\n\n Example #5: name = \"Buddy\", tag = \"TagOfBuddy\""
             operationId: AitrailblazerService_AddPet
             requestBody:
                 content:
@@ -94,7 +126,7 @@ paths:
         get:
             tags:
                 - AitrailblazerService
-            description: "This is a function signature for a Remote Procedure Call (RPC) in the Google API specification language. The function is called \"FindPetByID\" and it takes in a single input parameter called \"FindPetByIDParameters\". The function returns a single output of type \"Pet\".\n \n The \"option\" statement specifies additional options for the function, in this case specifying that the function can be called using an HTTP GET request to the URL \"/pets/{id}\", where \"{id}\" is a placeholder for a specific pet ID.\n \n This function allows a client to retrieve information about a specific pet by providing the pet's ID as a parameter in the HTTP request.\n \n Returns a pet by ID"
+            description: "FindPetByID\n This is a function signature for a Remote Procedure \n Call (RPC) in the Google API specification language. \n The function is called \"FindPetByID\" and it takes \n in a single input parameter called \"FindPetByIDParameters\". \n The function returns a single output of type \"Pet\".\n \n The \"option\" statement specifies additional \n options for the function, in this case specifying \n that the function can be called using an HTTP GET \n request to the URL \"/pets/{id}\", where \"{id}\" is \n a placeholder for a specific pet ID.\n \n This function allows a client to retrieve \n information about a specific pet by providing \n the pet's ID as a parameter in the HTTP request.\n \n Returns a pet by ID"
             operationId: AitrailblazerService_FindPetByID
             parameters:
                 - name: id
@@ -119,7 +151,7 @@ paths:
         delete:
             tags:
                 - AitrailblazerService
-            description: "The DeletePet RPC (Remote Procedure Call) is used \n to delete a pet from a database. It takes in a\n  DeletePetParameters message as input, which \n contains the ID of the pet to be deleted. \n The RPC returns an Error message, which includes \n a code and a message describing any errors that \n may have occurred during the delete operation. \n The RPC uses the HTTP DELETE method to delete \n the pet from the database, with the ID of the \n pet being specified in the URL as a path parameter."
+            description: "DeletePet\n\n The DeletePet RPC (Remote Procedure Call) is used \n to delete a pet from a database. It takes in a\n  DeletePetParameters message as input, which \n contains the ID of the pet to be deleted. \n The RPC returns an Error message, which includes \n a code and a message describing any errors that \n may have occurred during the delete operation. \n The RPC uses the HTTP DELETE method to delete \n the pet from the database, with the ID of the \n pet being specified in the URL as a path parameter."
             operationId: AitrailblazerService_DeletePet
             parameters:
                 - name: id
@@ -145,7 +177,7 @@ paths:
         get:
             tags:
                 - AitrailblazerService
-            description: /v1/ping or with optional message as query /v1/ping?message=test
+            description: SendPing
             operationId: AitrailblazerService_SendPing
             parameters:
                 - name: message
@@ -188,6 +220,17 @@ components:
                     description: The type of the serialized message.
             additionalProperties: true
             description: Contains an arbitrary serialized message along with a @type that describes the type of the serialized message.
+        ListPetsResponse:
+            type: object
+            properties:
+                pets:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/Pet'
+                    description: The Pets.
+                nextPageToken:
+                    type: string
+                    description: A token, which can be sent as `page_token` to retrieve the next page. If this field is omitted, there are no subsequent pages.
         NewPet:
             type: object
             properties:

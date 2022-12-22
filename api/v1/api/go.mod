@@ -3,7 +3,7 @@ module github.com/aitrailblazer/ait-gcp-go-grpc/api/v1/api
 go 1.19
 
 require (
-	github.com/aitrailblazer/ait-gcp-go-grpc/api/v1/models v0.0.0-20221216065228-c347b2f40972
+	github.com/aitrailblazer/ait-gcp-go-grpc/api/v1/models v0.0.0-20221220165456-10c2b85ad0e4
 	github.com/deepmap/oapi-codegen v1.12.4
 	github.com/getkin/kin-openapi v0.111.0
 	github.com/labstack/echo/v4 v4.9.1

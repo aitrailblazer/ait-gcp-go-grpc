@@ -22,9 +22,12 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type AitrailblazerServiceClient interface {
-	// /v1/ping or with optional message as query /v1/ping?message=test
+	// SendPing
 	SendPing(ctx context.Context, in *PingRequest, opts ...grpc.CallOption) (*PingResponse, error)
+	// echo
 	Echo(ctx context.Context, in *EchoMessage, opts ...grpc.CallOption) (*EchoMessage, error)
+	// FindPets
+	//
 	// The FindPets RPC (Remote Procedure Call) allows
 	// a client to search for pets based on certain
 	// parameters. The parameters include tags
@@ -35,6 +38,8 @@ type AitrailblazerServiceClient interface {
 	// RPC is a Pet message, which contains information
 	// about the found pets.
 	FindPets(ctx context.Context, in *FindPetsParameters, opts ...grpc.CallOption) (*Pet, error)
+	// AddPet
+	//
 	// The AddPet RPC allows for the addition of a new
 	// pet to the system. It takes in AddPetParameters
 	// as input, which includes a NewPet message that
@@ -44,15 +49,38 @@ type AitrailblazerServiceClient interface {
 	// The RPC can be accessed via an HTTP POST request
 	// to the "/pets" endpoint, with the new pet
 	// information being sent in the body of the request.
+	//
+	// Example #1: name = "Spot", tag = "TagOfSpot"
+	//
+	// Example #2: name = "Fido", tag = "TagOfFido"
+	//
+	// Example #3: name = "Rover", tag = "TagOfRover"
+	//
+	// Example #4: name = "Spike", tag = "TagOfSpike"
+	//
+	// Example #5: name = "Buddy", tag = "TagOfBuddy"
 	AddPet(ctx context.Context, in *AddPetParameters, opts ...grpc.CallOption) (*Pet, error)
-	// This is a function signature for a Remote Procedure Call (RPC) in the Google API specification language. The function is called "FindPetByID" and it takes in a single input parameter called "FindPetByIDParameters". The function returns a single output of type "Pet".
+	// FindPetByID
+	// This is a function signature for a Remote Procedure
+	// Call (RPC) in the Google API specification language.
+	// The function is called "FindPetByID" and it takes
+	// in a single input parameter called "FindPetByIDParameters".
+	// The function returns a single output of type "Pet".
 	//
-	// The "option" statement specifies additional options for the function, in this case specifying that the function can be called using an HTTP GET request to the URL "/pets/{id}", where "{id}" is a placeholder for a specific pet ID.
+	// The "option" statement specifies additional
+	// options for the function, in this case specifying
+	// that the function can be called using an HTTP GET
+	// request to the URL "/pets/{id}", where "{id}" is
+	// a placeholder for a specific pet ID.
 	//
-	// This function allows a client to retrieve information about a specific pet by providing the pet's ID as a parameter in the HTTP request.
+	// This function allows a client to retrieve
+	// information about a specific pet by providing
+	// the pet's ID as a parameter in the HTTP request.
 	//
 	// Returns a pet by ID
 	FindPetByID(ctx context.Context, in *FindPetByIDParameters, opts ...grpc.CallOption) (*Pet, error)
+	// DeletePet
+	//
 	// The DeletePet RPC (Remote Procedure Call) is used
 	// to delete a pet from a database. It takes in a
 	//
@@ -66,6 +94,8 @@ type AitrailblazerServiceClient interface {
 	// the pet from the database, with the ID of the
 	// pet being specified in the URL as a path parameter.
 	DeletePet(ctx context.Context, in *DeletePetParameters, opts ...grpc.CallOption) (*Error, error)
+	// ListPets
+	ListPets(ctx context.Context, in *ListPetsRequest, opts ...grpc.CallOption) (*ListPetsResponse, error)
 }
 
 type aitrailblazerServiceClient struct {
@@ -130,13 +160,25 @@ func (c *aitrailblazerServiceClient) DeletePet(ctx context.Context, in *DeletePe
 	return out, nil
 }
 
+func (c *aitrailblazerServiceClient) ListPets(ctx context.Context, in *ListPetsRequest, opts ...grpc.CallOption) (*ListPetsResponse, error) {
+	out := new(ListPetsResponse)
+	err := c.cc.Invoke(ctx, "/aitrailblazer.service.v1.AitrailblazerService/ListPets", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // AitrailblazerServiceServer is the server API for AitrailblazerService service.
 // All implementations must embed UnimplementedAitrailblazerServiceServer
 // for forward compatibility
 type AitrailblazerServiceServer interface {
-	// /v1/ping or with optional message as query /v1/ping?message=test
+	// SendPing
 	SendPing(context.Context, *PingRequest) (*PingResponse, error)
+	// echo
 	Echo(context.Context, *EchoMessage) (*EchoMessage, error)
+	// FindPets
+	//
 	// The FindPets RPC (Remote Procedure Call) allows
 	// a client to search for pets based on certain
 	// parameters. The parameters include tags
@@ -147,6 +189,8 @@ type AitrailblazerServiceServer interface {
 	// RPC is a Pet message, which contains information
 	// about the found pets.
 	FindPets(context.Context, *FindPetsParameters) (*Pet, error)
+	// AddPet
+	//
 	// The AddPet RPC allows for the addition of a new
 	// pet to the system. It takes in AddPetParameters
 	// as input, which includes a NewPet message that
@@ -156,15 +200,38 @@ type AitrailblazerServiceServer interface {
 	// The RPC can be accessed via an HTTP POST request
 	// to the "/pets" endpoint, with the new pet
 	// information being sent in the body of the request.
+	//
+	// Example #1: name = "Spot", tag = "TagOfSpot"
+	//
+	// Example #2: name = "Fido", tag = "TagOfFido"
+	//
+	// Example #3: name = "Rover", tag = "TagOfRover"
+	//
+	// Example #4: name = "Spike", tag = "TagOfSpike"
+	//
+	// Example #5: name = "Buddy", tag = "TagOfBuddy"
 	AddPet(context.Context, *AddPetParameters) (*Pet, error)
-	// This is a function signature for a Remote Procedure Call (RPC) in the Google API specification language. The function is called "FindPetByID" and it takes in a single input parameter called "FindPetByIDParameters". The function returns a single output of type "Pet".
+	// FindPetByID
+	// This is a function signature for a Remote Procedure
+	// Call (RPC) in the Google API specification language.
+	// The function is called "FindPetByID" and it takes
+	// in a single input parameter called "FindPetByIDParameters".
+	// The function returns a single output of type "Pet".
 	//
-	// The "option" statement specifies additional options for the function, in this case specifying that the function can be called using an HTTP GET request to the URL "/pets/{id}", where "{id}" is a placeholder for a specific pet ID.
+	// The "option" statement specifies additional
+	// options for the function, in this case specifying
+	// that the function can be called using an HTTP GET
+	// request to the URL "/pets/{id}", where "{id}" is
+	// a placeholder for a specific pet ID.
 	//
-	// This function allows a client to retrieve information about a specific pet by providing the pet's ID as a parameter in the HTTP request.
+	// This function allows a client to retrieve
+	// information about a specific pet by providing
+	// the pet's ID as a parameter in the HTTP request.
 	//
 	// Returns a pet by ID
 	FindPetByID(context.Context, *FindPetByIDParameters) (*Pet, error)
+	// DeletePet
+	//
 	// The DeletePet RPC (Remote Procedure Call) is used
 	// to delete a pet from a database. It takes in a
 	//
@@ -178,6 +245,8 @@ type AitrailblazerServiceServer interface {
 	// the pet from the database, with the ID of the
 	// pet being specified in the URL as a path parameter.
 	DeletePet(context.Context, *DeletePetParameters) (*Error, error)
+	// ListPets
+	ListPets(context.Context, *ListPetsRequest) (*ListPetsResponse, error)
 	mustEmbedUnimplementedAitrailblazerServiceServer()
 }
 
@@ -202,6 +271,9 @@ func (UnimplementedAitrailblazerServiceServer) FindPetByID(context.Context, *Fin
 }
 func (UnimplementedAitrailblazerServiceServer) DeletePet(context.Context, *DeletePetParameters) (*Error, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeletePet not implemented")
+}
+func (UnimplementedAitrailblazerServiceServer) ListPets(context.Context, *ListPetsRequest) (*ListPetsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListPets not implemented")
 }
 func (UnimplementedAitrailblazerServiceServer) mustEmbedUnimplementedAitrailblazerServiceServer() {}
 
@@ -324,6 +396,24 @@ func _AitrailblazerService_DeletePet_Handler(srv interface{}, ctx context.Contex
 	return interceptor(ctx, in, info, handler)
 }
 
+func _AitrailblazerService_ListPets_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListPetsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AitrailblazerServiceServer).ListPets(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/aitrailblazer.service.v1.AitrailblazerService/ListPets",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AitrailblazerServiceServer).ListPets(ctx, req.(*ListPetsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // AitrailblazerService_ServiceDesc is the grpc.ServiceDesc for AitrailblazerService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -354,6 +444,10 @@ var AitrailblazerService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "DeletePet",
 			Handler:    _AitrailblazerService_DeletePet_Handler,
+		},
+		{
+			MethodName: "ListPets",
+			Handler:    _AitrailblazerService_ListPets_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

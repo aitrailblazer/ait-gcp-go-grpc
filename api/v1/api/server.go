@@ -7,7 +7,7 @@ import (
 	"sync"
 	"time"
 
-	models "github.com/aitrailblazer/ait-gcp-go-grpc/api/v1/models"
+	"github.com/aitrailblazer/ait-gcp-go-grpc/api/v1/models"
 
 	"github.com/labstack/echo/v4"
 )
@@ -41,10 +41,12 @@ func sendPetStoreError(ctx echo.Context, code int, message string) error {
 
 // type Handler struct {}
 type Handler struct {
-	Lock   sync.Mutex
+	// Lock   sync.Mutex
 	Pets   map[int64]models.Pet
 	NextId int64
 }
+
+var dbmux sync.Mutex
 
 //	func NewHandler() Handler {
 //		// pong := Pong{
@@ -103,7 +105,6 @@ func (h *Handler) AitrailblazerServiceSendPing(ctx echo.Context, params models.A
 // curl localhost:8080/echo/test
 // curl localhost:8080/echo/test\?value\=test1234
 func (h *Handler) AitrailblazerServiceEcho(ctx echo.Context, message string, params models.AitrailblazerServiceEchoParams) error {
-
 	// ------------- Path parameter "message" -------------
 	fmt.Println("AitrailblazerServiceEcho: Path parameter ", message)
 	// paramsValue := params.Value
@@ -122,8 +123,8 @@ func (h *Handler) AitrailblazerServiceEcho(ctx echo.Context, message string, par
 }
 
 func (h *Handler) AitrailblazerServiceFindPetByID(ctx echo.Context, petId int64) error {
-	h.Lock.Lock()
-	defer h.Lock.Unlock()
+	dbmux.Lock()
+	defer dbmux.Unlock()
 
 	pet, found := h.Pets[petId]
 	if !found {
@@ -134,8 +135,8 @@ func (h *Handler) AitrailblazerServiceFindPetByID(ctx echo.Context, petId int64)
 }
 
 func (h *Handler) AitrailblazerServiceDeletePet(ctx echo.Context, id int64) error {
-	h.Lock.Lock()
-	defer h.Lock.Unlock()
+	dbmux.Lock()
+	defer dbmux.Unlock()
 
 	_, found := h.Pets[id]
 	if !found {
@@ -146,13 +147,23 @@ func (h *Handler) AitrailblazerServiceDeletePet(ctx echo.Context, id int64) erro
 	return ctx.NoContent(http.StatusNoContent)
 }
 
+//	rpc FindPets ( FindPetsParameters ) returns ( Pet ) {
+//	    option (google.api.http) = {
+//	      get:"/pets"
+//	    };
+//	 }
+//
+//	message FindPetsParameters {
+//		repeated string tags = 1;
+//		int32 limit = 2;
+//	}
+//
 // FindPets implements all the handlers in the ServerInterface
 func (h *Handler) AitrailblazerServiceFindPets(ctx echo.Context, params models.AitrailblazerServiceFindPetsParams) error {
-	h.Lock.Lock()
-	defer h.Lock.Unlock()
+	dbmux.Lock()
+	defer dbmux.Unlock()
 
 	var result []models.Pet
-
 	for _, pet := range h.Pets {
 		if params.Tags != nil {
 			// If we have tags,  filter pets by tag
@@ -177,6 +188,7 @@ func (h *Handler) AitrailblazerServiceFindPets(ctx echo.Context, params models.A
 	return ctx.JSON(http.StatusOK, result)
 }
 
+// post:"/pets" body:"new_pet"
 func (h *Handler) AitrailblazerServiceAddPet(ctx echo.Context) error {
 	// We expect a NewPet object in the request body.
 	var newPet models.NewPet
@@ -187,8 +199,8 @@ func (h *Handler) AitrailblazerServiceAddPet(ctx echo.Context) error {
 	// We now have a pet, let's add it to our "database".
 
 	// We're always asynchronous, so lock unsafe operations below
-	h.Lock.Lock()
-	defer h.Lock.Unlock()
+	dbmux.Lock()
+	defer dbmux.Unlock()
 
 	// We handle pets, not NewPets, which have an additional ID field
 	var pet models.Pet
@@ -214,6 +226,33 @@ func (h *Handler) AitrailblazerServiceAddPet(ctx echo.Context) error {
 	// HTTP/400 or HTTP/500 from here means Echo/HTTP are still working, so
 	// return nil.
 	return nil
+}
+
+func (h *Handler) ListPets() []models.Pet {
+	dbmux.Lock()
+	defer dbmux.Unlock()
+	var keys []int64        // Create a new slice of strings.  The slice is used to store the keys of the database map. The slice is created empty.
+	for k := range h.Pets { // For each key in the database map.  The key is a string. The key is assigned to k.
+		keys = append(keys, k) // The key is appended to the slice of keys.
+	}
+	// sort.Ints(keys)
+	var pets []models.Pet
+	for _, k := range keys {
+		v := h.Pets[k]
+		var pet models.Pet
+		pet.Name = v.Name
+		pet.Tag = v.Tag
+		pet.Id = v.Id
+		pets = append(pets, pet)
+	}
+	return pets
+}
+
+// (GET /listpets)
+func (h *Handler) AitrailblazerServiceListPets(ctx echo.Context, params models.AitrailblazerServiceListPetsParams) error {
+	pets := h.ListPets()
+
+	return ctx.JSON(http.StatusOK, pets)
 }
 
 // (GET /v1/shelves/{shelf})

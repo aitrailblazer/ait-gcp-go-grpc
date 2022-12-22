@@ -13,8 +13,10 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"sync"
 
 	"github.com/aitrailblazer/ait-gcp-go-grpc/api/v1/api"
+	"github.com/aitrailblazer/ait-gcp-go-grpc/api/v1/models"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 )
@@ -70,12 +72,81 @@ const PROJECT_ID = "ait-gcp-go-grpc"
 // <2> log all requests
 // <3> register the handlers
 // tag::routerSetup[]
-func routerSetup(e *echo.Echo) *echo.Echo {
-	handler := api.NewHandler() // <1>
 
+// func ListPets(h *api.Handler) []models.Pet {
+// 	var keys []int64        // Create a new slice of strings.  The slice is used to store the keys of the database map. The slice is created empty.
+// 	for k := range h.Pets { // For each key in the database map.  The key is a string. The key is assigned to k.
+// 		keys = append(keys, k) // The key is appended to the slice of keys.
+// 	}
+// 	// sort.Ints(keys)
+// 	var pets []models.Pet
+// 	for _, k := range keys {
+// 		v := h.Pets[k]
+// 		var pet models.Pet
+// 		pet.Name = v.Name
+// 		pet.Tag = v.Tag
+// 		pet.Id = v.Id
+// 		pets = append(pets, pet)
+// 	}
+// 	return pets
+// }
+
+var dbmux sync.Mutex
+
+func routerSetup(e *echo.Echo) *echo.Echo {
+	h := api.NewHandler() // <1>
+	dbmux.Lock()
+	defer dbmux.Unlock()
+	// Example #6: name = "Max", tag = "TagOfMax"
+	name1 := "Max"
+	tag1 := "TagOfMax"
+	// Example #7: name = "Charlie", tag = "TagOfCharlie"
+	name2 := "Charlie"
+	tag2 := "TagOfCharlie"
+	// Example #8: name = "Buster", tag = "TagOfBuster"
+	name3 := "Buster"
+	tag3 := "TagOfBuster"
+	var pet1 models.Pet
+	//
+	pet1.Name = &name1
+	pet1.Tag = &tag1
+	var Id1 int64 = 100
+	pet1.Id = &Id1
+	// h.NextId = h.NextId + 1
+	// Insert into map
+	h.Pets[*pet1.Id] = pet1
+	//
+	var pet2 models.Pet
+
+	pet2.Name = &name2
+	pet2.Tag = &tag2
+	var Id2 int64 = 110
+	pet2.Id = &Id2
+	// h.NextId = h.NextId + 1
+	// Insert into map
+	h.Pets[*pet2.Id] = pet2
+	//
+	//
+	var pet3 models.Pet
+
+	pet3.Name = &name3
+	pet3.Tag = &tag3
+	var Id3 int64 = 120
+	// h.NextId = h.NextId + 1
+	pet3.Id = &Id3
+	// Insert into map
+	h.Pets[*pet3.Id] = pet3
+
+	pets := h.ListPets()
+	for k := range pets {
+		log.Printf("pets Id %v", *pets[k].Id)
+		log.Printf("pets Name %v", *pets[k].Name)
+		log.Printf("pets Name %v", *pets[k].Tag)
+	}
+	// log.Printf("pets %v", pets)
 	// Log all requests
-	e.Use(middleware.Logger())       // <2>
-	api.RegisterHandlers(e, handler) // <3>
+	e.Use(middleware.Logger()) // <2>
+	api.RegisterHandlers(e, h) // <3>
 
 	return e
 }

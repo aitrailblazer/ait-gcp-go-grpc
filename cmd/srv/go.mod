@@ -3,15 +3,15 @@ module github.com/aitrailblazer/ait-gcp-go-grpc/cmd/srv
 go 1.19
 
 require (
-	github.com/aitrailblazer/ait-gcp-go-grpc/api/v1/api v0.0.0-20221216065228-c347b2f40972
+	github.com/aitrailblazer/ait-gcp-go-grpc/api/v1/api v0.0.0-20221220165456-10c2b85ad0e4
 	github.com/labstack/echo/v4 v4.9.1
 )
 
 require (
-	github.com/aitrailblazer/ait-gcp-go-grpc/api/v1/models v0.0.0-20221216003443-d579e8374515 // indirect
+	github.com/aitrailblazer/ait-gcp-go-grpc/api/v1/models v0.0.0-20221216065228-c347b2f40972 // indirect
 	github.com/apapsch/go-jsonmerge/v2 v2.0.0 // indirect
 	github.com/deepmap/oapi-codegen v1.12.4 // indirect
-	github.com/getkin/kin-openapi v0.110.0 // indirect
+	github.com/getkin/kin-openapi v0.111.0 // indirect
 	github.com/go-openapi/jsonpointer v0.19.5 // indirect
 	github.com/go-openapi/swag v0.21.1 // indirect
 	github.com/golang-jwt/jwt v3.2.2+incompatible // indirect

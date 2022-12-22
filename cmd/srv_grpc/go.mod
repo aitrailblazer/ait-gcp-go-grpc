@@ -3,7 +3,7 @@ module github.com/aitrailblazer/ait-gcp-go-grpc/cmd/srv_grpc
 go 1.19
 
 require (
-	github.com/aitrailblazer/ait-gcp-go-grpc/rpc/v1/pb v0.0.0-20221216065228-c347b2f40972
+	github.com/aitrailblazer/ait-gcp-go-grpc/rpc/v1/pb v0.0.0-20221220165456-10c2b85ad0e4
 	google.golang.org/grpc v1.51.0
 	google.golang.org/protobuf v1.28.1
 )

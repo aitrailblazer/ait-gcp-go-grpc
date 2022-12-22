@@ -47,18 +47,24 @@ option go_package = "github.com/aitrailblazer/ait-gcp-go-grpc/rpc/v1/pb";
 
 // This API represents ...
 service AitrailblazerService {
-  // /v1/ping or with optional message as query /v1/ping?message=test
+
+  // SendPing
+  // 
   rpc SendPing(PingRequest) returns (PingResponse) {
     option (google.api.http) = {
       get: "/v1/ping"
     };
   }
+  // echo
+  //
   rpc Echo(EchoMessage) returns (EchoMessage) {
     option (google.api.http) = {
       get: "/echo/{message}"
     };
   }
 
+  // FindPets
+  //
   // The FindPets RPC (Remote Procedure Call) allows 
   // a client to search for pets based on certain 
   // parameters. The parameters include tags 
@@ -74,6 +80,8 @@ service AitrailblazerService {
     };
   }
 
+  // AddPet
+  //
   // The AddPet RPC allows for the addition of a new 
   // pet to the system. It takes in AddPetParameters 
   // as input, which includes a NewPet message that 
@@ -83,17 +91,39 @@ service AitrailblazerService {
   // The RPC can be accessed via an HTTP POST request 
   // to the "/pets" endpoint, with the new pet 
   // information being sent in the body of the request.
+  // 
+  // Example #1: name = "Spot", tag = "TagOfSpot"
+  // 
+  // Example #2: name = "Fido", tag = "TagOfFido"
+  // 
+  // Example #3: name = "Rover", tag = "TagOfRover"
+  //
+  // Example #4: name = "Spike", tag = "TagOfSpike"
+  //
+  // Example #5: name = "Buddy", tag = "TagOfBuddy"
+  //
   rpc AddPet ( AddPetParameters ) returns ( Pet ) {
     option (google.api.http) = { 
       post:"/pets" body:"new_pet"  
     };
   }
 
-  // This is a function signature for a Remote Procedure Call (RPC) in the Google API specification language. The function is called "FindPetByID" and it takes in a single input parameter called "FindPetByIDParameters". The function returns a single output of type "Pet".
+  // FindPetByID
+  // This is a function signature for a Remote Procedure 
+  // Call (RPC) in the Google API specification language. 
+  // The function is called "FindPetByID" and it takes 
+  // in a single input parameter called "FindPetByIDParameters". 
+  // The function returns a single output of type "Pet".
   // 
-  // The "option" statement specifies additional options for the function, in this case specifying that the function can be called using an HTTP GET request to the URL "/pets/{id}", where "{id}" is a placeholder for a specific pet ID.
+  // The "option" statement specifies additional 
+  // options for the function, in this case specifying 
+  // that the function can be called using an HTTP GET 
+  // request to the URL "/pets/{id}", where "{id}" is 
+  // a placeholder for a specific pet ID.
   // 
-  // This function allows a client to retrieve information about a specific pet by providing the pet's ID as a parameter in the HTTP request.
+  // This function allows a client to retrieve 
+  // information about a specific pet by providing 
+  // the pet's ID as a parameter in the HTTP request.
   // 
   // Returns a pet by ID
   rpc FindPetByID ( FindPetByIDParameters ) returns ( Pet ) {
@@ -102,6 +132,8 @@ service AitrailblazerService {
     };
   }
 
+  // DeletePet
+  //
   // The DeletePet RPC (Remote Procedure Call) is used 
   // to delete a pet from a database. It takes in a
   //  DeletePetParameters message as input, which 
@@ -117,6 +149,16 @@ service AitrailblazerService {
       delete:"/pets/{id}"  
     };
   }
+ 
+  // ListPets
+  // 
+  rpc ListPets(ListPetsRequest) returns (ListPetsResponse) {
+    option (google.api.http) = {
+      get: "/listpets"
+    };
+  // option (google.api.method_signature) = "parent";
+  }
+
     // Gets a book. Returns NOT_FOUND if the book does not exist.
     // rpc GetBook(GetBookRequest) returns (Book) {
     //   option (google.api.http) = {
@@ -230,6 +272,28 @@ message FindPetsParameters {
   int32 limit = 2;
 }
 
+message ListPetsRequest {
+  // The maximum number of pets to return. The service may return fewer than
+  // this value.
+  // If unspecified, at most 50 pets will be returned.
+  // The maximum value is 1000; values above 1000 will be coerced to 1000.
+  int32 page_size = 1;
+
+  // A page token, received from a previous `ListPets` call.
+  // Provide this to retrieve the subsequent page.
+  //
+  // When paginating, all other parameters provided to `ListBooks` must match
+  // the call that provided the page token.
+  string page_token = 2;
+}
+message ListPetsResponse {
+  // The Pets.
+  repeated Pet pets = 1;
+
+  // A token, which can be sent as `page_token` to retrieve the next page.
+  // If this field is omitted, there are no subsequent pages.
+  string next_page_token = 2;
+}
 // Request message for LibraryService.GetBook.
 // message GetBookRequest {
 //   // The name of the book to retrieve.
