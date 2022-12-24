@@ -411,7 +411,7 @@
         
       
         <h3 id="aitrailblazer.service.v1.ListPetsRequest">ListPetsRequest</h3>
-        <p>The parent, which owns this collection of books.</p><p>Format: publishers/{publisher}</p><p>string parent = 1 [</p><p>(google.api.field_behavior) = REQUIRED,</p><p>(google.api.resource_reference) = {</p><p>child_type: "library.googleapis.com/Book"</p><p>}];</p>
+        <p></p>
 
         
           <table class="field-table">
@@ -424,9 +424,9 @@
                   <td>page_size</td>
                   <td><a href="#int32">int32</a></td>
                   <td></td>
-                  <td><p>The maximum number of books to return. The service may return fewer than
+                  <td><p>The maximum number of pets to return. The service may return fewer than
 this value.
-If unspecified, at most 50 books will be returned.
+If unspecified, at most 50 pets will be returned.
 The maximum value is 1000; values above 1000 will be coerced to 1000. </p></td>
                 </tr>
               
@@ -434,11 +434,19 @@ The maximum value is 1000; values above 1000 will be coerced to 1000. </p></td>
                   <td>page_token</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>A page token, received from a previous `ListBooks` call.
+                  <td><p>A page token, received from a previous `ListPets` call.
 Provide this to retrieve the subsequent page.
 
 When paginating, all other parameters provided to `ListBooks` must match
 the call that provided the page token. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>filter</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>An expression that can be used to filter the list. Filters use the Common
+Expression Language and can refer to all message fields. </p></td>
                 </tr>
               
             </tbody>
@@ -494,7 +502,7 @@ If this field is omitted, there are no subsequent pages. </p></td>
                   <td>name</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p> </p></td>
+                  <td><p>[(validate.rules).string.min_len = 1]; </p></td>
                 </tr>
               
                 <tr>

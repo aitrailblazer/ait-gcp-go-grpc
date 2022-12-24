@@ -146,21 +146,16 @@ returned in the result.
 <a name="aitrailblazer-service-v1-ListPetsRequest"></a>
 
 ### ListPetsRequest
-The parent, which owns this collection of books.
-Format: publishers/{publisher}
-string parent = 1 [
-  (google.api.field_behavior) = REQUIRED,
-  (google.api.resource_reference) = {
-    child_type: &#34;library.googleapis.com/Book&#34;
-  }];
+
 
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| page_size | [int32](#int32) |  | The maximum number of books to return. The service may return fewer than this value. If unspecified, at most 50 books will be returned. The maximum value is 1000; values above 1000 will be coerced to 1000. |
-| page_token | [string](#string) |  | A page token, received from a previous `ListBooks` call. Provide this to retrieve the subsequent page.
+| page_size | [int32](#int32) |  | The maximum number of pets to return. The service may return fewer than this value. If unspecified, at most 50 pets will be returned. The maximum value is 1000; values above 1000 will be coerced to 1000. |
+| page_token | [string](#string) |  | A page token, received from a previous `ListPets` call. Provide this to retrieve the subsequent page.
 
 When paginating, all other parameters provided to `ListBooks` must match the call that provided the page token. |
+| filter | [string](#string) |  | An expression that can be used to filter the list. Filters use the Common Expression Language and can refer to all message fields. |
 
 
 
@@ -197,7 +192,7 @@ passed as input to the AddPet RPC.
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| name | [string](#string) |  |  |
+| name | [string](#string) |  | [(validate.rules).string.min_len = 1]; |
 | tag | [string](#string) |  |  |
 
 

@@ -1,5 +1,5 @@
-github.com/aitrailblazer/ait-gcp-go-grpc/rpc/v1/pb v0.0.0-20221220165456-10c2b85ad0e4 h1://hkTUMcRDyJx5noHeWRCj6daMZnT2FDIsy45MJY5lw=
-github.com/aitrailblazer/ait-gcp-go-grpc/rpc/v1/pb v0.0.0-20221220165456-10c2b85ad0e4/go.mod h1:e2TJMFT8g/rj/7tbkwmk39A5JiwGD4eM5S89mJFiUMs=
+github.com/aitrailblazer/ait-gcp-go-grpc/rpc/v1/pb v0.0.0-20221222235906-89192c04a362 h1:FtfNSHhsnIpTPyi1PBGgXEqasUCZgxwKs0u0F4T7Fgc=
+github.com/aitrailblazer/ait-gcp-go-grpc/rpc/v1/pb v0.0.0-20221222235906-89192c04a362/go.mod h1:e2TJMFT8g/rj/7tbkwmk39A5JiwGD4eM5S89mJFiUMs=
 github.com/golang/protobuf v1.5.0/go.mod h1:FsONVRAS9T7sI+LIUmWTfcYkHO4aIWwzhcaSAoJOfIk=
 github.com/golang/protobuf v1.5.2 h1:ROPKBNFfQgOUMifHyP+KYbvpjbdoFNs+aK7DXlji0Tw=
 github.com/golang/protobuf v1.5.2/go.mod h1:XVQd3VNwM+JqD3oG2Ue2ip4fOMUkwXdXDdiuN0vRsmY=

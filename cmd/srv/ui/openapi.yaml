@@ -45,13 +45,18 @@ paths:
             parameters:
                 - name: pageSize
                   in: query
-                  description: The maximum number of books to return. The service may return fewer than this value. If unspecified, at most 50 books will be returned. The maximum value is 1000; values above 1000 will be coerced to 1000.
+                  description: The maximum number of pets to return. The service may return fewer than this value. If unspecified, at most 50 pets will be returned. The maximum value is 1000; values above 1000 will be coerced to 1000.
                   schema:
                     type: integer
                     format: int32
                 - name: pageToken
                   in: query
-                  description: A page token, received from a previous `ListBooks` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListBooks` must match the call that provided the page token.
+                  description: A page token, received from a previous `ListPets` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListBooks` must match the call that provided the page token.
+                  schema:
+                    type: string
+                - name: filter
+                  in: query
+                  description: An expression that can be used to filter the list. Filters use the Common Expression Language and can refer to all message fields.
                   schema:
                     type: string
             responses:

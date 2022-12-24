@@ -1,8 +1,8 @@
 github.com/RaveNoX/go-jsoncommentstrip v1.0.0/go.mod h1:78ihd09MekBnJnxpICcwzCMzGrKSKYe4AqU6PDYYpjk=
-github.com/aitrailblazer/ait-gcp-go-grpc/api/v1/api v0.0.0-20221220165456-10c2b85ad0e4 h1:c568Gr/6vMedVchBGCcEZ7Zq6R0dL1+190aRwdyp+74=
-github.com/aitrailblazer/ait-gcp-go-grpc/api/v1/api v0.0.0-20221220165456-10c2b85ad0e4/go.mod h1:3OrP9TinXwK5tBaktCPiHRfmCi+mzWD85XP2bgK5PBQ=
-github.com/aitrailblazer/ait-gcp-go-grpc/api/v1/models v0.0.0-20221216065228-c347b2f40972 h1:FcgD4w2EaGRMD1omS1+b5BITPu16TFOQ+shU/WXv3EU=
-github.com/aitrailblazer/ait-gcp-go-grpc/api/v1/models v0.0.0-20221216065228-c347b2f40972/go.mod h1:doZ8NTM89xz4gRFIvDYdIpHMaohyBHS4+M5EoMrv3wY=
+github.com/aitrailblazer/ait-gcp-go-grpc/api/v1/api v0.0.0-20221222235906-89192c04a362 h1:djs57ciNWQpYp4ZucgEgcvzAT7UkV12TH+JZ2U2ko6Y=
+github.com/aitrailblazer/ait-gcp-go-grpc/api/v1/api v0.0.0-20221222235906-89192c04a362/go.mod h1:LRmu8Qor5sr3xLNkOMbpTkuOoant7vaglU7au2krr2k=
+github.com/aitrailblazer/ait-gcp-go-grpc/api/v1/models v0.0.0-20221222235906-89192c04a362 h1:wLHe0aD9fvG4eQmsy3p1VYOWoLwPyuwERHybbP424Wk=
+github.com/aitrailblazer/ait-gcp-go-grpc/api/v1/models v0.0.0-20221222235906-89192c04a362/go.mod h1:doZ8NTM89xz4gRFIvDYdIpHMaohyBHS4+M5EoMrv3wY=
 github.com/apapsch/go-jsonmerge/v2 v2.0.0 h1:axGnT1gRIfimI7gJifB699GoE/oq+F2MU7Dml6nw9rQ=
 github.com/apapsch/go-jsonmerge/v2 v2.0.0/go.mod h1:lvDnEdqiQrp0O42VQGgmlKpxL1AP2+08jFMw88y4klk=
 github.com/bmatcuk/doublestar v1.1.1/go.mod h1:UD6OnuiIn0yFxxA2le/rnRU1G4RaI4UvFv1sNto9p6w=

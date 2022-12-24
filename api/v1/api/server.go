@@ -4,10 +4,15 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"reflect"
+	"strings"
 	"sync"
 	"time"
 
 	"github.com/aitrailblazer/ait-gcp-go-grpc/api/v1/models"
+	"github.com/go-playground/validator/v10"
+
+	// "github.com/go-playground/validator/v10"
 
 	"github.com/labstack/echo/v4"
 )
@@ -188,6 +193,48 @@ func (h *Handler) AitrailblazerServiceFindPets(ctx echo.Context, params models.A
 	return ctx.JSON(http.StatusOK, result)
 }
 
+// var ( // The following are used to validate the data that is being sent to the server.
+//
+//	uUIDRegex                 = regexp.MustCompile(uUIDRegexString)                 // The uUIDRegex is used to validate the uUID. The uUIDRegex is a regexp.Regexp. The uUIDRegex is created from the uUIDRegexString. The uUIDRegexString is a string. The uUIDRegexString is assigned to the uUIDRegex.
+//	alphaNumericAndSpaceRegex = regexp.MustCompile(alphaNumericAndSpaceRegexString) // The alphaNumericAndSpaceRegex is used to validate the alphaNumericAndSpace. The alphaNumericAndSpaceRegex is a regexp.Regexp. The alphaNumericAndSpaceRegex is created from the alphaNumericAndSpaceRegexString. The alphaNumericAndSpaceRegexString is a string. The alphaNumericAndSpaceRegexString is assigned to the alphaNumericAndSpaceRegex.
+//	unitPriceRegex            = regexp.MustCompile(unitPriceString)                 // The unitPriceRegex is used to validate the unitPrice. The unitPriceRegex is a regexp.Regexp. The unitPriceRegex is created from the unitPriceString. The unitPriceString is a string. The unitPriceString is assigned to the unitPriceRegex.
+//
+// )
+// MinMax    string `validate:"min=1,max=10"`
+
+type NewPetValid struct {
+	Name *string `validate:"min=1,max=10"`
+	Tag  *string `validate:"min=1,max=10"`
+}
+
+// use a single instance of Validate, it caches struct info
+
+var validate *validator.Validate
+
+// UserStructLevelValidation contains custom struct level validations that don't always
+
+// make sense at the field validation level. For Example this function validates that either
+// FirstName or LastName exist; could have done that with a custom field validation but then
+// would have had to add it to both fields duplicating the logic + overhead, this way it's
+// only validated once.
+//
+
+// NOTE: you may ask why wouldn't I just do this outside of validator, because doing this way
+// hooks right into validator and you can combine with validation tags and still have a
+// common error output format.
+
+func NewPetStructLevelValidation(sl validator.StructLevel) {
+
+	newPetValid := sl.Current().Interface().(NewPetValid)
+
+	if len(*newPetValid.Name) == 0 && len(*newPetValid.Tag) == 0 {
+		sl.ReportError(*newPetValid.Name, "name", "Name", "nameortag", "")
+		sl.ReportError(*newPetValid.Tag, "tag", "Tag", "nameortag", "")
+	}
+	// plus can do more, even with different tag than
+	// "fnameorlname"
+}
+
 // post:"/pets" body:"new_pet"
 func (h *Handler) AitrailblazerServiceAddPet(ctx echo.Context) error {
 	// We expect a NewPet object in the request body.
@@ -196,7 +243,30 @@ func (h *Handler) AitrailblazerServiceAddPet(ctx echo.Context) error {
 	if err != nil {
 		return sendPetStoreError(ctx, http.StatusBadRequest, "Invalid format for NewPet")
 	}
-	// We now have a pet, let's add it to our "database".
+	validate = validator.New()
+	// register function to get tag name from json tags.
+
+	validate.RegisterTagNameFunc(func(fld reflect.StructField) string {
+		name := strings.SplitN(fld.Tag.Get("json"), ",", 2)[0]
+		if name == "-" {
+			return ""
+		}
+		return name
+	})
+	// register validation for 'NewPet'
+	// NOTE: only have to register a non-pointer type for 'NewPet', validator
+	// internally dereferences during it's type checks.
+	validate.RegisterStructValidation(NewPetStructLevelValidation, NewPetValid{})
+	newPetValid := &NewPetValid{
+		Name: newPet.Name,
+		Tag:  newPet.Tag,
+	}
+
+	// returns InvalidValidationError for bad validation input, nil or ValidationErrors ( []FieldError )
+	err = validate.Struct(newPetValid)
+	if err != nil {
+		return sendPetStoreError(ctx, http.StatusBadRequest, "Invalid format for NewPet")
+	}
 
 	// We're always asynchronous, so lock unsafe operations below
 	dbmux.Lock()

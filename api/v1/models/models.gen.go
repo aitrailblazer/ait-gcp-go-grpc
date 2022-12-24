@@ -86,11 +86,14 @@ type AitrailblazerServiceEchoParams struct {
 
 // AitrailblazerServiceListPetsParams defines parameters for AitrailblazerServiceListPets.
 type AitrailblazerServiceListPetsParams struct {
-	// PageSize The maximum number of books to return. The service may return fewer than this value. If unspecified, at most 50 books will be returned. The maximum value is 1000; values above 1000 will be coerced to 1000.
+	// PageSize The maximum number of pets to return. The service may return fewer than this value. If unspecified, at most 50 pets will be returned. The maximum value is 1000; values above 1000 will be coerced to 1000.
 	PageSize *int32 `form:"pageSize,omitempty" json:"pageSize,omitempty"`
 
-	// PageToken A page token, received from a previous `ListBooks` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListBooks` must match the call that provided the page token.
+	// PageToken A page token, received from a previous `ListPets` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListBooks` must match the call that provided the page token.
 	PageToken *string `form:"pageToken,omitempty" json:"pageToken,omitempty"`
+
+	// Filter An expression that can be used to filter the list. Filters use the Common Expression Language and can refer to all message fields.
+	Filter *string `form:"filter,omitempty" json:"filter,omitempty"`
 }
 
 // AitrailblazerServiceFindPetsParams defines parameters for AitrailblazerServiceFindPets.
