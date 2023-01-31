@@ -1,0 +1,346 @@
+swagger: '2.0'
+info:
+  version: '1.0.0'
+  title: ait-gcp-go-grpc-api API Gateway service
+  description: Secure and Scalable APIs with API Gateway and Cloud Run
+  contact: {}
+basePath: /
+security:
+  - api_key: []
+schemes:
+- https
+consumes:
+- application/json
+produces:
+- application/json
+x-google-backend:
+  address: https://smartapi-3696-svc-xxx-uc.a.run
+paths:
+  /echo/{message}:
+    get:
+      description: echo
+      summary: AitrailblazerService_Echo
+      tags:
+      - AitrailblazerService
+      operationId: AitrailblazerService_Echo
+      deprecated: false
+      produces:
+      - application/json
+      parameters:
+      - name: message
+        in: path
+        required: true
+        type: string
+        description: ''
+      - name: value
+        in: query
+        required: false
+        type: string
+        description: ''
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/EchoMessage'
+          headers: {}
+        default:
+          description: Default error response
+          schema:
+            $ref: '#/definitions/Status'
+          headers: {}
+  /listpets:
+    get:
+      description: ListPets
+      summary: AitrailblazerService_ListPets
+      tags:
+      - AitrailblazerService
+      operationId: AitrailblazerService_ListPets
+      deprecated: false
+      produces:
+      - application/json
+      parameters:
+      - name: pageSize
+        in: query
+        required: false
+        type: integer
+        format: int32
+        description: The maximum number of pets to return. The service may return fewer than this value. If unspecified, at most 50 pets will be returned. The maximum value is 1000; values above 1000 will be coerced to 1000.
+      - name: pageToken
+        in: query
+        required: false
+        type: string
+        description: A page token, received from a previous `ListPets` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListBooks` must match the call that provided the page token.
+      - name: filter
+        in: query
+        required: false
+        type: string
+        description: An expression that can be used to filter the list. Filters use the Common Expression Language and can refer to all message fields.
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/ListPetsResponse'
+          headers: {}
+        default:
+          description: Default error response
+          schema:
+            $ref: '#/definitions/Status'
+          headers: {}
+  /pets:
+    get:
+      description: "FindPets\n\n The FindPets RPC (Remote Procedure Call) allows \n a client to search for pets based on certain \n parameters. The parameters include tags \n (such as breed, color, etc.) and a limit on the \n number of pets to be returned. The RPC uses a \n GET HTTP request to the \"/pets\" endpoint to \n retrieve the desired pets. The result of the \n RPC is a Pet message, which contains information \n about the found pets."
+      summary: AitrailblazerService_FindPets
+      tags:
+      - AitrailblazerService
+      operationId: AitrailblazerService_FindPets
+      deprecated: false
+      produces:
+      - application/json
+      parameters:
+      - name: tags
+        in: query
+        required: false
+        type: array
+        items:
+          type: string
+        description: ''
+      - name: limit
+        in: query
+        required: false
+        type: integer
+        format: int32
+        description: ''
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Pet'
+          headers: {}
+        default:
+          description: Default error response
+          schema:
+            $ref: '#/definitions/Status'
+          headers: {}
+    post:
+      description: "AddPet\n\n The AddPet RPC allows for the addition of a new \n pet to the system. It takes in AddPetParameters \n as input, which includes a NewPet message that \n contains the name and tag of the new pet. \n The RPC returns a Pet message, which likely \n includes information about the newly added pet. \n The RPC can be accessed via an HTTP POST request \n to the \"/pets\" endpoint, with the new pet \n information being sent in the body of the request.\n \n Example #1: name = \"Spot\", tag = \"TagOfSpot\"\n \n Example #2: name = \"Fido\", tag = \"TagOfFido\"\n \n Example #3: name = \"Rover\", tag = \"TagOfRover\"\n\n Example #4: name = \"Spike\", tag = \"TagOfSpike\"\n\n Example #5: name = \"Buddy\", tag = \"TagOfBuddy\""
+      summary: AitrailblazerService_AddPet
+      tags:
+      - AitrailblazerService
+      operationId: AitrailblazerService_AddPet
+      deprecated: false
+      produces:
+      - application/json
+      consumes:
+      - application/json
+      parameters:
+      - name: Content-Type
+        in: header
+        required: false
+        enum:
+        - application/json
+        type: string
+        description: ''
+      - name: body
+        in: body
+        required: true
+        description: ''
+        schema:
+          $ref: '#/definitions/NewPet'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Pet'
+          headers: {}
+        default:
+          description: Default error response
+          schema:
+            $ref: '#/definitions/Status'
+          headers: {}
+  /pets/{id}:
+    get:
+      description: "FindPetByID\n This is a function signature for a Remote Procedure \n Call (RPC) in the Google API specification language. \n The function is called \"FindPetByID\" and it takes \n in a single input parameter called \"FindPetByIDParameters\". \n The function returns a single output of type \"Pet\".\n \n The \"option\" statement specifies additional \n options for the function, in this case specifying \n that the function can be called using an HTTP GET \n request to the URL \"/pets/{id}\", where \"{id}\" is \n a placeholder for a specific pet ID.\n \n This function allows a client to retrieve \n information about a specific pet by providing \n the pet's ID as a parameter in the HTTP request.\n \n Returns a pet by ID"
+      summary: AitrailblazerService_FindPetByID
+      tags:
+      - AitrailblazerService
+      operationId: AitrailblazerService_FindPetByID
+      deprecated: false
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        required: true
+        type: integer
+        format: int64
+        description: ''
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Pet'
+          headers: {}
+        default:
+          description: Default error response
+          schema:
+            $ref: '#/definitions/Status'
+          headers: {}
+    delete:
+      description: "DeletePet\n\n The DeletePet RPC (Remote Procedure Call) is used \n to delete a pet from a database. It takes in a\n  DeletePetParameters message as input, which \n contains the ID of the pet to be deleted. \n The RPC returns an Error message, which includes \n a code and a message describing any errors that \n may have occurred during the delete operation. \n The RPC uses the HTTP DELETE method to delete \n the pet from the database, with the ID of the \n pet being specified in the URL as a path parameter."
+      summary: AitrailblazerService_DeletePet
+      tags:
+      - AitrailblazerService
+      operationId: AitrailblazerService_DeletePet
+      deprecated: false
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        required: true
+        type: integer
+        format: int64
+        description: ''
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Error'
+          headers: {}
+        default:
+          description: Default error response
+          schema:
+            $ref: '#/definitions/Status'
+          headers: {}
+  /v1/ping:
+    get:
+      description: SendPing
+      summary: AitrailblazerService_SendPing
+      tags:
+      - AitrailblazerService
+      operationId: AitrailblazerService_SendPing
+      deprecated: false
+      produces:
+      - application/json
+      parameters:
+      - name: message
+        in: query
+        required: false
+        type: string
+        description: ''
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/PingResponse'
+          headers: {}
+        default:
+          description: Default error response
+          schema:
+            $ref: '#/definitions/Status'
+          headers: {}
+securityDefinitions:
+    # This section configures basic authentication with an API key.
+    api_key:
+      type: "apiKey"
+      name: "key"
+      in: "query"
+definitions:
+  EchoMessage:
+    title: EchoMessage
+    type: object
+    properties:
+      value:
+        type: string
+  Error:
+    title: Error
+    type: object
+    properties:
+      code:
+        type: integer
+        format: int32
+      message:
+        type: string
+  GoogleProtobufAny:
+    title: GoogleProtobufAny
+    description: Contains an arbitrary serialized message along with a @type that describes the type of the serialized message.
+    type: object
+    properties:
+      '@type':
+        description: The type of the serialized message.
+        type: string
+  ListPetsResponse:
+    title: ListPetsResponse
+    type: object
+    properties:
+      pets:
+        description: The Pets.
+        type: array
+        items:
+          $ref: '#/definitions/Pet'
+      nextPageToken:
+        description: A token, which can be sent as `page_token` to retrieve the next page. If this field is omitted, there are no subsequent pages.
+        type: string
+  NewPet:
+    title: NewPet
+    description: The NewPet message contains information about a  new pet being added to the system. It includes  the name of the pet (a string) and a tag  (also a string) that can be used to identify  the pet. This message is used as the "new_pet"  field in the AddPetParameters message, which is  passed as input to the AddPet RPC.
+    type: object
+    properties:
+      name:
+        type: string
+      tag:
+        type: string
+  Pet:
+    title: Pet
+    description: 'The message Pet is a data structure that  represents a pet in this gRPC function.  It has three fields: name, tag, and id.  The name field is a string that represents  the name of the pet. The tag field is a  string that represents a tag or label  associated with the pet. The id field  is an integer that represents a unique  identifier for the pet. These three  fields are defined as required fields,  meaning that they must be provided when  creating a new Pet object.'
+    type: object
+    properties:
+      name:
+        description: The name of the pet
+        type: string
+      tag:
+        description: The tag of the pet
+        type: string
+      id:
+        description: The id of the pet
+        type: integer
+        format: int64
+  PingResponse:
+    title: PingResponse
+    type: object
+    properties:
+      pong:
+        $ref: '#/definitions/Pong'
+  Pong:
+    title: Pong
+    type: object
+    properties:
+      index:
+        type: integer
+        format: int32
+      message:
+        type: string
+      ver:
+        type: string
+      receivedOn:
+        type: string
+        format: date-time
+  Status:
+    title: Status
+    description: 'The `Status` type defines a logical error model that is suitable for different programming environments, including REST APIs and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each `Status` message contains three pieces of data: error code, error message, and error details. You can find out more about this error model and how to work with it in the [API Design Guide](https://cloud.google.com/apis/design/errors).'
+    type: object
+    properties:
+      code:
+        description: The status code, which should be an enum value of [google.rpc.Code][google.rpc.Code].
+        type: integer
+        format: int32
+      message:
+        description: A developer-facing error message, which should be in English. Any user-facing error message should be localized and sent in the [google.rpc.Status.details][google.rpc.Status.details] field, or localized by the client.
+        type: string
+      details:
+        description: A list of messages that carry the error details.  There is a common set of message types for APIs to use.
+        type: array
+        items:
+          $ref: '#/definitions/GoogleProtobufAny'
+tags:
+- name: AitrailblazerService

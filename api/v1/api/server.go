@@ -21,7 +21,7 @@ const VERSION = "1.02"
 
 // This function wraps sending of an error in the Error format, and
 // handling the failure to marshal that.
-func sendPetStoreError(ctx echo.Context, code int, message string) error {
+func returnError(ctx echo.Context, code int, message string) error {
 	code32 := int32(code)
 	petErr := models.Error{
 		Code:    &code32,
@@ -133,7 +133,7 @@ func (h *Handler) AitrailblazerServiceFindPetByID(ctx echo.Context, petId int64)
 
 	pet, found := h.Pets[petId]
 	if !found {
-		return sendPetStoreError(ctx, http.StatusNotFound,
+		return returnError(ctx, http.StatusNotFound,
 			fmt.Sprintf("Could not find pet with ID %d", petId))
 	}
 	return ctx.JSON(http.StatusOK, pet)
@@ -145,7 +145,7 @@ func (h *Handler) AitrailblazerServiceDeletePet(ctx echo.Context, id int64) erro
 
 	_, found := h.Pets[id]
 	if !found {
-		return sendPetStoreError(ctx, http.StatusNotFound,
+		return returnError(ctx, http.StatusNotFound,
 			fmt.Sprintf("Could not find pet with ID %d", id))
 	}
 	delete(h.Pets, id)
@@ -241,7 +241,7 @@ func (h *Handler) AitrailblazerServiceAddPet(ctx echo.Context) error {
 	var newPet models.NewPet
 	err := ctx.Bind(&newPet)
 	if err != nil {
-		return sendPetStoreError(ctx, http.StatusBadRequest, "Invalid format for NewPet")
+		return returnError(ctx, http.StatusBadRequest, "Invalid format for NewPet")
 	}
 	validate = validator.New()
 	// register function to get tag name from json tags.
@@ -265,7 +265,7 @@ func (h *Handler) AitrailblazerServiceAddPet(ctx echo.Context) error {
 	// returns InvalidValidationError for bad validation input, nil or ValidationErrors ( []FieldError )
 	err = validate.Struct(newPetValid)
 	if err != nil {
-		return sendPetStoreError(ctx, http.StatusBadRequest, "Invalid format for NewPet")
+		return returnError(ctx, http.StatusBadRequest, "Invalid format for NewPet")
 	}
 
 	// We're always asynchronous, so lock unsafe operations below

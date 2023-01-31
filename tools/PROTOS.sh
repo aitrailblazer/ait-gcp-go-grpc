@@ -2,6 +2,12 @@
 #
 # Copyright 2023 AITrailblazer, LLC. All Rights Reserved.
 PROJECT_ID=ait-gcp-go-grpc
+PROJECT_API_ID=$PROJECT_ID-api
+PROJECT_API_CONFIG_ID=$PROJECT_API_ID-config 
+PROJECT_API_CONFIG_ID_KEY=$PROJECT_API_ID-config-key
+PROJECT_API_GATEWAY_ID=$PROJECT_API_ID-gateway 
+GCP_REGION=us-central1
+
 GCP_PROJECT=smartapi-3696
 GCP_SVC_NAME=$GCP_PROJECT"-svc"
 

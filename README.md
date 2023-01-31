@@ -5,7 +5,7 @@
 
 Source code for the book.
 
-[ait-gcp-go-grpc](https://github.com/aitrailblazer/ait-gcp-go-grpc)
+[How to Build and Deploy Production-Grade Web Services  with gRPC/OpenAPI: Go, HTTP,Transcoding,API Gateway,Load Balancing, CloudRun Vol II.](https://www.amazon.com/dp/B0BPXZ4C97)
 
 ```sh
 .

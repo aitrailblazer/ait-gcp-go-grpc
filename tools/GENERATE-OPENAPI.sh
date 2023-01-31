@@ -8,7 +8,7 @@ set -e
 clone_common_protos
 
 go install github.com/google/gnostic/cmd/protoc-gen-openapi@latest
-mkdir -p ./docs/
+# mkdir -p docs/
 
 echo "==> Generating OpenAPI spec for ${AIT_PROTOS[@]}"
 protoc ${AIT_PROTOS[*]}  \

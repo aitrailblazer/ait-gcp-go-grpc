@@ -55,7 +55,7 @@ service AitrailblazerService {
       get: "/v1/ping"
     };
   }
-  // echo
+  // Echo
   //
   rpc Echo(EchoMessage) returns (EchoMessage) {
     option (google.api.http) = {
